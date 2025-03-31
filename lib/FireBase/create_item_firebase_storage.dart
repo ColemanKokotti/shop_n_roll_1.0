@@ -18,7 +18,6 @@ class CreateItemService {
           'iconItem': state.selectedIcon,
           'descriptionItem': state.descriptionItem,
           'quantity': state.quantity,
-          'imageUrl': state.imageUrl,
         });
         return true;
       }

@@ -1,4 +1,8 @@
 {
+  "- At least 1 number": "- 少なくとも1つの数字",
+  "- At least 1 special character": "- 少なくとも1つの特殊文字",
+  "- At least 1 uppercase letter": "- 少なくとも1つの大文字",
+  "- Minimum 10 characters": "- 最小10文字",
   "Account": "アカウント",
   "Add": "追加",
   "Add item": "アイテムを追加",
@@ -19,19 +23,15 @@
   "Name not available": "名前は使用できません",
   "No description": "説明なし",
   "No items found": "アイテムが見つかりません",
+  "Password must contain:": "パスワードには以下を含める必要があります:",
   "Quantity:": "数量:",
   "Registration": "登録",
+  "Remember me": "私を覚えて",
   "Select an icon for editing:": "編集用のアイコンを選択:",
   "Settings": "設定",
   "Sign up": "サインアップ",
   "Theme Selector": "テーマ選択",
   "Undo": "元に戻す",
   "Welcome": "ようこそ",
-  "Welcome, ${state.user.email ?? \"User\"}": "ようこそ、${state.user.email ?? \"ユーザー\"}",
-  "Remember me": "私を覚えて",
-  "Password must contain:": "パスワードには以下を含める必要があります:",
-  "- At least 1 uppercase letter": "- 少なくとも1つの大文字",
-  "- At least 1 special character": "- 少なくとも1つの特殊文字",
-  "- Minimum 10 characters":  "- 最小10文字",
-  "- At least 1 number":"- 少なくとも1つの数字"
+  "Welcome, ${state.user.email ?? \"User\"}": "ようこそ、${state.user.email ?? \"ユーザー\"}"
 }

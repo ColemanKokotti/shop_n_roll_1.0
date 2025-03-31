@@ -24,21 +24,15 @@ class ActionButtonsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () async {
-            final CreateItemService itemService = CreateItemService(
-              AuthService(FirebaseAuth.instance)
-            );
-            bool success = await itemService.addItemToUser(state);
-            if (success) {
-              cubit.reset();
-              Navigator.of(context).pop();
-            } else {
-              showErrorDialog(context);
+          onPressed: () {
+            // Validate that all fields are filled
+            if (_validateFields(context)) {
+              _addItem(context);
             }
           },
           child: Text(
             'Add'.tr(),
-            style: TextStyle(color:  theme.appBarTheme.foregroundColor, fontSize: 15),
+            style: TextStyle(color: theme.appBarTheme.foregroundColor, fontSize: 15),
           ),
         ),
         SizedBox(width: 8),
@@ -46,11 +40,35 @@ class ActionButtonsWidget extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
             'Cancel'.tr(),
-            style: TextStyle(color:   theme.appBarTheme.foregroundColor, fontSize: 15),
+            style: TextStyle(color: theme.appBarTheme.foregroundColor, fontSize: 15),
           ),
         ),
       ],
     );
+  }
+
+  bool _validateFields(BuildContext context) {
+    // Check if name, description, and icon are not empty
+    if (cubit.nameController.text.trim().isEmpty ||
+        cubit.descriptionController.text.trim().isEmpty ||
+        state.selectedIcon.isEmpty) {
+      showErrorDialog(context);
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _addItem(BuildContext context) async {
+    final CreateItemService itemService = CreateItemService(
+        AuthService(FirebaseAuth.instance)
+    );
+    bool success = await itemService.addItemToUser(state);
+    if (success) {
+      cubit.reset();
+      Navigator.of(context).pop();
+    } else {
+      showErrorDialog(context);
+    }
   }
 
   void showErrorDialog(BuildContext context) {
@@ -69,7 +87,7 @@ class ActionButtonsWidget extends StatelessWidget {
             child: Text(
               'Attention'.tr(),
               style: TextStyle(
-                color: theme.textTheme.labelLarge?.color,
+                color: theme.appBarTheme.foregroundColor,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -80,7 +98,7 @@ class ActionButtonsWidget extends StatelessWidget {
             child: Text(
               'All fields must be filled in to create the item.'.tr(),
               style: TextStyle(
-                color: theme.textTheme.labelLarge?.color,
+                color: theme.appBarTheme.foregroundColor,
                 fontSize: 16,
               ),
             ),
@@ -89,6 +107,7 @@ class ActionButtonsWidget extends StatelessWidget {
       },
     );
 
+    // Automatically close the dialog after 3 seconds
     Future.delayed(Duration(seconds: 3), () {
       Navigator.of(context).pop();
     });

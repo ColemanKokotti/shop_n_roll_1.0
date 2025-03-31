@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final ThemeData warframeTheme = ThemeData(
   primaryColor: Color(0xFF00A8CC), // Energy Blue
   secondaryHeaderColor: Color(0xFFC8A2C8),
-  scaffoldBackgroundColor: Color(0xFFD4AF37),
+  scaffoldBackgroundColor: Color(0xFFA8C3A5),
 
   appBarTheme: AppBarTheme(
     color: Color(0xFF00A8CC),

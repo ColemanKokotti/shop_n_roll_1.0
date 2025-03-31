@@ -112,11 +112,6 @@ class AuthCubit extends Cubit<AuthState> {
       User? user = await _authService.register(email, password);
       if (user != null) {
         await _accountService.createUserAccount(user.uid);
-
-        await _themePreferenceService.saveThemePreference(user.uid, 'default');
-        await _languagePreferenceService.saveLanguagePreference(user.uid, 'en');
-
-        emit(AuthAuthenticated(user, 'en'));
       } else {
         emit(AuthUnauthenticated());
       }
