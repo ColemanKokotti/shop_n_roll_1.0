@@ -60,13 +60,10 @@ class ThemeCubit extends Cubit<ThemeData> {
   void selectTheme(String themeName) {
     final selectedTheme = themeMap[themeName] ?? defaultTheme;
 
-    // Save the theme preference for the current user
     User? currentUser = _auth.currentUser;
     if (currentUser != null) {
       _themePreferenceService.saveThemePreference(currentUser.uid, themeName);
     }
-
-    // Emit the new theme
     emit(selectedTheme);
   }
 }

@@ -9,7 +9,6 @@ import '../FireBase/auth_service.dart';
 import '../FireBase/account_service.dart';
 import '../FireBase/theme_preference_service.dart';
 import '../Widgets/AuthWidgets/auth_form_widget.dart';
-import '../Widgets/AuthWidgets/error_dialog_widget.dart';
 import 'list_screen.dart';
 
 class AuthScreen extends StatelessWidget {

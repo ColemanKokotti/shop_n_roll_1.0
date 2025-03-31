@@ -145,7 +145,6 @@ class ChangeLanguageButton extends StatelessWidget {
                         onTap: () async {
                           final newLocale = Locale(option);
 
-                          // Save language preference for logged-in user
                           final User? currentUser = FirebaseAuth.instance.currentUser;
                           if (currentUser != null) {
                             await languagePreferenceService.saveLanguagePreference(

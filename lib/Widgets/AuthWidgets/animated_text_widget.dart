@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math; // Importazione per funzioni matematiche
+import 'dart:math' as math;
 
 class AnimatedTextWidget extends StatefulWidget {
   const AnimatedTextWidget({super.key});
@@ -17,12 +17,12 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 5), // Durata dell'animazione aumentata
+      duration: const Duration(seconds: 5),
       vsync: this,
     );
 
     _animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut), // Animazione easeInOut
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
     _controller.repeat(reverse: true);
@@ -40,11 +40,11 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget>
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        double rotation = (_animation.value - 0.5) * math.pi * 0.2; // Rotazione aumentata
-        double scale = 1 + (_animation.value - 0.5).abs() * 0.5; // Scala variabile
-        double offsetX = (_animation.value - 0.5) * 50; // Offset orizzontale aumentato
-        double offsetY = (_animation.value - 0.5) * -50; // Offset verticale aumentato
-        double opacity = 1 - (_animation.value - 0.5).abs() * 0.8; // Opacità variabile
+        double rotation = (_animation.value - 0.5) * math.pi * 0.2;
+        double scale = 1 + (_animation.value - 0.5).abs() * 0.5;
+        double offsetX = (_animation.value - 0.5) * 50;
+        double offsetY = (_animation.value - 0.5) * -50;
+        double opacity = 1 - (_animation.value - 0.5).abs() * 0.8;
 
         return Transform.translate(
           offset: Offset(offsetX, offsetY),
@@ -66,7 +66,7 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget>
                     shadows: [
                       Shadow(
                         blurRadius: 10,
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white,
                         offset: const Offset(0, 0),
                       ),
                     ],

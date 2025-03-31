@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AccountService {
   final CollectionReference _accountsCollection = FirebaseFirestore.instance.collection('Accounts');
 
+
   Future<void> addItemToAccount(String userId, String itemId) async {
     try {
       await _accountsCollection.doc(userId).update({
@@ -37,11 +38,12 @@ class AccountService {
       return [];
     }
   }
-
-  Future<void> createUserAccount(String userId) async {
+  Future<void> createUserAccount(String userId, {String? preferredLanguage, String? preferredTheme}) async {
     try {
       await _accountsCollection.doc(userId).set({
         'itemIds': [],
+        'preferredLanguage': preferredLanguage,
+        'theme': preferredTheme,
       });
     } catch (e) {
       print('Errore nella creazione dell\'account: $e');

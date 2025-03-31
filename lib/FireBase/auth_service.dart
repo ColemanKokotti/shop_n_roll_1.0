@@ -2,13 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../myapp.dart';
 import '../Bloc_Cubit/AuthCubit/auth_cubit.dart';
-import 'firebase_language_preference.dart';
-import 'theme_preference_service.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
-  final LanguagePreferenceService _languagePreferenceService = LanguagePreferenceService();
-  final ThemePreferenceService _themePreferenceService = ThemePreferenceService();
+
 
   AuthService(this._firebaseAuth);
 
@@ -45,13 +42,6 @@ class AuthService {
 
   Future<void> logout(BuildContext context, AuthCubit authCubit) async {
     try {
-      final currentUser = _firebaseAuth.currentUser;
-
-      if (currentUser != null) {
-        await _languagePreferenceService.clearLanguagePreference(currentUser.uid);
-        await _themePreferenceService.clearThemePreference(currentUser.uid);
-      }
-
       await _firebaseAuth.signOut();
 
       Navigator.of(context).pushAndRemoveUntil(
