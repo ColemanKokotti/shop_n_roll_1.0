@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class AccountService {
   final CollectionReference _accountsCollection = FirebaseFirestore.instance.collection('Accounts');
-
 
   Future<void> addItemToAccount(String userId, String itemId) async {
     try {
@@ -38,13 +36,23 @@ class AccountService {
       return [];
     }
   }
+
   Future<void> createUserAccount(String userId, {String? preferredLanguage, String? preferredTheme}) async {
     try {
-      await _accountsCollection.doc(userId).set({
-        'itemIds': [],
-        'preferredLanguage': preferredLanguage,
-        'theme': preferredTheme,
-      });
+
+      DocumentSnapshot doc = await _accountsCollection.doc(userId).get();
+
+      if (!doc.exists) {
+        await _accountsCollection.doc(userId).set({
+          'itemIds': [],
+          'preferredLanguage': preferredLanguage ?? 'en',
+          'theme': preferredTheme ?? 'default',
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+        print('Account creato con successo per: $userId');
+      } else {
+        print('Account già esistente per: $userId');
+      }
     } catch (e) {
       print('Errore nella creazione dell\'account: $e');
     }

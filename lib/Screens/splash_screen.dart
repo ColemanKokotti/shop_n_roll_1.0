@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../Widgets/SplashScreenWidgets/animated_button.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:shop_n_roll/Themes/default_theme.dart';
 import 'auth_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,118 +11,134 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _shakeController;
-  late Animation<Offset> _shakeAnimation;
-  late AnimationController _textController;
-  late Animation<double> _textAnimation;
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  late AnimationController _backgroundController;
+  late Animation<double> _backgroundAnimation;
 
-  bool _showButton = false;
+  late AnimationController _imageController;
+  late Animation<Offset> _imageAnimation;
+
+  late AnimationController _textController;
+  late Animation<Offset> _textAnimation;
 
   @override
   void initState() {
     super.initState();
-    _initializeApp();
 
-    _shakeController = AnimationController(
-      duration: Duration(seconds: 1),
+    _backgroundController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _shakeAnimation = Tween<Offset>(
-      begin: Offset(0, 0),
-      end: Offset(0, 0.1),
-    ).chain(CurveTween(curve: Curves.elasticInOut)).animate(_shakeController);
+    _backgroundAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _backgroundController, curve: Curves.easeOut),
+    );
+
+    _imageController = AnimationController(
+      duration: const Duration(milliseconds: 1800),
+      vsync: this,
+    );
+    _imageAnimation = Tween<Offset>(
+      begin: const Offset(0, -1.5),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _imageController, curve: Curves.elasticOut),
+    );
 
     _textController = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: const Duration(milliseconds: 2200),
       vsync: this,
     );
-    _textAnimation = CurvedAnimation(
-      parent: _textController,
-      curve: Curves.easeIn,
+    _textAnimation = Tween<Offset>(
+      begin: const Offset(0, -2),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _textController, curve: Curves.elasticOut),
     );
 
-    _shakeController.repeat(reverse: true);
-    _textController.forward();
-
-    Future.delayed(Duration(seconds: 4), () {
-      setState(() {
-        _showButton = true;
-      });
+    _backgroundController.forward();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _imageController.forward();
     });
-  }
-
-  Future<void> _initializeApp() async {
-    // Wait for a short duration to show splash screen
-    await Future.delayed(const Duration(seconds: 2));
-  }
-
-  Future<void> _setAppLaunched() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('app_launch_counter', 1);
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      _textController.forward();
+    });
   }
 
   @override
   void dispose() {
-    _shakeController.dispose();
+    _backgroundController.dispose();
+    _imageController.dispose();
     _textController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = defaultTheme;
 
-    return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SlideTransition(
-              position: _shakeAnimation,
-              child: Image.asset(
-                'assets/images/splash_screen.png',
-                width: 200,
-                height: 200,
+    return AnimatedSplashScreen(
+      duration: 3500,
+      splash: AnimatedBuilder(
+        animation: Listenable.merge([_backgroundAnimation, _imageAnimation, _textAnimation]),
+        builder: (context, child) {
+          return Stack(
+            children: [
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 5000),
+                curve: Curves.easeOutQuart,
+                left: _backgroundAnimation.value * 0,
+                right: (1 - _backgroundAnimation.value) * MediaQuery.of(context).size.width,
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  color: Colors.transparent,
+                ),
               ),
-            ),
-            FadeTransition(
-              opacity: _textAnimation,
-              child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Text(
-                    "Shop 'n' Roll",
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      foreground: Paint()
-                        ..shader = LinearGradient(
-                          colors: [
-                            theme.primaryColor,
-                            theme.secondaryHeaderColor
-                          ],
-                        ).createShader(
-                            const Rect.fromLTWH(0.0, 0.0, 200.0, 50.0)),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SlideTransition(
+                      position: _imageAnimation,
+                      child: Image.asset(
+                        'assets/images/splash_screen.png',
+                        width: 200,
+                        height: 200,
+                      ),
                     ),
-                  )),
-            ),
-            if (_showButton)
-              AnimatedButton(
-                onPressed: () {
-                  _setAppLaunched();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AuthScreen(),
+                    const SizedBox(height: 20),
+                    SlideTransition(
+                      position: _textAnimation,
+                      child: Text(
+                        "Shop 'n' Roll",
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()
+                            ..shader = LinearGradient(
+                              colors: [
+                                theme.primaryColor,
+                                theme.secondaryHeaderColor
+                              ],
+                            ).createShader(
+                                const Rect.fromLTWH(0.0, 0.0, 200.0, 50.0)),
+                        ),
+                      ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
+      nextScreen: const AuthScreen(),
+      splashTransition: SplashTransition.fadeTransition,
+      pageTransitionType: PageTransitionType.fade,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      splashIconSize: double.infinity,
+      centered: true,
+      animationDuration: const Duration(milliseconds: 1500),
     );
   }
 }

@@ -9,8 +9,9 @@ class AuthLoading extends AuthState {}
 class AuthAuthenticated extends AuthState {
   final User user;
   final String? preferredLanguage;
+  final String? preferredTheme;
 
-  AuthAuthenticated(this.user, this.preferredLanguage);
+  AuthAuthenticated(this.user, this.preferredLanguage,this.preferredTheme);
 }
 
 class AuthUnauthenticated extends AuthState {}

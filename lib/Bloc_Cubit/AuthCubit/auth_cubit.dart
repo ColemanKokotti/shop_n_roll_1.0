@@ -15,11 +15,9 @@ class AuthCubit extends Cubit<AuthState> {
   final AccountService _accountService;
   final ThemeCubit _themeCubit;
   final ThemePreferenceService _themePreferenceService;
-  final LanguagePreferenceService _languagePreferenceService =
-  LanguagePreferenceService();
+  final LanguagePreferenceService _languagePreferenceService = LanguagePreferenceService();
 
-  AuthCubit(this._authService, this._accountService, this._themeCubit,
-      this._themePreferenceService)
+  AuthCubit(this._authService, this._accountService, this._themeCubit, this._themePreferenceService)
       : super(AuthInitial());
 
   bool obscureText = true;
@@ -30,6 +28,11 @@ class AuthCubit extends Cubit<AuthState> {
   bool rememberMe = false;
   String email = '';
   String password = '';
+
+
+  ThemeCubit getThemeCubit() {
+    return _themeCubit;
+  }
 
   void toggleObscureText() {
     obscureText = !obscureText;
@@ -58,6 +61,12 @@ class AuthCubit extends Cubit<AuthState> {
     password = value;
     emit(AuthUpdate(password: password));
   }
+
+
+  Future<void> setAuthScreenLanguage(BuildContext context) async {
+    emit(AuthUpdate());
+  }
+
 
   Future<void> loadCredentials() async {
     final prefs = await SharedPreferences.getInstance();
@@ -88,39 +97,32 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthLoading());
       User? user = await _authService.login(email, password);
       if (user != null) {
+        final themePreferenceFuture = _themePreferenceService.getThemePreference(user.uid);
+        final languagePreferenceFuture = _languagePreferenceService.getLanguagePreference(user.uid);
 
-        String? savedTheme = await _themePreferenceService.getThemePreference(user.uid);
+        final results = await Future.wait([themePreferenceFuture, languagePreferenceFuture]);
+        final String? savedTheme = results[0];
+        final String? savedLanguage = results[1];
+
         if (savedTheme != null) {
-          _themeCubit.selectTheme(savedTheme);
+          await _themeCubit.selectTheme(savedTheme);
+          print('Tema applicato: $savedTheme');
+        } else {
+          await _themeCubit.selectTheme('default');
+          print('Tema predefinito applicato');
         }
 
-
-        String? savedLanguage = await _languagePreferenceService.getLanguagePreference(user.uid);
         if (savedLanguage != null) {
-
           context.setLocale(Locale(savedLanguage));
+          print('Lingua applicata: $savedLanguage');
         }
 
-        emit(AuthAuthenticated(user, savedLanguage));
+        emit(AuthAuthenticated(user, savedLanguage, savedTheme));
       } else {
         emit(AuthUnauthenticated());
       }
     } catch (e) {
-      emit(AuthError(e.toString()));
-      rethrow;
-    }
-  }
-
-  Future<void> register(String email, String password) async {
-    try {
-      emit(AuthLoading());
-      User? user = await _authService.register(email, password);
-      if (user != null) {
-        await _accountService.createUserAccount(user.uid);
-      } else {
-        emit(AuthUnauthenticated());
-      }
-    } catch (e) {
+      print('Errore nel login: $e');
       emit(AuthError(e.toString()));
       rethrow;
     }
@@ -128,40 +130,78 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkAuthStatus(BuildContext context) async {
     try {
+      emit(AuthLoading());
       User? currentUser = _authService.getCurrentUser();
       if (currentUser != null) {
-        String? savedTheme = await _themePreferenceService.getThemePreference(currentUser.uid);
+        final themePreferenceFuture = _themePreferenceService.getThemePreference(currentUser.uid);
+        final languagePreferenceFuture = _languagePreferenceService.getLanguagePreference(currentUser.uid);
+
+        final results = await Future.wait([themePreferenceFuture, languagePreferenceFuture]);
+        final String? savedTheme = results[0];
+        final String? savedLanguage = results[1];
+
         if (savedTheme != null) {
-          _themeCubit.selectTheme(savedTheme);
+          await _themeCubit.selectTheme(savedTheme);
+          print('Tema applicato: $savedTheme');
         } else {
-          _themeCubit.selectTheme('default');
+          await _themeCubit.selectTheme('default');
+          print('Tema predefinito applicato');
         }
 
-        String? savedLanguage = await _languagePreferenceService.getLanguagePreference(currentUser.uid);
         if (savedLanguage != null) {
           context.setLocale(Locale(savedLanguage));
-        } else {
-          context.setLocale(Locale('en'));
+          print('Lingua applicata: $savedLanguage');
         }
 
-        emit(AuthAuthenticated(currentUser, savedLanguage));
+
+        emit(AuthAuthenticated(currentUser, savedLanguage, savedTheme));
       } else {
         emit(AuthUnauthenticated());
       }
     } catch (e) {
+      print('Errore nel controllo dello stato di autenticazione: $e');
       emit(AuthUnauthenticated());
     }
   }
+
+  Future<void> register(String email, String password, BuildContext context) async {
+    try {
+      emit(AuthLoading());
+      User? user = await _authService.register(email, password);
+      if (user != null) {
+        await _accountService.createUserAccount(
+            user.uid,
+            preferredLanguage: 'en',
+            preferredTheme: 'default'
+        );
+
+        await _themeCubit.selectTheme('default');
+
+        context.setLocale(Locale('en'));
+
+        emit(AuthAuthenticated(user, 'en', 'default'));
+      } else {
+        emit(AuthUnauthenticated());
+      }
+    } catch (e) {
+      print('Errore nella registrazione: $e');
+      emit(AuthError(e.toString()));
+      rethrow;
+    }
+  }
+  Future<void> checkAuthScreen(BuildContext context) async {
+    if (state is! AuthAuthenticated) {
+    }
+    await loadCredentials();
+  }
+
   Future<void> logout(BuildContext context) async {
     try {
-      _themeCubit.selectTheme('default');
-      context.setLocale(Locale('en'));
       await _authService.logout(context, this);
       emit(AuthUnauthenticated());
     } catch (e) {
+      print('Errore nel logout: $e');
       emit(AuthError(e.toString()));
     }
   }
-
-
 }

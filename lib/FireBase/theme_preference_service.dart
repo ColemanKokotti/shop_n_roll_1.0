@@ -5,21 +5,22 @@ class ThemePreferenceService {
 
   Future<void> saveThemePreference(String userId, String theme) async {
     try {
-      await _accountsCollection.doc(userId).update({
-        'theme': theme,
-      });
-    } catch (e) {
-      print('Errore nel salvare il tema: $e');
+      DocumentSnapshot doc = await _accountsCollection.doc(userId).get();
 
-      // Se il documento non esiste, crealo con il tema
-      try {
+      if (doc.exists) {
+        await _accountsCollection.doc(userId).update({
+          'theme': theme,
+        });
+      } else {
         await _accountsCollection.doc(userId).set({
           'itemIds': [],
           'theme': theme,
+          'preferredLanguage': 'en',
         });
-      } catch (createError) {
-        print('Errore nella creazione dell\'account con tema: $createError');
       }
+      print('Tema salvato con successo: $theme');
+    } catch (e) {
+      print('Errore nel salvare il tema: $e');
     }
   }
 
@@ -27,7 +28,8 @@ class ThemePreferenceService {
     try {
       DocumentSnapshot doc = await _accountsCollection.doc(userId).get();
       if (doc.exists && doc.data() != null) {
-        return doc.get('theme');
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return data['theme'] as String?;
       }
       return null;
     } catch (e) {
@@ -36,7 +38,13 @@ class ThemePreferenceService {
     }
   }
 
-
   Future<void> clearThemePreference(String userId) async {
+    try {
+      await _accountsCollection.doc(userId).update({
+        'theme': FieldValue.delete(),
+      });
+    } catch (e) {
+      print('Errore nella cancellazione del tema: $e');
+    }
   }
 }

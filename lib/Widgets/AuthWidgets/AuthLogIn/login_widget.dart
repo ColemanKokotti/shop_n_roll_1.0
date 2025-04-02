@@ -1,9 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import '../../../Bloc_Cubit/AuthCubit/auth_state.dart';
+import '../../../Themes/default_theme.dart';
 import '../animated_text_widget.dart';
+import '../error_dialog_widget.dart'; // Add this import
 
 class LoginWidget extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -13,13 +14,12 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = defaultTheme;
     context.read<AuthCubit>().loadCredentials();
 
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         if (state is AuthUpdate) {
-
           if (state.email != null) {
             emailController.text = state.email!;
           }
@@ -80,22 +80,32 @@ class LoginWidget extends StatelessWidget {
                         context.read<AuthCubit>().updateRememberMe(value!);
                       },
                     ),
-                    Text('Remember me').tr(),
+                    Text('Remember me'),
                   ],
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () { if (emailController.text.isEmpty || !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$").hasMatch(emailController.text)) {
+                              ErrorDialog(context, "Please enter a valid email.");
+                  } else if (passwordController.text.isEmpty || !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$").hasMatch(passwordController.text)) {
+                    ErrorDialog(context, "No Password or wrong Password .");
+                  }
+                  else {
                     context.read<AuthCubit>().saveCredentials();
                     context.read<AuthCubit>().login(
-                      emailController.text,
-                      passwordController.text,
-                      context
-                    );
+                        emailController.text,
+                        passwordController.text,
+                        context
+                    );}
                   },
                   style: theme.elevatedButtonTheme.style,
-                  child: Text('Login').tr(),
+                  child: Text('Login'),
                 ),
+                if (state is AuthLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: CircularProgressIndicator(),
+                  ),
               ],
             ),
           ),

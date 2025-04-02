@@ -53,6 +53,8 @@ class AuthService {
       throw AuthException('Errore durante il logout.');
     }
   }
+
+
 }
 
 class AuthException implements Exception {

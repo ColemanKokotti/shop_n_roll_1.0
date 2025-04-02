@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import '../../Themes/default_theme.dart';
+
 class AnimatedTextWidget extends StatefulWidget {
   const AnimatedTextWidget({super.key});
 
@@ -36,7 +38,7 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = defaultTheme;
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {

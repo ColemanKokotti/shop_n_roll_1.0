@@ -1,8 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-void showErrorDialog(BuildContext context, String message) {
-  final theme = Theme.of(context);
+import '../../Themes/default_theme.dart';
+
+void ErrorDialog(BuildContext context, String message) {
+  final theme = defaultTheme ;
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -13,7 +14,7 @@ void showErrorDialog(BuildContext context, String message) {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Error'.tr(),
+              'Error',
               style: TextStyle(
                 color: theme.appBarTheme.foregroundColor,
                 fontSize: 20,

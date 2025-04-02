@@ -159,6 +159,7 @@ class ThemeSelector extends StatelessWidget {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {
+                          print('ThemeSelector: Selezionato tema: $option');
                           context.read<ThemeCubit>().selectTheme(option);
                           context.read<SettingsThemeCubit>().toggleThemeOptions();
                         },

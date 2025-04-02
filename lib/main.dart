@@ -44,6 +44,7 @@ void main() async {
         child: MultiBlocProvider(
           providers: [
             BlocProvider.value(value: authCubit),
+            BlocProvider.value(value: themeCubit),
           ],
           child: MyApp(authCubit: authCubit),
         ),

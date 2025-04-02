@@ -24,46 +24,68 @@ final themeMap = {
   'vintage': vintageRetroTheme,
   'earthy': earthyTheme,
   'ocean': oceanBreezeTheme,
-  'cyberpunk': cyberpunkTheme ,
+  'cyberpunk': cyberpunkTheme,
   'godofwar': godOfWarTheme,
-  'pokemon': pokemonTheme ,
+  'pokemon': pokemonTheme,
   'honkaistarrail': honkaiStarRailTheme,
   'warframe': warframeTheme,
-  'witcher' : witcherTheme
+  'witcher': witcherTheme
 };
 
 class ThemeCubit extends Cubit<ThemeData> {
   final ThemePreferenceService _themePreferenceService = ThemePreferenceService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  String _currentTheme = 'default';
 
   ThemeCubit() : super(defaultTheme) {
-    // Set default theme first
-    _setDefaultTheme();
-    // Load saved theme if user is authenticated
-    _loadSavedTheme();
+    loadSavedTheme();
   }
 
-  void _setDefaultTheme(){
-    emit(defaultTheme);
-  }
+  String get currentThemeName => _currentTheme;
 
-  Future<void> _loadSavedTheme() async {
-    User? currentUser = _auth.currentUser;
-    if (currentUser != null) {
-      String? savedTheme = await _themePreferenceService.getThemePreference(currentUser.uid);
-      if (savedTheme != null) {
-        selectTheme(savedTheme);
+  Future<void> loadSavedTheme() async {
+    try {
+      User? currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        String? savedTheme = await _themePreferenceService.getThemePreference(currentUser.uid);
+        if (savedTheme != null && themeMap.containsKey(savedTheme)) {
+          _currentTheme = savedTheme;
+          emit(themeMap[savedTheme]!);
+          print('Tema caricato: $savedTheme');
+        } else {
+          _currentTheme = 'default';
+          emit(defaultTheme);
+          print('Tema predefinito applicato');
+        }
+      } else {
+        _currentTheme = 'default';
+        emit(defaultTheme);
       }
+    } catch (e) {
+      print('Errore nel caricamento del tema: $e');
+      _currentTheme = 'default';
+      emit(defaultTheme);
     }
   }
 
-  void selectTheme(String themeName) {
-    final selectedTheme = themeMap[themeName] ?? defaultTheme;
+  Future<void> selectTheme(String themeName) async {
+    try {
+      if (!themeMap.containsKey(themeName)) {
+        themeName = 'default';
+      }
 
-    User? currentUser = _auth.currentUser;
-    if (currentUser != null) {
-      _themePreferenceService.saveThemePreference(currentUser.uid, themeName);
+      _currentTheme = themeName;
+      final selectedTheme = themeMap[themeName]!;
+
+      User? currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        await _themePreferenceService.saveThemePreference(currentUser.uid, themeName);
+        print('Tema selezionato e salvato: $themeName');
+      }
+
+      emit(selectedTheme);
+    } catch (e) {
+      print('Errore nella selezione del tema: $e');
     }
-    emit(selectedTheme);
   }
 }

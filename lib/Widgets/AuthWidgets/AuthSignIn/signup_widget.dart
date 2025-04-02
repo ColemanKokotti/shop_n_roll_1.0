@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import '../../../Bloc_Cubit/AuthCubit/auth_state.dart';
+import '../../../Themes/default_theme.dart';
 import '../animated_text_widget.dart';
+import '../error_dialog_widget.dart';
 
 class SingUpWidget extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -13,11 +15,11 @@ class SingUpWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = defaultTheme;
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         final cubit = context.read<AuthCubit>();
-        return SingleChildScrollView( // Aggiunto SingleChildScrollView
+        return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -63,11 +65,11 @@ class SingUpWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Password must contain:'.tr(),
+                      'Password must contain:',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '- At least 1 uppercase letter'.tr(),
+                      '- At least 1 uppercase letter',
                       style: TextStyle(
                           color: cubit.hasUppercase ? Colors.green : Colors.black),
                     ),
@@ -77,12 +79,12 @@ class SingUpWidget extends StatelessWidget {
                           color: cubit.hasNumber ? Colors.green : Colors.black),
                     ),
                     Text(
-                      '- At least 1 special character'.tr(),
+                      '- At least 1 special character',
                       style: TextStyle(
                           color: cubit.hasSpecialChar ? Colors.green : Colors.black),
                     ),
                     Text(
-                      '- Minimum 10 characters'.tr(),
+                      '- Minimum 10 characters',
                       style: TextStyle(
                           color: cubit.hasMinLength ? Colors.green : Colors.black),
                     ),
@@ -96,20 +98,23 @@ class SingUpWidget extends StatelessWidget {
                         cubit.hasSpecialChar &&
                         cubit.hasMinLength) {
                       context.read<AuthCubit>().register(
-                        emailController.text,
-                        passwordController.text,
+                          emailController.text,
+                          passwordController.text,
+                          context
                       );
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content:
-                            Text('Password does not meet requirements.')),
-                      );
+                      ErrorDialog(context, "Email or Password not valid.");
                     }
                   },
                   style: theme.elevatedButtonTheme.style,
-                  child: Text('Sign up').tr(),
+                  child: Text('Sign up'),
                 ),
+                // Show a loading indicator when AuthLoading state
+                if (state is AuthLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: CircularProgressIndicator(),
+                  ),
               ],
             ),
           ),

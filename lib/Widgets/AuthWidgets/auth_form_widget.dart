@@ -1,14 +1,24 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import '../../Themes/default_theme.dart';
 import 'AuthLogIn/login_widget.dart';
 import 'AuthSignIn/signup_widget.dart';
 
-class AuthForm extends StatelessWidget {
+class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
 
   @override
+  _AuthFormState createState() => _AuthFormState();
+}
+
+class _AuthFormState extends State<AuthForm> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = defaultTheme;
 
     return DefaultTabController(
       length: 2,
@@ -19,8 +29,8 @@ class AuthForm extends StatelessWidget {
             child: TabBar(
               labelColor: theme.appBarTheme.foregroundColor,
               tabs: [
-                Tab(text: 'Login'.tr()),
-                Tab(text: 'Registration'.tr()),
+                Tab(text: 'Login'),
+                Tab(text: 'Registration'),
               ],
             ),
           ),

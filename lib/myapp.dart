@@ -20,49 +20,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  bool _isFirstLaunch = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _checkFirstLaunch();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _resetLaunchCounter();
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached) {
-      _resetLaunchCounter();
-    }
-  }
-
-  Future<void> _checkFirstLaunch() async {
-    final prefs = await SharedPreferences.getInstance();
-    final launchCounter = prefs.getInt('app_launch_counter') ?? 0;
-    setState(() {
-      _isFirstLaunch = launchCounter == 0;
-    });
-  }
-
-  Future<void> _resetLaunchCounter() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('app_launch_counter', 0);
-  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ThemeCubit(),
-        ),
         BlocProvider(
           create: (context) => SettingsThemeCubit(),
         ),
@@ -85,7 +48,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             title: "Shop 'n' Roll ",
             theme: currentTheme,
             debugShowCheckedModeBanner: false,
-            home: _isFirstLaunch ? const SplashScreen() : const AuthScreen(),
+            home:  const SplashScreen() ,
           );
         },
       ),
