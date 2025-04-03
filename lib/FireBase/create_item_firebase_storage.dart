@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Bloc_Cubit/CreateItemCubit/create_item_state.dart';
 import 'auth_service.dart';
 
-class CreateItemService {
+class CreateItemFirebase {
   final AuthService _authService;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  CreateItemService(this._authService);
+  CreateItemFirebase(this._authService);
 
   Future<bool> addItemToUser(CreateItemState state) async {
     try {

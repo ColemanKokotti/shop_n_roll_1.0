@@ -59,7 +59,7 @@ class ActionButtonsWidget extends StatelessWidget {
   }
 
   Future<void> _addItem(BuildContext context) async {
-    final CreateItemService itemService = CreateItemService(
+    final CreateItemFirebase itemService = CreateItemFirebase(
         AuthService(FirebaseAuth.instance)
     );
     bool success = await itemService.addItemToUser(state);

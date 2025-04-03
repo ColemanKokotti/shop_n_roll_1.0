@@ -10,14 +10,14 @@ class BoughtItemButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme =Theme.of(context);
-    return BlocBuilder<BuyedItemCubit, bool>(
+    return BlocBuilder<BoughtItemCubit, bool>(
       builder: (context, isBought) {
         return IconButton(
           icon: Icon(
             isBought ? Icons.check_circle: Icons.add_circle_outlined ,
             color: isBought ? theme.iconTheme.color : theme.iconTheme.color,
           ),
-          onPressed: () => context.read<BuyedItemCubit>().toggleItemStatus(),
+          onPressed: () => context.read<BoughtItemCubit>().toggleItemStatus(),
         );
       },
     );

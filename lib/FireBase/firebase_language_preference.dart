@@ -4,7 +4,6 @@ class LanguagePreferenceService {
   final CollectionReference _accountsCollection =
   FirebaseFirestore.instance.collection('Accounts');
 
-  // Save user's language preference
   Future<void> saveLanguagePreference(String userId, String languageCode) async {
     try {
       DocumentSnapshot doc = await _accountsCollection.doc(userId).get();

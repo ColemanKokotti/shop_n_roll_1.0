@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-
-
 class Item {
   final String id;
   final String nameItem;

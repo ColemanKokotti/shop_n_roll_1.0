@@ -29,7 +29,7 @@ class LogoutWidgetButton extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(8),
               onTap: () {
-                context.read<AuthCubit>().logout(context); // Pass context to logout method
+                context.read<AuthCubit>().logout(context);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),

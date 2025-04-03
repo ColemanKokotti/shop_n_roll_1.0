@@ -156,7 +156,7 @@ class ItemListWidget extends StatelessWidget {
                                       },
                                     ),
                                     BlocProvider(
-                                      create: (_) => BuyedItemCubit(),
+                                      create: (_) => BoughtItemCubit(),
                                       child: BoughtItemButtonWidget(),
                                     ),
                                   ],

@@ -1,23 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 import '../../Bloc_Cubit/ItemListCubit/item_list_state.dart';
-
 class UndoButtonWidget extends StatelessWidget {
   const UndoButtonWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return BlocBuilder<ItemListCubit, ItemListState>(
       builder: (context, state) {
         if (state.deletedItem == null || state.isItemRestored) {
           return const SizedBox.shrink();
         }
-
         return Positioned(
           bottom: 60,
           left: 0,
