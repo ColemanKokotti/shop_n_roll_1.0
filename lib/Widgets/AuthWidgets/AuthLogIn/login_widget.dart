@@ -90,7 +90,6 @@ class LoginWidget extends StatelessWidget {
                     context.read<AuthCubit>().login(
                         emailController.text,
                         passwordController.text,
-                        context
                     );
                   },
                   style: theme.elevatedButtonTheme.style,

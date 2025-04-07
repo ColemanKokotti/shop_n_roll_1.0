@@ -42,6 +42,7 @@ dependencies:
   flutter_bloc: ^9.1.0
   animated_splash_screen: ^1.3.0
   page_transition: ^2.2.1
+  equatable: ^2.0.5
 
   bloc: any
   flutter_launcher_icons: ^0.14.3

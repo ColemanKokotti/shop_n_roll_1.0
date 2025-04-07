@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Bloc_Cubit/AuthCubit/auth_cubit.dart';
+import '../../Screens/splash_screen.dart';
 
 class LogoutWidgetButton extends StatelessWidget {
   const LogoutWidgetButton({super.key});
@@ -29,7 +30,11 @@ class LogoutWidgetButton extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(8),
               onTap: () {
-                context.read<AuthCubit>().logout(context);
+                context.read<AuthCubit>().logout();
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const SplashScreen()),
+                      (route) => false,
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),

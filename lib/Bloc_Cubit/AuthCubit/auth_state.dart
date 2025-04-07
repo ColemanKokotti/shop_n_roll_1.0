@@ -11,7 +11,7 @@ class AuthAuthenticated extends AuthState {
   final String? preferredLanguage;
   final String? preferredTheme;
 
-  AuthAuthenticated(this.user, this.preferredLanguage,this.preferredTheme);
+  AuthAuthenticated(this.user, this.preferredLanguage, this.preferredTheme);
 }
 
 class AuthUnauthenticated extends AuthState {}

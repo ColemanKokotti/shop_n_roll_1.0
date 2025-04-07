@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Bloc_Cubit/ThemeCubit/theme_cubit.dart';
@@ -28,7 +26,6 @@ class AuthCubit extends Cubit<AuthState> {
   bool rememberMe = false;
   String email = '';
   String password = '';
-
 
   ThemeCubit getThemeCubit() {
     return _themeCubit;
@@ -62,11 +59,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthUpdate(password: password));
   }
 
-
-  Future<void> setAuthScreenLanguage(BuildContext context) async {
+  Future<void> setAuthScreenLanguage() async {
     emit(AuthUpdate());
   }
-
 
   Future<void> loadCredentials() async {
     final prefs = await SharedPreferences.getInstance();
@@ -92,7 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthUpdate());
   }
 
-  Future<void> login(String email, String password, BuildContext context) async {
+  Future<void> login(String email, String password) async {
     try {
       emit(AuthLoading());
       User? user = await _authService.login(email, password);
@@ -112,11 +107,6 @@ class AuthCubit extends Cubit<AuthState> {
           print('Tema predefinito applicato');
         }
 
-        if (savedLanguage != null) {
-          context.setLocale(Locale(savedLanguage));
-          print('Lingua applicata: $savedLanguage');
-        }
-
         emit(AuthAuthenticated(user, savedLanguage, savedTheme));
       } else {
         emit(AuthUnauthenticated());
@@ -128,7 +118,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> checkAuthStatus(BuildContext context) async {
+  Future<void> checkAuthStatus() async {
     try {
       emit(AuthLoading());
       User? currentUser = _authService.getCurrentUser();
@@ -148,12 +138,6 @@ class AuthCubit extends Cubit<AuthState> {
           print('Tema predefinito applicato');
         }
 
-        if (savedLanguage != null) {
-          context.setLocale(Locale(savedLanguage));
-          print('Lingua applicata: $savedLanguage');
-        }
-
-
         emit(AuthAuthenticated(currentUser, savedLanguage, savedTheme));
       } else {
         emit(AuthUnauthenticated());
@@ -164,7 +148,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> register(String email, String password, BuildContext context) async {
+  Future<void> register(String email, String password) async {
     try {
       emit(AuthLoading());
       User? user = await _authService.register(email, password);
@@ -177,8 +161,6 @@ class AuthCubit extends Cubit<AuthState> {
 
         await _themeCubit.selectTheme('default');
 
-        context.setLocale(Locale('en'));
-
         emit(AuthAuthenticated(user, 'en', 'default'));
       } else {
         emit(AuthUnauthenticated());
@@ -189,15 +171,16 @@ class AuthCubit extends Cubit<AuthState> {
       rethrow;
     }
   }
-  Future<void> checkAuthScreen(BuildContext context) async {
+
+  Future<void> checkAuthScreen() async {
     if (state is! AuthAuthenticated) {
     }
     await loadCredentials();
   }
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> logout() async {
     try {
-      await _authService.logout(context, this);
+      await _authService.signOut();
       emit(AuthUnauthenticated());
     } catch (e) {
       print('Errore nel logout: $e');

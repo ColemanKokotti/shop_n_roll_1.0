@@ -1,11 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import '../myapp.dart';
-import '../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
-
 
   AuthService(this._firebaseAuth);
 
@@ -40,21 +36,14 @@ class AuthService {
     }
   }
 
-  Future<void> logout(BuildContext context, AuthCubit authCubit) async {
+  Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();
-
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => MyApp(authCubit: authCubit)),
-            (Route<dynamic> route) => false,
-      );
     } catch (e) {
       print('Errore nel logout: $e');
       throw AuthException('Errore durante il logout.');
     }
   }
-
-
 }
 
 class AuthException implements Exception {

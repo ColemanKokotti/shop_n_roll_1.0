@@ -100,7 +100,6 @@ class SingUpWidget extends StatelessWidget {
                       context.read<AuthCubit>().register(
                           emailController.text,
                           passwordController.text,
-                          context
                       );
                     } else {
                       ErrorDialog(context, "Email or Password not valid.");

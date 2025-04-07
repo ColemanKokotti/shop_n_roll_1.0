@@ -36,7 +36,7 @@ final ThemeData defaultTheme = ThemeData(
 
   textTheme: TextTheme(
     labelLarge: TextStyle(color: Color(0xFF212121), fontSize: 30), // Primary Text
-    titleLarge: TextStyle(color: Color(0xFF00796B), fontSize: 22, fontWeight: FontWeight.bold), // 👈 Aggiunto
+    titleLarge: TextStyle(color: Color(0xFF00796B), fontSize: 22, fontWeight: FontWeight.bold),
   ),
 
   elevatedButtonTheme: ElevatedButtonThemeData(
