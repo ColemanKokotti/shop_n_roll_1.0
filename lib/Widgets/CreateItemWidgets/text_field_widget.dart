@@ -21,16 +21,41 @@ class TextFieldWidget extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyle(color: theme.textTheme.labelLarge?.color),
+        labelStyle: theme.inputDecorationTheme.labelStyle,
         filled: true,
-        fillColor: theme.textTheme.labelLarge?.backgroundColor,
+        fillColor: theme.inputDecorationTheme.fillColor,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
+            width: 1.5,
+          ),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary.withOpacity(0.5),
+            width: 1.5,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: theme.colorScheme.primary,
+            width: 2.0,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: theme.colorScheme.error,
+            width: 2.0,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
-      style: TextStyle(color: theme.textTheme.labelLarge?.color),
+      style: theme.textTheme.bodyMedium,
       maxLines: maxLines,
       minLines: minLines,
     );

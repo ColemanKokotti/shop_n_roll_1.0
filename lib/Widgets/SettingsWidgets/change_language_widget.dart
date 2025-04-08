@@ -12,7 +12,8 @@ class ChangeLanguageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final languageOptions = ['en', 'it', 'ja', 'ru', 'de', 'fr', 'es', 'ro','ar'];
+    final borderRadius = BorderRadius.circular(30);
+    final languageOptions = ['en', 'it', 'ja', 'ru', 'de', 'fr', 'es', 'ro', 'ar'];
     final languageNames = {
       'en': 'English',
       'it': 'Italiano',
@@ -52,9 +53,8 @@ class ChangeLanguageButton extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             'Language Selector'.tr(),
-            style: TextStyle(
-              color: theme.primaryColor,
-              fontSize: 20,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: theme.colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -62,8 +62,8 @@ class ChangeLanguageButton extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: theme.cardColor,
-            borderRadius: BorderRadius.circular(8),
+            color: theme.cardTheme.color,
+            borderRadius: borderRadius,
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -74,8 +74,9 @@ class ChangeLanguageButton extends StatelessWidget {
           ),
           child: Material(
             color: Colors.transparent,
+            borderRadius: borderRadius,
             child: InkWell(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: borderRadius,
               onTap: () {
                 context.read<SettingsLanguageCubit>().toggleLanguageOptions();
               },
@@ -86,17 +87,31 @@ class ChangeLanguageButton extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          languageFlags[currentLanguage]!,
-                          width: 24,
-                          height: 24,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 2.0,
+                                offset: const Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              languageFlags[currentLanguage]!,
+                              width: 24,
+                              height: 24,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Text(
                           languageNames[currentLanguage]?.toUpperCase() ?? 'ENGLISH',
-                          style: TextStyle(
-                            color: theme.primaryColor,
-                            fontSize: 16.0,
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            color: theme.colorScheme.primary,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -106,7 +121,7 @@ class ChangeLanguageButton extends StatelessWidget {
                       context.watch<SettingsLanguageCubit>().state
                           ? Icons.keyboard_arrow_up
                           : Icons.keyboard_arrow_down,
-                      color: theme.primaryColor,
+                      color: theme.colorScheme.primary,
                     ),
                   ],
                 ),
@@ -121,8 +136,8 @@ class ChangeLanguageButton extends StatelessWidget {
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(8),
+                  color: theme.cardTheme.color,
+                  borderRadius: borderRadius,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
@@ -131,17 +146,19 @@ class ChangeLanguageButton extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: languageOptions.length,
-                  itemBuilder: (context, index) {
-                    final option = languageOptions[index];
-                    final isSelected = option == currentLanguage;
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: borderRadius,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: languageOptions.length,
+                    itemBuilder: (context, index) {
+                      final option = languageOptions[index];
+                      final isSelected = option == currentLanguage;
 
-                    return Material(
-                      color: Colors.transparent,
-                      child: InkWell(
+                      return InkWell(
+                        borderRadius: borderRadius,
                         onTap: () async {
                           final newLocale = Locale(option);
 
@@ -164,17 +181,36 @@ class ChangeLanguageButton extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Image.asset(
-                                    languageFlags[option]!,
-                                    width: 24,
-                                    height: 24,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 2.0,
+                                          offset: const Offset(0, 1),
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.asset(
+                                        languageFlags[option]!,
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
                                     languageNames[option]?.toUpperCase() ?? option.toUpperCase(),
-                                    style: TextStyle(
-                                      color: isSelected ? theme.primaryColor : theme.textTheme.bodyLarge?.color,
-                                      fontSize: 16.0,
+                                    style: (isSelected 
+                                      ? theme.textTheme.titleSmall
+                                      : theme.textTheme.bodyLarge
+                                    )?.copyWith(
+                                      color: isSelected 
+                                        ? theme.colorScheme.primary
+                                        : theme.textTheme.bodyLarge?.color,
                                       fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                                     ),
                                   ),
@@ -183,15 +219,15 @@ class ChangeLanguageButton extends StatelessWidget {
                               if (isSelected)
                                 Icon(
                                   Icons.check_circle,
-                                  color: theme.primaryColor,
+                                  color: theme.colorScheme.primary,
                                   size: 20.0,
                                 ),
                             ],
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               );
             }

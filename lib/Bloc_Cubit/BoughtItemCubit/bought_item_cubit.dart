@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bought_item_state.dart';
 
-class BoughtItemCubit extends Cubit<bool> {
-  BoughtItemCubit() : super(false);
+class BoughtItemCubit extends Cubit<BoughtItemState> {
+  BoughtItemCubit() : super(BoughtItemState());
 
-  void toggleItemStatus() {
-    emit(!state);
+  void toggleBoughtStatus() {
+    emit(state.copyWith(isBought: !state.isBought));
   }
 }

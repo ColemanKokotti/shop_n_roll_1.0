@@ -15,38 +15,51 @@ class IconSelectorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SizedBox(
-      height: 150,
-      width: 300,
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 6,
-          childAspectRatio: 1.0,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: theme.colorScheme.primary,
+          width: 2.0,
         ),
-        itemCount: iconNames.length,
-        itemBuilder: (context, index) {
-          final name = iconNames[index];
-          final Widget iconWidget = getWidgetFromString(name, size: 30, color: theme.iconTheme.color);
-          final bool isSelected = selectedIcon == name;
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: EdgeInsets.all(20),
+      child: SizedBox(
+        height: 150,
+        width: 300,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 6,
+            childAspectRatio: 1.0,
+          ),
+          itemCount: iconNames.length,
+          itemBuilder: (context, index) {
+            final name = iconNames[index];
+            final Widget iconWidget = getWidgetFromString(name, size: 30, color: theme.iconTheme.color);
+            final bool isSelected = selectedIcon == name;
 
-          return GestureDetector(
-            onTap: () {
-              onIconSelect(name);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: isSelected ? theme.secondaryHeaderColor : Colors.transparent,
-                shape: BoxShape.circle,
+            return GestureDetector(
+              onTap: () {
+                onIconSelect(name);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected ? theme.colorScheme.primary.withOpacity(0.2) : Colors.transparent,
+                  border: Border.all(
+                    color: isSelected ? theme.colorScheme.primary : theme.colorScheme.primary.withOpacity(0.1),
+                    width: 2.0,
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: iconWidget,
+                ),
               ),
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: iconWidget,
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
 }
-

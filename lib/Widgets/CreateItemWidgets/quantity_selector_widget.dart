@@ -1,78 +1,45 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../Bloc_Cubit/CreateItemCubit/create_item_cubit.dart';
+import '../../UI/CreateItem/create_item_controller_adapter.dart';
 
 class QuantitySelectorWidget extends StatelessWidget {
   final CreateItemCubit cubit;
   final ThemeData theme;
+  final CreateItemControllerAdapter controllerAdapter;
 
-  const QuantitySelectorWidget({super.key,
+  const QuantitySelectorWidget({
+    Key? key,
     required this.cubit,
     required this.theme,
-  });
+    required this.controllerAdapter,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Quantity:'.tr(),
-          style: TextStyle(
-            color: theme.textTheme.labelLarge?.color,
-            fontSize: 16,
+        IconButton(
+          onPressed: () => cubit.decreaseQuantity(),
+          icon: Icon(Icons.remove),
+        ),
+        SizedBox(width: 8),
+        SizedBox(
+          width: 50,
+          child: TextField(
+            controller: controllerAdapter.quantityController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.symmetric(horizontal: 8),
+            ),
           ),
         ),
-        Expanded(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-              color: theme.textTheme.labelLarge?.backgroundColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.remove,
-                    color: theme.iconTheme.color,
-                  ),
-                  onPressed: () => cubit.decreaseQuantity(),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: cubit.quantityController,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                    style: TextStyle(
-                      color: theme.textTheme.labelLarge?.color,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onChanged: (value) {
-                      if (int.tryParse(value) == null) {
-                        cubit.quantityController.text = '1';
-                        cubit.quantityController.selection = TextSelection.fromPosition(
-                          TextPosition(offset: cubit.quantityController.text.length),
-                        );
-                      }
-                    },
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.iconTheme.color,
-                  ),
-                  onPressed: () => cubit.increaseQuantity(),
-                ),
-              ],
-            ),
-          ),
+        SizedBox(width: 8),
+        IconButton(
+          onPressed: () => cubit.increaseQuantity(),
+          icon: Icon(Icons.add),
         ),
       ],
     );

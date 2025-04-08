@@ -10,18 +10,24 @@ Future<bool> showDeleteConfirmationDialog(BuildContext context, String itemId,It
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: theme.appBarTheme.backgroundColor,
-          title: Text('Confirm deletion'.tr(), textAlign: TextAlign.center),
-          titleTextStyle: TextStyle(color:  theme.appBarTheme.foregroundColor, fontSize: 30),
-          content: Text('Are you sure you want to delete this item?'.tr(), style: TextStyle(color: theme.appBarTheme.foregroundColor)),
+          backgroundColor: theme.dialogTheme.backgroundColor,
+          title: Text(
+            'Confirm deletion'.tr(), 
+            textAlign: TextAlign.center,
+            style: theme.dialogTheme.titleTextStyle,
+          ),
+          content: Text(
+            'Are you sure you want to delete this item?'.tr(), 
+            style: theme.dialogTheme.contentTextStyle,
+          ),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  style: TextButton.styleFrom(backgroundColor:   theme.appBarTheme.iconTheme?.color),
-                  child: Text('Cancel'.tr(), style: TextStyle(color: theme.textTheme.bodyLarge?.color, fontSize: 15)),
+                  style: theme.textButtonTheme.style,
+                  child: Text('Cancel'.tr()),
                 ),
                 SizedBox(width: 10),
                 TextButton(
@@ -29,8 +35,8 @@ Future<bool> showDeleteConfirmationDialog(BuildContext context, String itemId,It
                     await itemListCubit.deleteItem(itemId);
                     Navigator.of(context).pop(true);
                   },
-                  style: TextButton.styleFrom(backgroundColor:  theme.appBarTheme.iconTheme?.color),
-                  child: Text('Delete'.tr(), style: TextStyle(color:  theme.textTheme.bodyLarge?.color, fontSize: 15)),
+                  style: theme.textButtonTheme.style,
+                  child: Text('Delete'.tr()),
                 ),
               ],
             ),

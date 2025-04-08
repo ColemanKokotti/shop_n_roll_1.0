@@ -12,16 +12,16 @@ class ThemeSelector extends StatelessWidget {
       'default': Color(0xFF009688),
       'light': Colors.blue,
       'dark': Colors.grey[800]!,
-      'pastel': Color(0xFFFFB6C1),
+      'pastel': Color(0xFFFFC8DD), 
       'vintage': Color(0xFF795548),
       'earthy': Color(0xFF6D4C41),
       'ocean': Color(0xFF0277BD),
       'cyberpunk': Color(0xFF00FFD1),
       'godofwar': Color(0xFF8B0000),
-      'pokemon' :  Color(0xFFFF0000),
-      'honkaistarrail' : Color(0xFF4A6CFF),
-      'warframe':  Color(0xFF00A8CC),
-      'witcher':Color(0xFFB22222),
+      'pokemon': Color(0xFFFF0000),
+      'honkaistarrail': Color(0xFF4A6CFF),
+      'warframe': Color(0xFF00A8CC),
+      'witcher': Color(0xFFB22222),
     };
   }
 
@@ -44,6 +44,7 @@ class ThemeSelector extends StatelessWidget {
       'witcher'
     ];
     final themeColors = getThemeColors();
+    final borderRadius = BorderRadius.circular(30);
 
     String getCurrentTheme() {
       final currentThemeData = context.watch<ThemeCubit>().state;
@@ -64,9 +65,8 @@ class ThemeSelector extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             'Theme Selector'.tr(),
-            style: TextStyle(
-              color: theme.primaryColor,
-              fontSize: 20,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: theme.colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -74,8 +74,8 @@ class ThemeSelector extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: theme.cardColor,
-            borderRadius: BorderRadius.circular(8),
+            color: theme.cardTheme.color,
+            borderRadius: borderRadius,
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -86,8 +86,9 @@ class ThemeSelector extends StatelessWidget {
           ),
           child: Material(
             color: Colors.transparent,
+            borderRadius: borderRadius,
             child: InkWell(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: borderRadius,
               onTap: () {
                 context.read<SettingsThemeCubit>().toggleThemeOptions();
               },
@@ -104,15 +105,14 @@ class ThemeSelector extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: themeColors[currentTheme],
                             shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: borderRadius,
                           ),
                         ),
                         SizedBox(width: 10),
                         Text(
                           currentTheme.toUpperCase(),
-                          style: TextStyle(
-                            color: theme.primaryColor,
-                            fontSize: 16.0,
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            color: theme.colorScheme.primary,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -122,7 +122,7 @@ class ThemeSelector extends StatelessWidget {
                       context.watch<SettingsThemeCubit>().state
                           ? Icons.keyboard_arrow_up
                           : Icons.keyboard_arrow_down,
-                      color: theme.primaryColor,
+                      color: theme.colorScheme.primary,
                     ),
                   ],
                 ),
@@ -137,8 +137,8 @@ class ThemeSelector extends StatelessWidget {
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(8),
+                  color: theme.cardTheme.color,
+                  borderRadius: borderRadius,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
@@ -147,61 +147,71 @@ class ThemeSelector extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: themeOptions.length,
-                  itemBuilder: (context, index) {
-                    final option = themeOptions[index];
-                    final isSelected = option == currentTheme;
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: borderRadius,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: themeOptions.length,
+                    itemBuilder: (context, index) {
+                      final option = themeOptions[index];
+                      final isSelected = option == currentTheme;
 
-                    return Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          print('ThemeSelector: Selezionato tema: $option');
-                          context.read<ThemeCubit>().selectTheme(option);
-                          context.read<SettingsThemeCubit>().toggleThemeOptions();
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      color: themeColors[option],
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(4),
+                      return Material(
+                        color: Colors.transparent,
+                        borderRadius: borderRadius,
+                        child: InkWell(
+                          borderRadius: borderRadius,
+                          onTap: () {
+                            print('ThemeSelector: Selezionato tema: $option');
+                            context.read<ThemeCubit>().selectTheme(option);
+                            context.read<SettingsThemeCubit>().toggleThemeOptions();
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: themeColors[option],
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: borderRadius,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    option.toUpperCase(),
-                                    style: TextStyle(
-                                      color: isSelected ? theme.primaryColor : theme.textTheme.bodyLarge?.color,
-                                      fontSize: 16.0,
-                                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                    SizedBox(width: 10),
+                                    Text(
+                                      option.toUpperCase(),
+                                      style: (isSelected 
+                                        ? theme.textTheme.titleSmall
+                                        : theme.textTheme.bodyLarge
+                                      )?.copyWith(
+                                        color: isSelected 
+                                          ? theme.colorScheme.primary
+                                          : theme.textTheme.bodyLarge?.color,
+                                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              if (isSelected)
-                                Icon(
-                                  Icons.check_circle,
-                                  color: theme.primaryColor,
-                                  size: 20.0,
+                                  ],
                                 ),
-                            ],
+                                if (isSelected)
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: theme.colorScheme.primary,
+                                    size: 20.0,
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               );
             }

@@ -1,33 +1,25 @@
-import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import "package:bloc/bloc.dart";
 import 'package:image_picker/image_picker.dart';
 import 'create_item_state.dart';
+import 'create_item_validation.dart';
 
 class CreateItemCubit extends Cubit<CreateItemState> {
   final CollectionReference _itemsCollection = FirebaseFirestore.instance.collection('Items');
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController(text: '1');
-
   final ImagePicker _picker = ImagePicker();
+  
+  CreateItemCubit() : super(CreateItemState());
 
-  CreateItemCubit() : super(CreateItemState()) {
-    nameController.addListener(_updateNameFromController);
-    descriptionController.addListener(_updateDescriptionFromController);
-    quantityController.addListener(_updateQuantityFromController);
+  void updateName(String name) {
+    emit(state.copyWith(nameItem: name));
   }
 
-  void _updateNameFromController() {
-    emit(state.copyWith(nameItem: nameController.text));
+  void updateDescription(String description) {
+    emit(state.copyWith(descriptionItem: description));
   }
 
-  void _updateDescriptionFromController() {
-    emit(state.copyWith(descriptionItem: descriptionController.text));
-  }
-
-  void _updateQuantityFromController() {
-    final quantityValue = int.tryParse(quantityController.text) ?? 1;
+  void updateQuantity(String quantity) {
+    final quantityValue = int.tryParse(quantity) ?? 1;
     emit(state.copyWith(quantity: quantityValue));
   }
 
@@ -37,47 +29,35 @@ class CreateItemCubit extends Cubit<CreateItemState> {
 
   void increaseQuantity() {
     final newQuantity = state.quantity + 1;
-    quantityController.text = newQuantity.toString();
     emit(state.copyWith(quantity: newQuantity));
   }
 
   void decreaseQuantity() {
     final newQuantity = state.quantity > 0 ? state.quantity - 1 : 0;
-    quantityController.text = newQuantity.toString();
     emit(state.copyWith(quantity: newQuantity));
   }
 
-  Future<void> selectImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      emit(state.copyWith(imageUrl: image.path));
+  Future<void> pickImage() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        emit(state.copyWith(imageUrl: image.path));
+      }
+    } catch (e) {
+      print("Errore durante la selezione dell'immagine: $e");
     }
   }
 
-  Future<bool> addItem(BuildContext context) async {
-    final theme = Theme.of(context);
+  bool validateFields() {
+    return CreateItemValidation.validateFields(
+      state.nameItem,
+      state.descriptionItem,
+      state.selectedIcon
+    );
+  }
 
-    if (state.nameItem.isEmpty || state.descriptionItem.isEmpty || state.selectedIcon.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop();
-          });
-          return AlertDialog(
-            backgroundColor: theme.appBarTheme.backgroundColor,
-            title: Text(
-              "Attenzione",
-              style: theme.textTheme.labelLarge,
-              textAlign: TextAlign.center,
-            ),
-            content: Text(
-              "Tutti i campi devono essere compilati.",
-              style: TextStyle(color: theme.textTheme.labelLarge?.backgroundColor),
-            ),
-          );
-        },
-      );
+  Future<bool> addItem() async {
+    if (!validateFields()) {
       return false;
     }
 
@@ -99,17 +79,11 @@ class CreateItemCubit extends Cubit<CreateItemState> {
   }
 
   void reset() {
-    nameController.clear();
-    descriptionController.clear();
-    quantityController.text = '1';
     emit(CreateItemState());
   }
 
   @override
   Future<void> close() {
-    nameController.dispose();
-    descriptionController.dispose();
-    quantityController.dispose();
     return super.close();
   }
 }

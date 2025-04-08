@@ -21,6 +21,7 @@ class ItemListCubit extends Cubit<ItemListState> {
         emit(state.copyWith(
           deletedItem: itemData,
           deletedItemId: documentId,
+          showUndoButton: true,
         ));
 
         if (_authService.getCurrentUser() != null) {
@@ -38,7 +39,7 @@ class ItemListCubit extends Cubit<ItemListState> {
       try {
         bool success = await _itemFirebaseStorage.undoDelete(state.deletedItemId!, state.deletedItem!);
         if (success) {
-          emit(state.clearDeletedItem());
+          emit(state.clearDeletedItem().copyWith(showUndoButton: false));
           if (_authService.getCurrentUser() != null) {
             await _accountService.addItemToAccount(_authService.getCurrentUser()!.uid, state.deletedItemId!);
           }

@@ -10,27 +10,35 @@ class LogoutWidgetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final borderRadius = BorderRadius.circular(30);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text('Account'.tr(), style: TextStyle(color: theme.primaryColor, fontSize: 20, fontWeight: FontWeight.bold)),
+          child: Text('Account'.tr(), style: theme.textTheme.titleLarge?.copyWith(color: theme.primaryColor, fontWeight: FontWeight.bold)),
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-              color: theme.cardColor,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4.0, offset: Offset(0, 2))]
+            color: theme.cardTheme.color,
+            borderRadius: borderRadius,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4.0,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Material(
             color: Colors.transparent,
+            borderRadius: borderRadius,
             child: InkWell(
-              borderRadius: BorderRadius.circular(8),
-              onTap: () {
-                context.read<AuthCubit>().logout();
+              borderRadius: borderRadius,
+              onTap: () async {
+                await context.read<AuthCubit>().logout();
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const SplashScreen()),
                       (route) => false,
@@ -39,11 +47,37 @@ class LogoutWidgetButton extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Logout'.tr(), style: TextStyle(color: theme.primaryColor, fontSize: 16.0, fontWeight: FontWeight.w500)),
-                      Icon(Icons.logout, color: theme.primaryColor),
-                    ]
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.error.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Icon(
+                            Icons.logout,
+                            color: theme.colorScheme.error,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Logout'.tr(),
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            color: theme.colorScheme.error,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      color: theme.colorScheme.error,
+                    ),
+                  ],
                 ),
               ),
             ),

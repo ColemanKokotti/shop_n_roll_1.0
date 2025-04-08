@@ -20,32 +20,42 @@ class ModifyIconWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final iconSelectorCubit = context.read<IconSelectorCubit>();
 
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 6,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: theme.colorScheme.primary,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(10),
       ),
-      itemCount: iconNames.length,
-      itemBuilder: (context, index) {
-        final String iconName = iconNames[index];
-        final Widget iconWidget = getWidgetFromString(iconName, size: 30, color: theme.iconTheme.color);
-        final bool isSelected = selectedIcon == iconName;
+      padding: EdgeInsets.all(20),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 6,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+        ),
+        itemCount: iconNames.length,
+        itemBuilder: (context, index) {
+          final String iconName = iconNames[index];
+          final Widget iconWidget = getWidgetFromString(iconName, size: 30, color: theme.iconTheme.color);
+          final bool isSelected = selectedIcon == iconName;
 
-        return GestureDetector(
-          onTap: () {
-            iconSelectorCubit.updateIcon(iconName);
-            onIconSelect(iconName);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: isSelected ? theme.secondaryHeaderColor : Colors.transparent,
-              shape: BoxShape.circle,
+          return GestureDetector(
+            onTap: () {
+              iconSelectorCubit.updateIcon(iconName);
+              onIconSelect(iconName);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: isSelected ? theme.colorScheme.primary.withOpacity(0.2) : Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: iconWidget,
             ),
-            child: iconWidget,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

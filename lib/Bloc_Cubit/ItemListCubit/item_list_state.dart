@@ -4,6 +4,7 @@ class ItemListState {
   final Map<String, int> itemQuantities;
   final String? errorMessage;
   final bool isItemRestored;
+  final bool showUndoButton;
 
   ItemListState({
     this.deletedItem,
@@ -11,6 +12,7 @@ class ItemListState {
     this.itemQuantities = const {},
     this.errorMessage,
     this.isItemRestored = false,
+    this.showUndoButton = false,
   });
 
   ItemListState copyWith({
@@ -19,13 +21,15 @@ class ItemListState {
     Map<String, int>? itemQuantities,
     String? errorMessage,
     bool? isItemRestored,
+    bool? showUndoButton,
   }) {
     return ItemListState(
       deletedItem: deletedItem ?? this.deletedItem,
       deletedItemId: deletedItemId ?? this.deletedItemId,
       itemQuantities: itemQuantities ?? this.itemQuantities,
-      errorMessage: errorMessage,
+      errorMessage: errorMessage ?? this.errorMessage,
       isItemRestored: isItemRestored ?? this.isItemRestored,
+      showUndoButton: showUndoButton ?? this.showUndoButton,
     );
   }
 
@@ -35,6 +39,7 @@ class ItemListState {
       deletedItemId: null,
       errorMessage: null,
       isItemRestored: true,
+      showUndoButton: false,
     );
   }
 

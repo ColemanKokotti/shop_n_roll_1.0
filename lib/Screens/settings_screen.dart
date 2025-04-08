@@ -16,26 +16,27 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: theme.appBarTheme.backgroundColor,
         foregroundColor: theme.appBarTheme.foregroundColor,
-        elevation: 0,
+        elevation: theme.appBarTheme.elevation,
         title: Text(
           'Settings'.tr(),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: theme.appBarTheme.titleTextStyle,
         ),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ThemeSelector(),
-              SizedBox(height: 20),
-              ChangeLanguageButton(),
-              SizedBox(height: 20),
-              LogoutWidgetButton(),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ThemeSelector(),
+                SizedBox(height: 20),
+                ChangeLanguageButton(),
+                SizedBox(height: 20),
+                LogoutWidgetButton(),
+              ],
+            ),
           ),
         ),
       ),

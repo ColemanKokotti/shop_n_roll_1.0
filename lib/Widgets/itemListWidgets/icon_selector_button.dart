@@ -19,6 +19,7 @@ class IconSelectorButton extends StatelessWidget {
 
   void _showIconSelector(BuildContext context, IconSelectorCubit cubit) {
     final theme = Theme.of(context);
+    final borderRadius = BorderRadius.circular(30);
 
     showDialog(
       context: context,
@@ -28,13 +29,13 @@ class IconSelectorButton extends StatelessWidget {
           child: BlocBuilder<IconSelectorCubit, IconSelectorState>(
             builder: (context, state) {
               return AlertDialog(
-                backgroundColor: theme.cardColor,
+                backgroundColor: theme.cardTheme.color,
+                shape: RoundedRectangleBorder(borderRadius: borderRadius),
                 title: Text(
                   'Select an icon for editing:'.tr(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: theme.textTheme.labelLarge?.color,
-                    fontSize: 20,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -53,17 +54,37 @@ class IconSelectorButton extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextButton(
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.error,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+                        ),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('Cancel'.tr(), style: TextStyle(fontSize: 15)),
+                        child: Text(
+                          'Cancel'.tr(),
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
-                      TextButton(
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.primary,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+                        ),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('Confirm'.tr(), style: TextStyle(fontSize: 15)),
+                        child: Text(
+                          'Confirm'.tr(),
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -79,6 +100,7 @@ class IconSelectorButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final borderRadius = BorderRadius.circular(30);
 
     return BlocProvider(
       create: (context) => IconSelectorCubit(
@@ -90,7 +112,18 @@ class IconSelectorButton extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<IconSelectorCubit>();
           return IconButton(
-            icon: getWidgetFromString(state.currentIconName, color: theme.iconTheme.color),
+            style: IconButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: borderRadius,
+                side: BorderSide(
+                  color: theme.colorScheme.primary,
+                  width: 2.0,
+                ),
+              ),
+              backgroundColor: Colors.transparent,
+              padding: EdgeInsets.all(8),
+            ),
+            icon: getWidgetFromString(state.currentIconName, color: theme.colorScheme.primary),
             onPressed: () => _showIconSelector(context, cubit),
           );
         },

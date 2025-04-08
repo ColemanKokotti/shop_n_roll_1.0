@@ -2,58 +2,181 @@ import 'package:flutter/material.dart';
 
 /// ✨ DEFAULT THEME
 final ThemeData defaultTheme = ThemeData(
-  primaryColor: Color(0xFF009688), // Primary Color
-  secondaryHeaderColor: Colors.purple[300], // Accent Color
-  scaffoldBackgroundColor: Color(0xFFB2DFDB), // Light Primary Color
+  primaryColor: Color(0xFF009688),
+  secondaryHeaderColor: Colors.teal[300],
+  scaffoldBackgroundColor: Colors.white,
+  
+  colorScheme: ColorScheme.light(
+    primary: Color(0xFF009688),
+    secondary: Colors.teal[300]!,
+    surface: Colors.white,
+    background: Colors.white,
+    error: Colors.red[700]!,
+  ),
 
   appBarTheme: AppBarTheme(
-    color: Color(0xFF009688), // Primary Color
-    foregroundColor: Colors.white, // Testo e icone AppBar
+    backgroundColor: Color(0xFF009688),
+    foregroundColor: Colors.white,
+    elevation: 2,
     titleTextStyle: TextStyle(
-      color: Colors.white, // 👈 Assicura visibilità
+      color: Colors.white,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
     iconTheme: IconThemeData(color: Colors.white),
   ),
 
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all(Color(0xFFFFFFFF)), // Testo bianco
-      backgroundColor: WidgetStateProperty.all(Color(0xFF009688)), // Primary Color
+  cardTheme: CardTheme(
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+      side: BorderSide(color: Color(0xFF009688).withOpacity(0.2)),
     ),
   ),
 
-  cardColor: Color(0xFFB2DFDB), // Light Primary Color
-  iconTheme: IconThemeData(color: Color(0xFF00796B)), // Dark Primary Color per icone generali
-
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color(0xFF7C4DFF), // Accent Color
-    textTheme: ButtonTextTheme.primary,
+  iconTheme: IconThemeData(
+    color: Color(0xFF009688),
+    size: 24,
   ),
 
-  brightness: Brightness.light,
-
   textTheme: TextTheme(
-    labelLarge: TextStyle(color: Color(0xFF212121), fontSize: 30), // Primary Text
-    titleLarge: TextStyle(color: Color(0xFF00796B), fontSize: 22, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(
+      color: Color(0xFF212121),
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+    ),
+    titleMedium: TextStyle(
+      color: Color(0xFF212121),
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+    ),
+    bodyLarge: TextStyle(
+      color: Color(0xFF424242),
+      fontSize: 16,
+    ),
+    bodyMedium: TextStyle(
+      color: Color(0xFF424242),
+      fontSize: 14,
+    ),
+    labelLarge: TextStyle(
+      color: Color(0xFF212121),
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+    ),
+  ),
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Colors.grey[50],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF009688)),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF009688).withOpacity(0.5)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF009688), width: 2),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Colors.red[700]!),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
   ),
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      foregroundColor: Colors.white, // Testo bianco
-      backgroundColor: Color(0xFF009688), // Primary Color
+      foregroundColor: Colors.white,
+      backgroundColor: Color(0xFF009688),
+      elevation: 2,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30), 
+      ),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
+      ),
     ),
   ),
 
-  dropdownMenuTheme: DropdownMenuThemeData(
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Color(0xFFB2DFDB), // Light Primary Color
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFBDBDBD)), // Divider
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: Color(0xFF009688),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30), 
+      ),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
       ),
     ),
-    textStyle: TextStyle(color: Color(0xFF212121), fontSize: 30), // Primary Text
+  ),
+
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      foregroundColor: Color(0xFF009688),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30), 
+      ),
+      side: BorderSide(color: Color(0xFF009688), width: 2.0),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
+      ),
+    ),
+  ),
+
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(
+      shape: CircleBorder(), 
+      padding: EdgeInsets.all(12),
+    ),
+  ),
+
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    shape: CircleBorder(), 
+    elevation: 4,
+  ),
+
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return Color(0xFF009688);
+      }
+      return Colors.grey[400]!;
+    }),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4),
+    ),
+  ),
+
+  dividerTheme: DividerThemeData(
+    color: Colors.grey[300],
+    thickness: 1,
+    space: 1,
+  ),
+
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.white,
+    elevation: 8,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    titleTextStyle: TextStyle(
+      color: Color(0xFF212121),
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    contentTextStyle: TextStyle(
+      color: Color(0xFF424242),
+      fontSize: 16,
+    ),
   ),
 );
