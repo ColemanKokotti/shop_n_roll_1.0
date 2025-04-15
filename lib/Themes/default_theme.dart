@@ -10,7 +10,6 @@ final ThemeData defaultTheme = ThemeData(
     primary: Color(0xFF009688),
     secondary: Colors.teal[300]!,
     surface: Colors.white,
-    background: Colors.white,
     error: Colors.red[700]!,
   ),
 
@@ -146,8 +145,8 @@ final ThemeData defaultTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFF009688);
       }
       return Colors.grey[400]!;

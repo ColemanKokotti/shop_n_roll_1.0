@@ -10,7 +10,6 @@ final ThemeData witcherTheme = ThemeData(
     primary: Color(0xFFB22222),
     secondary: Color(0xFFD4AF37),
     surface: Color(0xFF2C2C2C),
-    background: Color(0xFF1C1C1C),
     error: Color(0xFFFF3D00),
   ),
 
@@ -130,8 +129,8 @@ final ThemeData witcherTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFFB22222);
       }
       return Colors.grey[700]!;

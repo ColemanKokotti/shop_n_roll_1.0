@@ -8,10 +8,10 @@ class ItemListContent extends StatelessWidget {
   final ThemeData theme;
 
   const ItemListContent({
-    Key? key,
+    super.key,
     required this.snapshot,
     required this.theme,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

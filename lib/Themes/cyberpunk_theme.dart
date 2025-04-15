@@ -10,7 +10,6 @@ final ThemeData cyberpunkTheme = ThemeData(
     primary: Color(0xFF00FF9C),
     secondary: Color(0xFFFF0055),
     surface: Color(0xFF1A1A1A),
-    background: Color(0xFF0D0D0D),
     error: Color(0xFFFF3D00),
   ),
 
@@ -125,8 +124,8 @@ final ThemeData cyberpunkTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFF00FF9C);
       }
       return Colors.grey[800]!;

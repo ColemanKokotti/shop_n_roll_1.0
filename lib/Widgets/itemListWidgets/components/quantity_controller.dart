@@ -8,12 +8,12 @@ class QuantityController extends StatelessWidget {
   final ItemListCubit itemListCubit;
 
   const QuantityController({
-    Key? key,
+    super.key,
     required this.quantity,
     required this.documentId,
     required this.theme,
     required this.itemListCubit,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

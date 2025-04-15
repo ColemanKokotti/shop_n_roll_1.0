@@ -17,14 +17,14 @@ class ItemCard extends StatelessWidget {
   final ThemeData theme;
 
   const ItemCard({
-    Key? key,
+    super.key,
     required this.documentId,
     required this.nameItem,
     required this.iconItem,
     required this.descriptionItem,
     required this.quantity,
     required this.theme,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

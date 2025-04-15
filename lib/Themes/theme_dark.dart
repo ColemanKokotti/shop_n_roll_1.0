@@ -10,7 +10,6 @@ final ThemeData darkTheme = ThemeData(
     primary: Color(0xFF00BFA5),
     secondary: Colors.tealAccent[400]!,
     surface: Color(0xFF1E1E1E),
-    background: Color(0xFF121212),
     error: Colors.red[700]!,
   ),
 
@@ -111,8 +110,8 @@ final ThemeData darkTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFF00BFA5);
       }
       return Colors.grey[700]!;

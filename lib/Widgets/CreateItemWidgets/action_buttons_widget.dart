@@ -11,12 +11,12 @@ class ActionButtonsWidget extends StatelessWidget {
   final CreateItemControllerAdapter controllerAdapter;
 
   const ActionButtonsWidget({
-    Key? key,
+    super.key,
     required this.cubit,
     required this.state,
     required this.onPressed,
     required this.controllerAdapter,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
