@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Bloc_Cubit/BoughtItemCubit/bought_item_cubit.dart';
+import '../../../Bloc_Cubit/BoughtItemCubit/bought_item_cubit.dart';
 
 
 
