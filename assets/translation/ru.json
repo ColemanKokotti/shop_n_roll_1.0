@@ -1,4 +1,8 @@
 {
+  "- At least 1 number": "- Минимум 1 цифру",
+  "- At least 1 special character": "- Минимум 1 специальный символ",
+  "- At least 1 uppercase letter": "- Минимум 1 заглавную букву",
+  "- Minimum 10 characters": "- Минимум 10 символов",
   "Account": "Аккаунт",
   "Add": "Добавить",
   "Add item": "Добавить элемент",
@@ -19,20 +23,17 @@
   "Name not available": "Имя недоступно",
   "No description": "Нет описания",
   "No items found": "Элементы не найдены",
+  "Password must contain:": "Пароль должен содержать:",
   "Quantity": "Количество",
   "Registration": "Регистрация",
+  "Remember me": "Запомни меня",
   "Select an icon for editing:": "Выберите значок для редактирования:",
   "Settings": "Настройки",
   "Sign up": "Зарегистрироваться",
   "Theme Selector": "Выбор темы",
   "Undo": "Отменить",
+  "Warning": "Предупреждение",
   "Welcome": "Добро пожаловать",
-  "Welcome, ${state.user.email ?? \"User\"}": "Добро пожаловать, ${state.user.email ?? \"Пользователь\"}",
-  "Remember me":  "Запомни меня",
-  "Password must contain:":"Пароль должен содержать:",
-  "- At least 1 uppercase letter":"- Минимум 1 заглавную букву",
-  "- At least 1 special character":"- Минимум 1 специальный символ",
-  "- Minimum 10 characters":"- Минимум 10 символов",
-  "- At least 1 number":"- Минимум 1 цифру"
+  "Welcome, ${state.user.email ?? \"User\"}": "Добро пожаловать, ${state.user.email ?? \"Пользователь\"}"
 }
 

@@ -36,8 +36,6 @@ class ItemListStream extends StatelessWidget {
           itemBuilder: (context, index) {
             DocumentSnapshot document = snapshot.data!.docs[index];
             Map data = document.data() as Map;
-            String documentId = document.id;
-
             return ItemCard(document: document, data: data);
           },
         );

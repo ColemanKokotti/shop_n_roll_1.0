@@ -1,4 +1,8 @@
 {
+  "- At least 1 number": "- Cel puțin 1 număr",
+  "- At least 1 special character": "- Cel puțin 1 caracter special",
+  "- At least 1 uppercase letter": "- Cel puțin 1 literă mare",
+  "- Minimum 10 characters": "- Minimum 10 caractere",
   "Account": "Cont",
   "Add": "Adaugă",
   "Add item": "Adaugă articol",
@@ -19,21 +23,18 @@
   "Name not available": "Nume indisponibil",
   "No description": "Fără descriere",
   "No items found": "Niciun articol găsit",
+  "Password must contain:": "Parola trebuie să conțină:",
   "Quantity": "Cantitate",
   "Registration": "Înregistrare",
+  "Remember me": "Ține-mă minte",
   "Select an icon for editing:": "Selectați o pictogramă pentru editare:",
   "Settings": "Setări",
   "Sign up": "Înregistrează-te",
   "Theme Selector": "Selector de temă",
   "Undo": "Anulează",
+  "Warning": "Avertisment",
   "Welcome": "Bun venit",
-  "Welcome, ${state.user.email ?? \"User\"}": "Bun venit, ${state.user.email ?? \"Utilizator\"}",
-  "Remember me": "Ține-mă minte",
-  "Password must contain:": "Parola trebuie să conțină:",
-  "- At least 1 uppercase letter":"- Cel puțin 1 literă mare",
-  "- At least 1 special character": "- Cel puțin 1 caracter special",
-  "- Minimum 10 characters":"- Minimum 10 caractere",
-  "- At least 1 number":"- Cel puțin 1 număr"
+  "Welcome, ${state.user.email ?? \"User\"}": "Bun venit, ${state.user.email ?? \"Utilizator\"}"
 }
 
 

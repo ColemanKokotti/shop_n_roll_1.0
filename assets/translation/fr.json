@@ -1,4 +1,8 @@
 {
+  "- At least 1 number": "- Au moins 1 chiffre",
+  "- At least 1 special character": "- Au moins 1 caractère spécial",
+  "- At least 1 uppercase letter": "- Au moins 1 lettre majuscule",
+  "- Minimum 10 characters": "- Minimum 10 caractères",
   "Account": "Compte",
   "Add": "Ajouter",
   "Add item": "Ajouter un élément",
@@ -19,21 +23,18 @@
   "Name not available": "Nom non disponible",
   "No description": "Pas de description",
   "No items found": "Aucun élément trouvé",
+  "Password must contain:": "Le mot de passe doit contenir :",
   "Quantity:": "Quantité:",
   "Registration": "Inscription",
+  "Remember me": "Souviens-toi de moi",
   "Select an icon for editing:": "Sélectionner une icône pour édition:",
   "Settings": "Paramètres",
   "Sign up": "S'inscrire",
   "Theme Selector": "Sélecteur de Thème",
   "Undo": "Annuler",
+  "Warning": "Avertissement",
   "Welcome": "Bienvenue",
-  "Welcome, ${state.user.email ?? \"User\"}": "Bienvenue, ${state.user.email ?? \"Utilisateur\"}",
-  "Remember me": "Souviens-toi de moi",
-  "Password must contain:": "Le mot de passe doit contenir :",
-  "- At least 1 uppercase letter": "- Au moins 1 lettre majuscule",
-  "- At least 1 special character": "- Au moins 1 caractère spécial",
-  "- Minimum 10 characters":"- Minimum 10 caractères",
-  "- At least 1 number":"- Au moins 1 chiffre"
+  "Welcome, ${state.user.email ?? \"User\"}": "Bienvenue, ${state.user.email ?? \"Utilisateur\"}"
 }
 
 

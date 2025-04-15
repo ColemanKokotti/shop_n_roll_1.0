@@ -12,12 +12,16 @@ class BoughtItemButtonWidget extends StatelessWidget {
     final theme =Theme.of(context);
     return BlocBuilder<BoughtItemCubit, bool>(
       builder: (context, isBought) {
-        return IconButton(
-          icon: Icon(
-            isBought ? Icons.check_circle: Icons.add_circle_outlined ,
-            color: isBought ? theme.iconTheme.color : theme.iconTheme.color,
-          ),
-          onPressed: () => context.read<BoughtItemCubit>().toggleItemStatus(),
+        return Checkbox(
+          value: isBought,
+          onChanged: (bool? value) {
+            if (value != null) {
+              context.read<BoughtItemCubit>().toggleItemStatus();
+            }
+          },
+          activeColor: theme.iconTheme.color,
+          checkColor: theme.cardColor,
+          tristate: false,
         );
       },
     );

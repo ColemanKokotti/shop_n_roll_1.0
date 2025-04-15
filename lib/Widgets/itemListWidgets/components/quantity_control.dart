@@ -17,39 +17,51 @@ class QuantityControl extends StatelessWidget {
     final theme = Theme.of(context);
     final itemListCubit = context.read<ItemListCubit>();
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-          icon: Icon(Icons.remove, color: theme.iconTheme.color),
-          onPressed: () {
-            if (quantity > 0) {
-              itemListCubit.updateQuantity(documentId, quantity - 1);
-            }
-          },
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: theme.primaryColorLight,
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: theme.primaryColor),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildButton(
+            context,
+            icon: Icons.remove,
+            onPressed: () {
+              if (quantity > 0) {
+                itemListCubit.updateQuantity(documentId, quantity - 1);
+              }
+            },
           ),
-          child: Text(
-            '$quantity',
-            style: TextStyle(
-              color: theme.textTheme.labelLarge?.color,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              '$quantity',
+              style: TextStyle(
+                color: theme.textTheme.labelLarge?.color,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-        ),
-        IconButton(
-          icon: Icon(Icons.add, color: theme.iconTheme.color),
-          onPressed: () {
-            itemListCubit.updateQuantity(documentId, quantity + 1);
-          },
-        ),
-      ],
+          _buildButton(
+            context,
+            icon: Icons.add,
+            onPressed: () {
+              itemListCubit.updateQuantity(documentId, quantity + 1);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButton(BuildContext context, {required IconData icon, required VoidCallback onPressed}) {
+    return IconButton(
+      icon: Icon(icon, color: Theme.of(context).iconTheme.color),
+      onPressed: onPressed,
     );
   }
 }

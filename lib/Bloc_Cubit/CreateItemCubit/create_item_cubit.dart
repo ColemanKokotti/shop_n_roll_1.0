@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:bloc/bloc.dart";
-import 'package:image_picker/image_picker.dart';
 import 'create_item_state.dart';
+import '../../../Data/DataUi/ui_data.dart';
 
 class CreateItemCubit extends Cubit<CreateItemState> {
   final CollectionReference _itemsCollection = FirebaseFirestore.instance.collection('Items');
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController(text: '1');
+  final UIControllerData _uiData;
 
-  final ImagePicker _picker = ImagePicker();
-
-  CreateItemCubit() : super(CreateItemState()) {
-    nameController.addListener(_updateNameFromController);
-    descriptionController.addListener(_updateDescriptionFromController);
-    quantityController.addListener(_updateQuantityFromController);
+  CreateItemCubit() : _uiData = UIControllerData(), super(CreateItemState()) {
+    _uiData.nameController.addListener(_updateNameFromController);
+    _uiData.descriptionController.addListener(_updateDescriptionFromController);
+    _uiData.quantityController.addListener(_updateQuantityFromController);
   }
 
+  TextEditingController get nameController => _uiData.nameController;
+  TextEditingController get descriptionController => _uiData.descriptionController;
+  TextEditingController get quantityController => _uiData.quantityController;
+
   void _updateNameFromController() {
-    emit(state.copyWith(nameItem: nameController.text));
+    emit(state.copyWith(nameItem: _uiData.nameController.text));
   }
 
   void _updateDescriptionFromController() {
-    emit(state.copyWith(descriptionItem: descriptionController.text));
+    emit(state.copyWith(descriptionItem: _uiData.descriptionController.text));
   }
 
   void _updateQuantityFromController() {
-    final quantityValue = int.tryParse(quantityController.text) ?? 1;
+    final quantityValue = int.tryParse(_uiData.quantityController.text) ?? 1;
     emit(state.copyWith(quantity: quantityValue));
   }
+
 
   void setSelectedIcon(String icon) {
     emit(state.copyWith(selectedIcon: icon));
@@ -37,7 +38,7 @@ class CreateItemCubit extends Cubit<CreateItemState> {
 
   void increaseQuantity() {
     final newQuantity = state.quantity + 1;
-    quantityController.text = newQuantity.toString();
+    _uiData.quantityController.text = newQuantity.toString();
     emit(state.copyWith(quantity: newQuantity));
   }
 
@@ -47,39 +48,17 @@ class CreateItemCubit extends Cubit<CreateItemState> {
     emit(state.copyWith(quantity: newQuantity));
   }
 
-  Future<void> selectImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      emit(state.copyWith(imageUrl: image.path));
-    }
-  }
 
   Future<bool> addItem(BuildContext context) async {
     final theme = Theme.of(context);
-
-    if (state.nameItem.isEmpty || state.descriptionItem.isEmpty || state.selectedIcon.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop();
-          });
-          return AlertDialog(
-            backgroundColor: theme.appBarTheme.backgroundColor,
-            title: Text(
-              "Attenzione",
-              style: theme.textTheme.labelLarge,
-              textAlign: TextAlign.center,
-            ),
-            content: Text(
-              "Tutti i campi devono essere compilati.",
-              style: TextStyle(color: theme.textTheme.labelLarge?.backgroundColor),
-            ),
-          );
-        },
-      );
-      return false;
-    }
+    final isValid = await UIValidation.validateFields(
+      context,
+      name: state.nameItem,
+      description: state.descriptionItem,
+      icon: state.selectedIcon,
+      theme: theme,
+    );
+    if (!isValid) return false;
 
     try {
       await _itemsCollection.add({
@@ -87,7 +66,6 @@ class CreateItemCubit extends Cubit<CreateItemState> {
         'iconItem': state.selectedIcon,
         'descriptionItem': state.descriptionItem,
         'quantity': state.quantity,
-        'imageUrl': state.imageUrl,
       });
 
       reset();
@@ -99,17 +77,15 @@ class CreateItemCubit extends Cubit<CreateItemState> {
   }
 
   void reset() {
-    nameController.clear();
-    descriptionController.clear();
-    quantityController.text = '1';
+    _uiData.nameController.clear();
+    _uiData.descriptionController.clear();
+    _uiData.quantityController.text = '1';
     emit(CreateItemState());
   }
 
   @override
   Future<void> close() {
-    nameController.dispose();
-    descriptionController.dispose();
-    quantityController.dispose();
+    _uiData.dispose();
     return super.close();
   }
 }

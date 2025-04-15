@@ -1,4 +1,8 @@
 {
+  "- At least 1 number": "- رقم واحد على الأقل",
+  "- At least 1 special character": "- حرف خاص واحد على الأقل",
+  "- At least 1 uppercase letter": "- حرف كبير واحد على الأقل",
+  "- Minimum 10 characters": "- 10 أحرف كحد أدنى",
   "Account": "الحساب",
   "Add": "إضافة",
   "Add item": "إضافة عنصر",
@@ -19,19 +23,16 @@
   "Name not available": "الاسم غير متوفر",
   "No description": "لا يوجد وصف",
   "No items found": "لم يتم العثور على عناصر",
+  "Password must contain:": "يجب أن تحتوي كلمة المرور على:",
   "Quantity:": "الكمية:",
   "Registration": "التسجيل",
+  "Remember me": "تذكرني",
   "Select an icon for editing:": "اختر رمزًا للتعديل:",
   "Settings": "الإعدادات",
   "Sign up": "تسجيل الاشتراك",
   "Theme Selector": "محدد المظهر",
   "Undo": "تراجع",
+  "Warning": "تحذير",
   "Welcome": "أهلاً بك",
-  "Welcome, ${state.user.email ?? \"User\"}": "أهلاً بك، ${state.user.email ?? \"مستخدم\"}",
-  "Remember me":  "تذكرني",
-  "Password must contain:": "يجب أن تحتوي كلمة المرور على:",
-  "- At least 1 uppercase letter": "- حرف كبير واحد على الأقل",
-  "- At least 1 special character": "- حرف خاص واحد على الأقل",
-  "- Minimum 10 characters": "- 10 أحرف كحد أدنى",
-  "- At least 1 number": "- رقم واحد على الأقل"
+  "Welcome, ${state.user.email ?? \"User\"}": "أهلاً بك، ${state.user.email ?? \"مستخدم\"}"
 }

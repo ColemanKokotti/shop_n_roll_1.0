@@ -11,6 +11,24 @@ class QuantitySelectorWidget extends StatelessWidget {
     required this.theme,
   });
 
+  Widget _buildButton({required IconData icon, required VoidCallback onPressed}) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onPressed,
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Icon(
+            icon,
+            color: theme.iconTheme.color,
+            size: 20,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,19 +42,16 @@ class QuantitySelectorWidget extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
-              color: theme.textTheme.labelLarge?.backgroundColor,
-              borderRadius: BorderRadius.circular(10),
+              color: theme.cardColor,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: theme.primaryColor),
             ),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.remove,
-                    color: theme.iconTheme.color,
-                  ),
+                _buildButton(
+                  icon: Icons.remove,
                   onPressed: () => cubit.decreaseQuantity(),
                 ),
                 Expanded(
@@ -63,11 +78,8 @@ class QuantitySelectorWidget extends StatelessWidget {
                     },
                   ),
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.iconTheme.color,
-                  ),
+                _buildButton(
+                  icon: Icons.add,
                   onPressed: () => cubit.increaseQuantity(),
                 ),
               ],

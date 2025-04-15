@@ -32,6 +32,7 @@
   "Sign up": "サインアップ",
   "Theme Selector": "テーマ選択",
   "Undo": "元に戻す",
+  "Warning": "警告",
   "Welcome": "ようこそ",
   "Welcome, ${state.user.email ?? \"User\"}": "ようこそ、${state.user.email ?? \"ユーザー\"}"
 }
