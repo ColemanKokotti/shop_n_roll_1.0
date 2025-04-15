@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider.value(
           value: widget.authCubit,
         ),
+
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, currentTheme) {

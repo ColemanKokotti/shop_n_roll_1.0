@@ -34,5 +34,13 @@
   "Undo": "تراجع",
   "Warning": "تحذير",
   "Welcome": "أهلاً بك",
-  "Welcome, ${state.user.email ?? \"User\"}": "أهلاً بك، ${state.user.email ?? \"مستخدم\"}"
+  "Welcome, ${state.user.email ?? \"User\"}": "مرحباً، ${state.user.email ?? \"مستخدم\"}",
+  "Total": "المجموع",
+  "Receipt": "الفاتورة",
+  "Shopping Receipt": "فاتورة التسوق",
+  "Item": "العنصر",
+  "Qty": "الكمية",
+  "Unit": "الوحدة",
+  "Total": "المجموع",
+  "No bought items": "لا توجد عناصر مشتراة"
 }

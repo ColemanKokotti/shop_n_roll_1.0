@@ -34,7 +34,15 @@
   "Undo": "Anulează",
   "Warning": "Avertisment",
   "Welcome": "Bun venit",
-  "Welcome, ${state.user.email ?? \"User\"}": "Bun venit, ${state.user.email ?? \"Utilizator\"}"
+  "Welcome, ${state.user.email ?? \"User\"}": "Bun venit, ${state.user.email ?? \"Utilizator\"}",
+  "Total": "Total",
+  "Receipt": "Factură",
+  "Shopping Receipt": "Factură de cumpărături",
+  "Item": "Articol",
+  "Qty": "Cant.",
+  "Unit": "Unitate",
+  "Total": "Total",
+  "No bought items": "Nu există articole achiziționate"
 }
 
 

@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc_Cubit/BoughtItemCubit/bought_item_cubit.dart';
 
-
-
 class BoughtItemButtonWidget extends StatelessWidget {
-  const BoughtItemButtonWidget({super.key});
+  final String itemId;
+  final bool initialIsBought;
+
+  const BoughtItemButtonWidget({
+    super.key, 
+    required this.itemId,
+    this.initialIsBought = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final theme =Theme.of(context);
+    final theme = Theme.of(context);
     return BlocBuilder<BoughtItemCubit, bool>(
       builder: (context, isBought) {
         return Checkbox(
@@ -19,7 +24,7 @@ class BoughtItemButtonWidget extends StatelessWidget {
               context.read<BoughtItemCubit>().toggleItemStatus();
             }
           },
-          activeColor: theme.iconTheme.color,
+          activeColor: theme.primaryColor,
           checkColor: theme.cardColor,
           tristate: false,
         );

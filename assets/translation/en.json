@@ -34,5 +34,13 @@
   "Undo": "Undo",
   "Warning": "Warning",
   "Welcome": "Welcome",
-  "Welcome, ${state.user.email ?? \"User\"}": "Welcome, ${state.user.email ?? \"User\"}"
+  "Welcome, ${state.user.email ?? \"User\"}": "Welcome, ${state.user.email ?? \"User\"}",
+  "Total": "Total",
+  "Receipt": "Receipt",
+  "Shopping Receipt": "Shopping Receipt",
+  "Item": "Item",
+  "Qty": "Qty",
+  "Unit": "Unit",
+  "Total": "Total",
+  "No bought items": "No bought items"
 }

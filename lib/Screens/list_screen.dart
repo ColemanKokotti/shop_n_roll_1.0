@@ -64,7 +64,7 @@ class ListScreen extends StatelessWidget {
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: 40, // Metà altezza della bottom bar (80) + padding bottom
+                bottom: 100, // Nuova posizione più in alto
                 child: Center(
                   child: CreateItemButton(),
                 ),

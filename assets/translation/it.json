@@ -34,7 +34,15 @@
   "Undo": "Annulla",
   "Warning": "Avvertimento",
   "Welcome": "Benvenuto",
-  "Welcome, ${state.user.email ?? \"User\"}": "Benvenuto, ${state.user.email ?? \"Utente\"}"
+  "Welcome, ${state.user.email ?? \"User\"}": "Benvenuto, ${state.user.email ?? \"Utente\"}",
+  "Total": "Totale",
+  "Receipt": "Ricevuta",
+  "Shopping Receipt": "Ricevuta della spesa",
+  "Item": "Articolo",
+  "Qty": "Qtà",
+  "Unit": "Unità",
+  "Total": "Totale",
+  "No bought items": "Nessun articolo acquistato"
 }
 
 

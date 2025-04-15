@@ -34,6 +34,14 @@
   "Undo": "Отменить",
   "Warning": "Предупреждение",
   "Welcome": "Добро пожаловать",
-  "Welcome, ${state.user.email ?? \"User\"}": "Добро пожаловать, ${state.user.email ?? \"Пользователь\"}"
+  "Welcome, ${state.user.email ?? \"User\"}": "Добро пожаловать, ${state.user.email ?? \"Пользователь\"}",
+  "Total": "Итого",
+  "Receipt": "Чек",
+  "Shopping Receipt": "Чек покупки",
+  "Item": "Товар",
+  "Qty": "Кол-во",
+  "Unit": "Ед.",
+  "Total": "Итого",
+  "No bought items": "Нет купленных товаров"
 }
 
