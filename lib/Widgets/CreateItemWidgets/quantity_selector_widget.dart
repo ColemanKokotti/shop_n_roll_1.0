@@ -8,11 +8,11 @@ class QuantitySelectorWidget extends StatelessWidget {
   final CreateItemControllerAdapter controllerAdapter;
 
   const QuantitySelectorWidget({
-    super.key,
+    Key? key,
     required this.cubit,
     required this.theme,
     required this.controllerAdapter,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

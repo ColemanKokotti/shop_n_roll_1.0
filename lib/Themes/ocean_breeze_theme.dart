@@ -10,6 +10,7 @@ final ThemeData oceanBreezeTheme = ThemeData(
     primary: Color(0xFF0277BD),
     secondary: Color(0xFF4DD0E1),
     surface: Colors.white,
+    background: Color(0xFFF5F5F5),
     error: Color(0xFFE57373),
   ),
 
@@ -129,8 +130,8 @@ final ThemeData oceanBreezeTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
         return Color(0xFF0277BD);
       }
       return Colors.grey[300]!;

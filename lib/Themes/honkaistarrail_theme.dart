@@ -10,6 +10,7 @@ final ThemeData honkaiStarRailTheme = ThemeData(
     primary: Color(0xFF7B68EE),
     secondary: Color(0xFF00BFFF),
     surface: Color(0xFF1A1A2F),
+    background: Color(0xFF0A0A1F),
     error: Color(0xFFFF4081),
   ),
 
@@ -129,8 +130,8 @@ final ThemeData honkaiStarRailTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
         return Color(0xFF7B68EE);
       }
       return Colors.grey[700]!;

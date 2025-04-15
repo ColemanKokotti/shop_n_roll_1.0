@@ -10,6 +10,7 @@ final ThemeData godOfWarTheme = ThemeData(
     primary: Color(0xFFBF2626),
     secondary: Color(0xFFD4AF37),
     surface: Color(0xFF262626),
+    background: Color(0xFF1A1A1A),
     error: Color(0xFFFF3D00),
   ),
 
@@ -126,8 +127,8 @@ final ThemeData godOfWarTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
         return Color(0xFFBF2626);
       }
       return Colors.grey[700]!;

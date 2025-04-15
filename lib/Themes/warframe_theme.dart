@@ -10,6 +10,7 @@ final ThemeData warframeTheme = ThemeData(
     primary: Color(0xFF00A8CC),
     secondary: Color(0xFFFFB300),
     surface: Color(0xFF2A2A2A),
+    background: Color(0xFF1A1A1A),
     error: Color(0xFFFF4444),
   ),
 
@@ -129,8 +130,8 @@ final ThemeData warframeTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
         return Color(0xFF00A8CC);
       }
       return Colors.grey[700]!;

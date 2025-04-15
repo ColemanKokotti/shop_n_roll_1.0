@@ -10,6 +10,7 @@ final ThemeData vintageRetroTheme = ThemeData(
     primary: Color(0xFF795548),
     secondary: Color(0xFFD4B996),
     surface: Color(0xFFFAF7EE),
+    background: Color(0xFFF5F2E9),
     error: Color(0xFFC62828),
   ),
 
@@ -129,8 +130,8 @@ final ThemeData vintageRetroTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
         return Color(0xFF795548);
       }
       return Color(0xFFE0E0E0);
