@@ -1,58 +1,173 @@
 import 'package:flutter/material.dart';
 
+/// 🌊 OCEAN BREEZE THEME
 final ThemeData oceanBreezeTheme = ThemeData(
-  primaryColor: Color(0xFF0277BD), // Blu oceano intenso
-  scaffoldBackgroundColor: Color(0xFFE0F7FA), // Azzurro chiarissimo
-  secondaryHeaderColor: Color(0xFF4FC3F7), // Azzurro vivace
+  primaryColor: Color(0xFF0277BD), // Deep Ocean Blue
+  secondaryHeaderColor: Color(0xFF4DD0E1), // Aqua
+  scaffoldBackgroundColor: Color(0xFFF5F5F5),
+  
+  colorScheme: ColorScheme.light(
+    primary: Color(0xFF0277BD),
+    secondary: Color(0xFF4DD0E1),
+    surface: Colors.white,
+    background: Color(0xFFF5F5F5),
+    error: Color(0xFFE57373),
+  ),
 
   appBarTheme: AppBarTheme(
-    color: Color(0xFF01579B), // Blu oceano scuro
-    foregroundColor: Colors.white, // Testo e icone a contrasto
+    backgroundColor: Color(0xFF0277BD),
+    foregroundColor: Colors.white,
+    elevation: 0,
     titleTextStyle: TextStyle(
-      color: Colors.white, //  bianco per visibilità
-      fontSize: 20,
+      color: Colors.white,
+      fontSize: 22,
       fontWeight: FontWeight.bold,
+      letterSpacing: 0.5,
     ),
-    iconTheme: IconThemeData(color: Colors.white), //  bianco per contrasto
+    iconTheme: IconThemeData(color: Colors.white),
   ),
 
-  textButtonTheme: TextButtonThemeData(
-    style: TextButton.styleFrom(
-      foregroundColor: Color(0xFF0288D1), // Azzurro medio
+  cardTheme: CardTheme(
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: BorderSide(
+        color: Color(0xFF0277BD).withOpacity(0.1),
+        width: 1,
+      ),
     ),
   ),
 
-  cardColor: Color(0xFFB3E5FC), // Azzurro chiaro
-
-  iconTheme: IconThemeData(color: Color(0xFF01579B)), // Icone blu scuro (fuori dall'AppBar)
-
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color(0xFF4FC3F7), // Azzurro vivace
-    textTheme: ButtonTextTheme.primary,
+  iconTheme: IconThemeData(
+    color: Color(0xFF0277BD),
+    size: 24,
   ),
-
-  brightness: Brightness.light,
 
   textTheme: TextTheme(
-    labelLarge: TextStyle(color: Colors.white, fontSize: 30), // Blu scuro per il testo principale
-    titleLarge: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold), // Scuro per evitare sovrapposizione
+    titleLarge: TextStyle(
+      color: Color(0xFF0277BD),
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 0.5,
+    ),
+    titleMedium: TextStyle(
+      color: Color(0xFF0277BD),
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.15,
+    ),
+    bodyLarge: TextStyle(
+      color: Colors.black87,
+      fontSize: 16,
+      letterSpacing: 0.5,
+    ),
+    bodyMedium: TextStyle(
+      color: Colors.black87,
+      fontSize: 14,
+      letterSpacing: 0.25,
+    ),
+    labelLarge: TextStyle(
+      color: Color(0xFF0277BD),
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.5,
+    ),
+  ),
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Colors.white,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF0277BD)),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF0277BD).withOpacity(0.5)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF4DD0E1), width: 2),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFFE57373)),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    labelStyle: TextStyle(color: Color(0xFF0277BD)),
+    hintStyle: TextStyle(color: Colors.black45),
   ),
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xFF0277BD), // Blu oceano intenso
+      backgroundColor: Color(0xFF0277BD),
+      elevation: 2,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
+      ),
     ),
   ),
 
-  dropdownMenuTheme: DropdownMenuThemeData(
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Color(0xFFB3E5FC), // Azzurro chiaro
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF0288D1)), // Azzurro medio
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: Color(0xFF0277BD),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
       ),
     ),
-    textStyle: TextStyle(color: Color(0xFF01579B), fontSize: 18), // Testo blu scuro
+  ),
+
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return Color(0xFF0277BD);
+      }
+      return Colors.grey[300]!;
+    }),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4),
+    ),
+    side: BorderSide(color: Color(0xFF0277BD), width: 1.5),
+  ),
+
+  dividerTheme: DividerThemeData(
+    color: Color(0xFF0277BD).withOpacity(0.1),
+    thickness: 1,
+    space: 1,
+  ),
+
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.white,
+    elevation: 4,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: BorderSide(
+        color: Color(0xFF0277BD).withOpacity(0.1),
+        width: 1,
+      ),
+    ),
+    titleTextStyle: TextStyle(
+      color: Color(0xFF0277BD),
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 0.5,
+    ),
+    contentTextStyle: TextStyle(
+      color: Colors.black87,
+      fontSize: 16,
+      letterSpacing: 0.5,
+    ),
   ),
 );

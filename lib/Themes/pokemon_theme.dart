@@ -1,136 +1,162 @@
 import 'package:flutter/material.dart';
 
-/// 🌈 POKEMON THEME
+/// 🎮 POKEMON THEME
 final ThemeData pokemonTheme = ThemeData(
-  // Core Color Palette
-  primaryColor: Color(0xFFFF0000), // Classic Pokéball Red
-  secondaryHeaderColor: Color(0xFFFFDE00), // Pikachu Yellow
-  scaffoldBackgroundColor: Color(0xFFF5F5F5), // Light Neutral Background
+  primaryColor: Color(0xFFE3350D), // Pokemon Red
+  secondaryHeaderColor: Color(0xFF0075BE), // Pokemon Blue
+  scaffoldBackgroundColor: Colors.white,
+  
+  colorScheme: ColorScheme.light(
+    primary: Color(0xFFE3350D),
+    secondary: Color(0xFF0075BE),
+    surface: Colors.white,
+    background: Colors.white,
+    error: Colors.red[700]!,
+  ),
 
-  // App Bar Theme
   appBarTheme: AppBarTheme(
-    color: Color(0xFFFF0000), // Pokéball Red
+    backgroundColor: Color(0xFFE3350D),
     foregroundColor: Colors.white,
+    elevation: 4,
     titleTextStyle: TextStyle(
       color: Colors.white,
-      fontSize: 22,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
-      letterSpacing: 1.1,
-      fontFamily: 'Pokemon', // Custom font to mimic Pokémon style
+      fontFamily: 'Pokemon',
     ),
     iconTheme: IconThemeData(color: Colors.white),
   ),
 
-  // Text Button Theme
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all(Colors.white),
-      backgroundColor: WidgetStateProperty.all(Color(0xFFFF0000)),
-      overlayColor: WidgetStateProperty.all(Color(0xFFFFDE00).withOpacity(0.2)),
-    ),
-  ),
-
-  // Card Theme
-  cardColor: Color(0xFFFFFFFF), // Crisp White
   cardTheme: CardTheme(
-    elevation: 5,
-    shadowColor: Color(0xFFFF0000).withOpacity(0.3),
+    color: Colors.white,
+    elevation: 4,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
-      side: BorderSide(
-        color: Color(0xFFFF0000),
-        width: 1.5,
-      ),
+      side: BorderSide(color: Color(0xFFE3350D).withOpacity(0.2)),
     ),
   ),
 
-  // Icon Theme
   iconTheme: IconThemeData(
-    color: Color(0xFFFF0000), // Pokéball Red
+    color: Color(0xFFE3350D),
     size: 24,
   ),
 
-  // Button Theme
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color(0xFFFF0000),
-    textTheme: ButtonTextTheme.primary,
-  ),
-
-  // Brightness and Color Scheme
-  brightness: Brightness.light,
-  colorScheme: ColorScheme.light(
-    primary: Color(0xFFFF0000), // Pokéball Red
-    secondary: Color(0xFFFFDE00), // Pikachu Yellow
-    background: Color(0xFFF5F5F5),
-    surface: Colors.white,
-  ),
-
-  // Text Theme
   textTheme: TextTheme(
-    labelLarge: TextStyle(
-      color: Color(0xFF3B4CCA), // Pokémon Blue
-      fontSize: 30,
+    titleLarge: TextStyle(
+      color: Color(0xFFE3350D),
+      fontSize: 24,
       fontWeight: FontWeight.bold,
-      letterSpacing: 1.2,
       fontFamily: 'Pokemon',
     ),
-    titleLarge: TextStyle(
-      color: Color(0xFFFF0000), // Pokéball Red
-      fontSize: 22,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 1.1,
+    titleMedium: TextStyle(
+      color: Color(0xFF0075BE),
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Pokemon',
+    ),
+    bodyLarge: TextStyle(
+      color: Colors.grey[800],
+      fontSize: 16,
     ),
     bodyMedium: TextStyle(
-      color: Colors.black87,
+      color: Colors.grey[700],
+      fontSize: 14,
+    ),
+    labelLarge: TextStyle(
+      color: Color(0xFFE3350D),
       fontSize: 16,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Pokemon',
     ),
   ),
 
-  // Elevated Button Theme
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Colors.grey[50],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFFE3350D)),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFFE3350D).withOpacity(0.5)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFFE3350D), width: 2),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Colors.red[700]!),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    labelStyle: TextStyle(color: Color(0xFFE3350D)),
+    hintStyle: TextStyle(color: Colors.grey[400]),
+  ),
+
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xFFFF0000), // Pokéball Red
-      textStyle: TextStyle(
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.1,
-        fontFamily: 'Pokemon',
-      ),
-      elevation: 6,
-      shadowColor: Color(0xFFFFDE00),
+      backgroundColor: Color(0xFFE3350D),
+      elevation: 4,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      textStyle: TextStyle(
+        fontFamily: 'Pokemon',
+        fontWeight: FontWeight.bold,
       ),
     ),
   ),
 
-  // Dropdown Menu Theme
-  dropdownMenuTheme: DropdownMenuThemeData(
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.white,
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFFF0000), width: 2),
-        borderRadius: BorderRadius.circular(15),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: Color(0xFFE3350D),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFFF0000), width: 2),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFFFDE00), width: 3),
-        borderRadius: BorderRadius.circular(15),
+      textStyle: TextStyle(
+        fontFamily: 'Pokemon',
+        fontWeight: FontWeight.bold,
       ),
     ),
-    textStyle: TextStyle(
-      color: Colors.black,
+  ),
+
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return Color(0xFFE3350D);
+      }
+      return Colors.grey[400]!;
+    }),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4),
+    ),
+  ),
+
+  dividerTheme: DividerThemeData(
+    color: Colors.grey[300],
+    thickness: 1,
+    space: 1,
+  ),
+
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.white,
+    elevation: 8,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    titleTextStyle: TextStyle(
+      color: Color(0xFFE3350D),
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Pokemon',
+    ),
+    contentTextStyle: TextStyle(
+      color: Colors.grey[800],
       fontSize: 16,
     ),
-  ),
-
-  // Additional Theming to capture Pokémon essence
-  dividerTheme: DividerThemeData(
-    color: Color(0xFFFF0000), // Pokéball Red Dividers
-    thickness: 2,
   ),
 );

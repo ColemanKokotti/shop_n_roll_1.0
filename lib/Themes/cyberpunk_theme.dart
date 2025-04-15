@@ -1,112 +1,163 @@
 import 'package:flutter/material.dart';
 
-/// 🌆 CYBERPUNK THEME
+/// 🌐 CYBERPUNK THEME
 final ThemeData cyberpunkTheme = ThemeData(
-  // Core Color Palette
-  primaryColor: Color(0xFF00FFD1), // Neon Cyan
-  secondaryHeaderColor: Color(0xFFFF00FF), // Bright Magenta
-  scaffoldBackgroundColor: Color(0xFF0A0A1A), // Deep Dark Blue-Black
-
-  // App Bar Theme
-  appBarTheme: AppBarTheme(
-    color: Color(0xFF00FFD1), // Neon Cyan
-    foregroundColor: Color(0xFF0A0A1A), // Dark background for contrast
-    titleTextStyle: TextStyle(
-      color: Color(0xFF0A0A1A),
-      fontSize: 22,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 1.5,
-    ),
-    iconTheme: IconThemeData(color: Color(0xFF0A0A1A)),
-  ),
-
-  // Text Button Theme
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all(Color(0xFF00FFD1)), // Neon Cyan
-      backgroundColor: WidgetStateProperty.all(Color(0xFF1A1A3A)), // Dark Background
-      overlayColor: WidgetStateProperty.all(Color(0xFF00FFD1).withOpacity(0.2)),
-    ),
-  ),
-
-  // Card Theme
-  cardColor: Color(0xFF1A1A3A), // Dark Card Background
-  cardTheme: CardTheme(
-    elevation: 5,
-    shadowColor: Color(0xFF00FFD1).withOpacity(0.5),
-  ),
-
-  // Icon Theme
-  iconTheme: IconThemeData(color: Color(0xFF00FFD1)), // Neon Cyan
-
-  // Button Theme
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color(0xFFFF00FF), // Bright Magenta
-    textTheme: ButtonTextTheme.primary,
-  ),
-
-  // Brightness and Color Scheme
-  brightness: Brightness.dark,
+  primaryColor: Color(0xFF00FF9C),
+  secondaryHeaderColor: Color(0xFFFF0055),
+  scaffoldBackgroundColor: Color(0xFF0D0D0D),
+  
   colorScheme: ColorScheme.dark(
-    primary: Color(0xFF00FFD1), // Neon Cyan
-    secondary: Color(0xFFFF00FF), // Bright Magenta
-    background: Color(0xFF0A0A1A),
-    surface: Color(0xFF1A1A3A),
+    primary: Color(0xFF00FF9C),
+    secondary: Color(0xFFFF0055),
+    surface: Color(0xFF1A1A1A),
+    background: Color(0xFF0D0D0D),
+    error: Color(0xFFFF3D00),
   ),
 
-  // Text Theme
-  textTheme: TextTheme(
-    labelLarge: TextStyle(
-      color: Color(0xFF00FFD1), // Neon Cyan
-      fontSize: 30,
-      letterSpacing: 1.2,
-    ),
-    titleLarge: TextStyle(
-      color: Color(0xFFFF00FF), // Bright Magenta
-      fontSize: 22,
+  appBarTheme: AppBarTheme(
+    backgroundColor: Color(0xFF1A1A1A),
+    foregroundColor: Color(0xFF00FF9C),
+    elevation: 0,
+    titleTextStyle: TextStyle(
+      color: Color(0xFF00FF9C),
+      fontSize: 20,
       fontWeight: FontWeight.bold,
-      letterSpacing: 1.5,
+      fontFamily: 'Orbitron',
     ),
-    bodyMedium: TextStyle(
-      color: Color(0xFFB0BEC5), // Soft Gray for body text
+    iconTheme: IconThemeData(color: Color(0xFF00FF9C)),
+  ),
+
+  cardTheme: CardTheme(
+    color: Color(0xFF1A1A1A),
+    elevation: 8,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+      side: BorderSide(color: Color(0xFF00FF9C).withOpacity(0.3), width: 2.0),
+    ),
+  ),
+
+  iconTheme: IconThemeData(
+    color: Color(0xFF00FF9C),
+    size: 24,
+  ),
+
+  textTheme: TextTheme(
+    titleLarge: TextStyle(
+      color: Color(0xFF00FF9C),
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Orbitron',
+    ),
+    titleMedium: TextStyle(
+      color: Color(0xFF00FF9C),
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Orbitron',
+    ),
+    bodyLarge: TextStyle(
+      color: Colors.cyan[100],
       fontSize: 16,
     ),
+    bodyMedium: TextStyle(
+      color: Colors.cyan[100],
+      fontSize: 14,
+    ),
+    labelLarge: TextStyle(
+      color: Color(0xFF00FF9C),
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Orbitron',
+    ),
   ),
 
-  // Elevated Button Theme
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Color(0xFF1A1A1A),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF00FF9C)),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF00FF9C).withOpacity(0.5)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF00FF9C), width: 2),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFFFF0055)),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    labelStyle: TextStyle(color: Color(0xFF00FF9C)),
+    hintStyle: TextStyle(color: Color(0xFF00FF9C).withOpacity(0.5)),
+  ),
+
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      foregroundColor: Color(0xFF0A0A1A), // Dark background
-      backgroundColor: Color(0xFF00FFD1), // Neon Cyan
-      textStyle: TextStyle(
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.2,
+      foregroundColor: Colors.black,
+      backgroundColor: Color(0xFF00FF9C),
+      elevation: 8,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      elevation: 5,
-      shadowColor: Color(0xFF00FFD1),
+      textStyle: TextStyle(
+        fontFamily: 'Orbitron',
+        fontWeight: FontWeight.bold,
+      ),
     ),
   ),
 
-  // Dropdown Menu Theme
-  dropdownMenuTheme: DropdownMenuThemeData(
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Color(0xFF1A1A3A), // Dark Background
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF00FFD1), width: 2), // Neon Cyan border
-        borderRadius: BorderRadius.circular(10),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: Color(0xFF00FF9C),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF00FFD1), width: 2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFFF00FF), width: 3), // Magenta when focused
-        borderRadius: BorderRadius.circular(10),
+      textStyle: TextStyle(
+        fontFamily: 'Orbitron',
+        fontWeight: FontWeight.bold,
       ),
     ),
-    textStyle: TextStyle(
-      color: Color(0xFF00FFD1), // Neon Cyan
+  ),
+
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return Color(0xFF00FF9C);
+      }
+      return Colors.grey[800]!;
+    }),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4),
+    ),
+    side: BorderSide(color: Color(0xFF00FF9C), width: 2.0),
+  ),
+
+  dividerTheme: DividerThemeData(
+    color: Color(0xFF00FF9C).withOpacity(0.2),
+    thickness: 1,
+    space: 1,
+  ),
+
+  dialogTheme: DialogTheme(
+    backgroundColor: Color(0xFF1A1A1A),
+    elevation: 16,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+      side: BorderSide(color: Color(0xFF00FF9C).withOpacity(0.3), width: 2.0),
+    ),
+    titleTextStyle: TextStyle(
+      color: Color(0xFF00FF9C),
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Orbitron',
+    ),
+    contentTextStyle: TextStyle(
+      color: Colors.cyan[100],
       fontSize: 16,
     ),
   ),
