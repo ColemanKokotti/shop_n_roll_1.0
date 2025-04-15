@@ -28,6 +28,7 @@ class ItemCard extends StatelessWidget {
     String documentId = document.id;
     String nameItem = data['nameItem'] ?? 'Name not available';
     String iconItem = data['iconItem'] ?? 'error';
+    String descriptionItem = data['descriptionItem'] ?? 'Description not available';
     double unitPrice = (data['unitPrice'] ?? 0.0) is double
         ? (data['unitPrice'] ?? 0.0)
         : double.tryParse(data['unitPrice']?.toString() ?? '0.0') ?? 0.0;
@@ -40,7 +41,7 @@ class ItemCard extends StatelessWidget {
       id: documentId,
       nameItem: nameItem,
       iconItem: iconItem,
-      descriptionItem: '',
+      descriptionItem: descriptionItem,
     );
 
     return Padding(

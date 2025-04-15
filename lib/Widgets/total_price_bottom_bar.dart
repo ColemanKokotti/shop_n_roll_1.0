@@ -1,39 +1,50 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TotalPriceBottomBar extends StatelessWidget {
   const TotalPriceBottomBar({super.key});
 
-  Future<double> _calculateTotalPrice(BuildContext context) async {
-    final state = context.read<ItemListCubit>().state;
-    double totalPrice = 0.0;
+  Stream<double> _totalPriceStream() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return Stream.value(0.0);
 
-    final cubit = context.read<ItemListCubit>();
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('items')
+        .snapshots()
+        .map((snapshot) {
+      double totalPrice = 0.0;
 
-    for (final entry in state.itemQuantities.entries) {
-      final itemId = entry.key;
+      for (var doc in snapshot.docs) {
+        Map<String, dynamic> data = doc.data();
 
-      try {
-        final itemData = await cubit.getItemData(itemId);
-        if (itemData != null) {
-          final totalItemPrice = double.tryParse(itemData['totalPrice'].toString()) ?? 0.0;
-          totalPrice += totalItemPrice;
-        }
-      } catch (e) {
-        print('Errore nel calcolo del prezzo per l\'item $itemId: $e');
+        // Get the unit price
+        double unitPrice = data['unitPrice'] is double
+            ? data['unitPrice']
+            : double.tryParse(data['unitPrice']?.toString() ?? '0.0') ?? 0.0;
+
+        // Get the quantity
+        int quantity = data['quantity'] is int
+            ? data['quantity']
+            : int.tryParse(data['quantity']?.toString() ?? '0') ?? 0;
+
+        // Calculate the item's total price and add to the sum
+        totalPrice += (unitPrice * quantity);
       }
-    }
-    return totalPrice;
+
+      return totalPrice;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return FutureBuilder<double>(
-      future: _calculateTotalPrice(context),
+    return StreamBuilder<double>(
+      stream: _totalPriceStream(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
