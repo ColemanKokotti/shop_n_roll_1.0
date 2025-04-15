@@ -35,13 +35,13 @@ class UndoButtonWidget extends StatelessWidget {
                       Icon(
                         Icons.undo,
                         size: 24,
-                        color: theme.iconTheme.color,
+                        color: theme.appBarTheme.iconTheme?.color,
                       ),
                       const SizedBox(width: 8),
                       Text(
                         'Undo'.tr(),
                         style: TextStyle(
-                          color: theme.iconTheme.color,
+                          color: theme.appBarTheme.foregroundColor,
                           fontSize: 16,
                         ),
                       ),

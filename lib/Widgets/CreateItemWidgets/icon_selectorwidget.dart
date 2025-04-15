@@ -4,11 +4,13 @@ import '../../Data/data_items.dart';
 class IconSelectorWidget extends StatelessWidget {
   final String selectedIcon;
   final Function(String) onIconSelect;
+  final ThemeData theme;
 
   const IconSelectorWidget({
     super.key,
     required this.selectedIcon,
     required this.onIconSelect,
+    required this.theme,
   });
 
   @override

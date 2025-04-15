@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import "package:bloc/bloc.dart";
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bloc/bloc.dart';
 import 'create_item_state.dart';
 import '../../../Data/DataUi/ui_data.dart';
 
 class CreateItemCubit extends Cubit<CreateItemState> {
-  final CollectionReference _itemsCollection = FirebaseFirestore.instance.collection('Items');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final UIControllerData _uiData;
 
   CreateItemCubit() : _uiData = UIControllerData(), super(CreateItemState()) {
     _uiData.nameController.addListener(_updateNameFromController);
     _uiData.descriptionController.addListener(_updateDescriptionFromController);
     _uiData.quantityController.addListener(_updateQuantityFromController);
+    _uiData.priceController.addListener(_updatePriceFromController);
   }
 
   TextEditingController get nameController => _uiData.nameController;
   TextEditingController get descriptionController => _uiData.descriptionController;
   TextEditingController get quantityController => _uiData.quantityController;
+  TextEditingController get priceController => _uiData.priceController;
 
   void _updateNameFromController() {
     emit(state.copyWith(nameItem: _uiData.nameController.text));
@@ -28,7 +31,22 @@ class CreateItemCubit extends Cubit<CreateItemState> {
 
   void _updateQuantityFromController() {
     final quantityValue = int.tryParse(_uiData.quantityController.text) ?? 1;
-    emit(state.copyWith(quantity: quantityValue));
+    final unitPrice = state.unitPrice;
+    final totalPrice = unitPrice * quantityValue;
+    emit(state.copyWith(
+      quantity: quantityValue,
+      totalPrice: totalPrice
+    ));
+  }
+
+  void _updatePriceFromController() {
+    final priceValue = double.tryParse(_uiData.priceController.text) ?? 0.0;
+    final quantity = state.quantity;
+    final totalPrice = priceValue * quantity;
+    emit(state.copyWith(
+      unitPrice: priceValue,
+      totalPrice: totalPrice
+    ));
   }
 
 
@@ -61,14 +79,36 @@ class CreateItemCubit extends Cubit<CreateItemState> {
     if (!isValid) return false;
 
     try {
-      await _itemsCollection.add({
-        'nameItem': state.nameItem,
-        'iconItem': state.selectedIcon,
-        'descriptionItem': state.descriptionItem,
-        'quantity': state.quantity,
-      });
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return false;
 
-      reset();
+      final quantity = state.quantity;
+      final unitPrice = state.unitPrice;
+      final totalPrice = unitPrice * quantity;
+
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('items')
+          .add({
+            'nameItem': state.nameItem,
+            'iconItem': state.selectedIcon,
+            'descriptionItem': state.descriptionItem,
+            'quantity': quantity,
+            'unitPrice': unitPrice,
+            'totalPrice': totalPrice,
+            'id': FieldValue.serverTimestamp(),
+            'createdAt': FieldValue.serverTimestamp()
+          });
+
+      // Aggiorniamo lo stato con il prezzo totale
+      emit(state.copyWith(
+        quantity: quantity,
+        unitPrice: unitPrice,
+        totalPrice: totalPrice
+      ));
+
+      emit(state.reset());
       return true;
     } catch (e) {
       print("Errore nell'aggiungere l'elemento: $e");
@@ -80,7 +120,8 @@ class CreateItemCubit extends Cubit<CreateItemState> {
     _uiData.nameController.clear();
     _uiData.descriptionController.clear();
     _uiData.quantityController.text = '1';
-    emit(CreateItemState());
+    _uiData.priceController.text = '0.0';
+    emit(state.reset());
   }
 
   @override

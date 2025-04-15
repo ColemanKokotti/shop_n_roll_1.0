@@ -28,16 +28,19 @@ class ItemCard extends StatelessWidget {
     String documentId = document.id;
     String nameItem = data['nameItem'] ?? 'Name not available';
     String iconItem = data['iconItem'] ?? 'error';
-    String descriptionItem = data['descriptionItem'] ?? 'No description';
+    double unitPrice = (data['unitPrice'] ?? 0.0) is double
+        ? (data['unitPrice'] ?? 0.0)
+        : double.tryParse(data['unitPrice']?.toString() ?? '0.0') ?? 0.0;
     int quantity = (data['quantity'] ?? 0) is int
         ? (data['quantity'] ?? 0)
         : int.tryParse(data['quantity']?.toString() ?? '0') ?? 0;
+    double totalPrice = (unitPrice * quantity).toDouble();
 
     Item item = Item(
       id: documentId,
       nameItem: nameItem,
       iconItem: iconItem,
-      descriptionItem: descriptionItem,
+      descriptionItem: '',
     );
 
     return Padding(
@@ -85,14 +88,16 @@ class ItemCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              subtitle: Text(
-                descriptionItem,
-                style: TextStyle(
-                  color: theme.textTheme.labelLarge?.color,
-                  fontSize: 12,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+              subtitle: Row(
+                children: [
+                  Text(
+                    'Tot: ${totalPrice.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: theme.textTheme.labelLarge?.color,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,

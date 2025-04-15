@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'dart:async';
 import '../../FireBase/item_firebase_storage.dart';
 import '../../FireBase/auth_service.dart';
 import '../../FireBase/account_service.dart';
@@ -10,6 +11,8 @@ class ItemListCubit extends Cubit<ItemListState> {
   final AccountService _accountService;
 
   ItemListCubit(this._itemFirebaseStorage, this._authService, this._accountService) : super(ItemListState());
+
+  Timer? _autoClearTimer;
 
   Future<void> deleteItem(String documentId) async {
     try {
@@ -26,11 +29,23 @@ class ItemListCubit extends Cubit<ItemListState> {
         if (_authService.getCurrentUser() != null) {
           await _accountService.removeItemFromAccount(_authService.getCurrentUser()!.uid, documentId);
         }
+
+        // Clear the deleted item after 3 seconds if not undone
+        _autoClearTimer?.cancel();
+        _autoClearTimer = Timer(const Duration(seconds: 3), () {
+          emit(state.clearDeletedItem());
+        });
       }
     } catch (e) {
       print("Errore durante la cancellazione dell'elemento: $e");
       emit(state.setError("Errore durante la cancellazione: ${e.toString()}"));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _autoClearTimer?.cancel();
+    return super.close();
   }
 
   Future<void> undoDelete() async {
@@ -61,6 +76,15 @@ class ItemListCubit extends Cubit<ItemListState> {
     } catch (e) {
       print("Errore durante l'aggiornamento della quantità: $e");
       emit(state.setError("Errore durante l'aggiornamento: ${e.toString()}"));
+    }
+  }
+
+  Future<Map<String, dynamic>?> getItemData(String itemId) async {
+    try {
+      return await _itemFirebaseStorage.getItem(itemId);
+    } catch (e) {
+      print("Errore durante il recupero dei dati dell'item: $e");
+      return null;
     }
   }
 }

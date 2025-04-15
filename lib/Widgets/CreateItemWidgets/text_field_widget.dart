@@ -6,6 +6,7 @@ class TextFieldWidget extends StatelessWidget {
   final ThemeData theme;
   final int? maxLines;
   final int? minLines;
+  final TextInputType? keyboardType;
 
   const TextFieldWidget({super.key, 
     required this.controller,
@@ -13,6 +14,7 @@ class TextFieldWidget extends StatelessWidget {
     required this.theme,
     this.maxLines,
     this.minLines,
+    this.keyboardType,
   });
 
   @override
@@ -33,6 +35,7 @@ class TextFieldWidget extends StatelessWidget {
       style: TextStyle(color: theme.textTheme.labelLarge?.color),
       maxLines: maxLines,
       minLines: minLines,
+      keyboardType: keyboardType,
     );
   }
 }

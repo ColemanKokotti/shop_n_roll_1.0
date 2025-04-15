@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../Bloc_Cubit/CreateItemCubit/create_item_cubit.dart';
+import '../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 import '../Widgets/CreateItemWidgets/create_item_button.dart';
 import 'settings_screen.dart';
 import '../Widgets/itemListWidgets/list_item_widget.dart';
+import '../Widgets/total_price_bottom_bar.dart';
+import '../FireBase/auth_service.dart';
+import '../FireBase/account_service.dart';
+import '../FireBase/item_firebase_storage.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -12,8 +18,15 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return BlocProvider(
-      create: (context) => CreateItemCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CreateItemCubit()),
+        BlocProvider(create: (context) => ItemListCubit(
+          ItemFirebaseStorage(),
+          AuthService(FirebaseAuth.instance),
+          AccountService(),
+        )),
+      ],
       child: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
@@ -38,17 +51,26 @@ class ListScreen extends StatelessWidget {
           ],
         ),
         body: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
-              Expanded(
-                child: ItemListWidget(),
+              Column(
+                children: [
+                  Expanded(
+                    child: ItemListWidget(),
+                  ),
+                  const TotalPriceBottomBar(),
+                ],
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 40, // Metà altezza della bottom bar (80) + padding bottom
+                child: Center(
+                  child: CreateItemButton(),
+                ),
               ),
             ],
           ),
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0, right: 20.0),
-          child: CreateItemButton(),
         ),
       ),
     );
