@@ -62,4 +62,43 @@ class ReceiptCubit extends Cubit<ReceiptState> {
       emit(state.copyWith(isLoading: false, error: e.toString()));
     }
   }
+
+  Future<void> saveReceiptAndClear() async {
+    try {
+      emit(state.copyWith(isLoading: true, error: null));
+
+      final user = _auth.currentUser;
+      if (user == null) {
+        emit(state.copyWith(isLoading: false, error: 'User not authenticated'));
+        return;
+      }
+
+      // Save receipt to Firebase
+      final receiptRef = _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('receipts')
+          .doc();
+
+      await receiptRef.set({
+        'items': state.items,
+        'totalPrice': state.totalPrice,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      // Clear bought items by setting isBought to false
+      for (var item in state.items) {
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('items')
+            .doc(item['id'])
+            .update({'isBought': false});
+      }
+
+      emit(state.copyWith(isLoading: false, items: [], totalPrice: 0.0));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
+  }
 }

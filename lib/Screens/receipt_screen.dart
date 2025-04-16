@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Bloc_Cubit/ReceiptCubit/receipt_cubit.dart';
 import '../Bloc_Cubit/ReceiptCubit/receipt_state.dart';
 import '../Widgets/ReceiptScreenWidgets/receipt_content_widget.dart';
+import '../Widgets/ReceiptScreenWidgets/bottom_bar_widget.dart';
 
 
 class ReceiptScreen extends StatelessWidget {
@@ -22,23 +23,31 @@ class ReceiptScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Receipt'.tr()),
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
-        body: BlocBuilder<ReceiptCubit, ReceiptState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: BlocBuilder<ReceiptCubit, ReceiptState>(
+              builder: (context, state) {
+                if (state.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-            if (state.error != null) {
-              return Center(child: Text(state.error!));
-            }
+                if (state.error != null) {
+                  return Center(child: Text(state.error!));
+                }
 
-            if (state.items.isEmpty) {
-              return Center(child: Text('No bought items'.tr()));
-            }
+                if (state.items.isEmpty) {
+                  return Center(child: Text('No bought items'.tr()));
+                }
 
-            return ReceiptContent(items: state.items, totalPrice: state.totalPrice);
-          },
+                return ReceiptContent(items: state.items, totalPrice: state.totalPrice);
+              },
+            ),
+          ),
+        ),
+        bottomNavigationBar: SafeArea(
+          child: const ReceiptBottomBar(),
         ),
       ),
     );

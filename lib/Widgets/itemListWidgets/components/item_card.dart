@@ -93,11 +93,15 @@ class ItemCard extends StatelessWidget {
               ),
               subtitle: Row(
                 children: [
-                  Text(
-                    'Tot: ${totalPrice.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      color: theme.textTheme.labelLarge?.color,
-                      fontSize: 12,
+                  Flexible(
+                    child: Text(
+                      'Tot: ${totalPrice.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color: theme.textTheme.labelLarge?.color,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
