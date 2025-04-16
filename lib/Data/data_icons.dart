@@ -40,13 +40,10 @@ final Map iconMap = {
   'pet_food': IconOrImage(imagePath: 'assets/icons/pet_food.png'),
   'rice': IconOrImage(imagePath: 'assets/icons/rice.png'),
   'toilet_paper': IconOrImage(imagePath: 'assets/icons/toilet_paper.png'),
-  'chicken_leg': IconOrImage(imagePath: 'assets/icons/chicken_leg.png'),
+  'chicken': IconOrImage(imagePath: 'assets/icons/chicken.png'),
   'fruit': IconOrImage(imagePath: 'assets/icons/fruit.png'),
   'games': IconOrImage(imagePath: 'assets/icons/games.png'),
-  'plug': IconOrImage(imagePath: 'assets/icons/plug.png'),
   'television': IconOrImage(imagePath: 'assets/icons/television.png'),
-  'toothbrush': IconOrImage(imagePath: 'assets/icons/toothbrush.png'),
-  'toothpaste': IconOrImage(imagePath: 'assets/icons/toothpaste.png'),
 };
 
 List get iconNames => iconMap.keys.toList();

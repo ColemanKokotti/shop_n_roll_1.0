@@ -7,10 +7,10 @@ import '../../../Data/item_firebase_storage.dart';
 import '../../../Screens/list_detailed_screen.dart';
 import '../../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 import '../../../Bloc_Cubit/BoughtItemCubit/bought_item_cubit.dart';
-import 'icon_selector_button.dart';
 import 'delete_item_widget.dart';
 import 'quantity_control.dart';
 import 'bought_item_button_widget.dart';
+import '../../../Data/data_icons.dart';
 
 class ItemCard extends StatelessWidget {
   final DocumentSnapshot document;
@@ -78,10 +78,7 @@ class ItemCard extends StatelessWidget {
             color: theme.cardColor,
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-              leading: IconSelectorButton(
-                currentIconName: iconItem,
-                documentId: documentId,
-              ),
+              leading: getWidgetFromString(iconItem, color: theme.iconTheme.color),
               title: Text(
                 nameItem,
                 style: TextStyle(
