@@ -41,6 +41,6 @@
   "Item": "商品",
   "Qty": "数量",
   "Unit": "単位",
-  "Total": "合計",
-  "No bought items": "購入した商品がありません"
+  "No bought items": "購入した商品はありません",
+  "Thank you for shopping!": "お買い物ありがとうございます！"
 }

@@ -37,24 +37,100 @@ class AccountService {
     }
   }
 
-  Future<void> createUserAccount(String userId, {String? preferredLanguage, String? preferredTheme}) async {
+  Future<String?> getUsernameFromAccount(String userId) async {
     try {
-
+      print("DEBUG - AccountService: Retrieving username for userId: $userId");
       DocumentSnapshot doc = await _accountsCollection.doc(userId).get();
+      print("DEBUG - AccountService: Got document: ${doc.exists}, data: ${doc.data()}");
 
-      if (!doc.exists) {
+      if (doc.exists && doc.data() != null) {
+        var data = doc.data() as Map<String, dynamic>;
+        String? username = data['username'] as String?;
+        print("DEBUG - AccountService: Retrieved username: $username");
+        return username;
+      }
+      print("DEBUG - AccountService: Document does not exist or is null");
+      return null;
+    } catch (e) {
+      print('DEBUG - AccountService: Error retrieving username: $e');
+      return null;
+    }
+  }
+
+  Future<void> createUserAccount(String userId, {
+    String? preferredLanguage,
+    String? preferredTheme,
+    String? username
+  }) async {
+    try {
+      print("DEBUG - AccountService: Creating account for userId: $userId with username: $username");
+
+      // Always set (not update) to ensure all fields are present
+      await _accountsCollection.doc(userId).set({
+        'itemIds': [],
+        'preferredLanguage': preferredLanguage ?? 'en',
+        'theme': preferredTheme ?? 'default',
+        'username': username ?? '',
+        'createdAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      print('DEBUG - AccountService: Account created/updated for: $userId with username: $username');
+
+      // Verify the account was created correctly
+      DocumentSnapshot verifyDoc = await _accountsCollection.doc(userId).get();
+      print('DEBUG - AccountService: Verification - account data: ${verifyDoc.data()}');
+
+    } catch (e) {
+      print('DEBUG - AccountService: Error creating account: $e');
+    }
+  }
+
+  Future<void> updateUsername(String userId, String username) async {
+    try {
+      print("DEBUG - AccountService: Updating username for userId: $userId to: $username");
+
+      // Check if document exists first
+      DocumentSnapshot docCheck = await _accountsCollection.doc(userId).get();
+
+      if (docCheck.exists) {
+        await _accountsCollection.doc(userId).update({
+          'username': username,
+        });
+        print('DEBUG - AccountService: Username updated for existing document');
+      } else {
+        // Document doesn't exist, create it
         await _accountsCollection.doc(userId).set({
           'itemIds': [],
-          'preferredLanguage': preferredLanguage ?? 'en',
-          'theme': preferredTheme ?? 'default',
+          'preferredLanguage': 'en',
+          'theme': 'default',
+          'username': username,
           'createdAt': FieldValue.serverTimestamp(),
         });
-        print('Account creato con successo per: $userId');
-      } else {
-        print('Account già esistente per: $userId');
+        print('DEBUG - AccountService: Created new account with username');
       }
+
+      // Verify the update was successful
+      DocumentSnapshot verifyDoc = await _accountsCollection.doc(userId).get();
+      if (verifyDoc.exists) {
+        var data = verifyDoc.data() as Map<String, dynamic>;
+        print('DEBUG - AccountService: Verification - updated username is: ${data['username']}');
+      }
+
     } catch (e) {
-      print('Errore nella creazione dell\'account: $e');
+      print('DEBUG - AccountService: Error updating username: $e');
+      // Create document if update failed
+      try {
+        await _accountsCollection.doc(userId).set({
+          'itemIds': [],
+          'preferredLanguage': 'en',
+          'theme': 'default',
+          'username': username,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+        print('DEBUG - AccountService: Created document after update failed');
+      } catch (e2) {
+        print('DEBUG - AccountService: Error creating document after update failed: $e2');
+      }
     }
   }
 }

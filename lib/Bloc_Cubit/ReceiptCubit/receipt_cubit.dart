@@ -23,6 +23,7 @@ class ReceiptCubit extends Cubit<ReceiptState> {
           .collection('users')
           .doc(user.uid)
           .collection('items')
+          .where('isBought', isEqualTo: true)
           .get();
 
       List<Map<String, dynamic>> boughtItems = [];
@@ -53,9 +54,9 @@ class ReceiptCubit extends Cubit<ReceiptState> {
       }
 
       emit(state.copyWith(
-        isLoading: false,
-        items: boughtItems,
-        totalPrice: totalPrice,
+      isLoading: false,
+      items: boughtItems,
+      totalPrice: totalPrice,
       ));
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));

@@ -20,6 +20,7 @@
   "Let's go shopping": "Să mergem la cumpărături",
   "Login": "Autentificare",
   "Logout": "Deconectare",
+  "Thank you for shopping!": "Mulțumesc pentru cumpărături!",
   "Name not available": "Nume indisponibil",
   "No description": "Fără descriere",
   "No items found": "Niciun articol găsit",
@@ -41,7 +42,6 @@
   "Item": "Articol",
   "Qty": "Cant.",
   "Unit": "Unitate",
-  "Total": "Total",
   "No bought items": "Nu există articole achiziționate"
 }
 

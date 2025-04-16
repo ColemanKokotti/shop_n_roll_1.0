@@ -42,7 +42,7 @@ class LoginWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
-                        color: theme.appBarTheme.foregroundColor,
+                        color: theme.textTheme.labelLarge?.color,
                         fontSize: theme.textTheme.labelLarge?.fontSize),
                     border: OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -56,7 +56,7 @@ class LoginWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: TextStyle(
-                        color: theme.appBarTheme.foregroundColor,
+                        color: theme.textTheme.labelLarge?.color,
                         fontSize: theme.textTheme.labelLarge?.fontSize),
                     border: OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.never,

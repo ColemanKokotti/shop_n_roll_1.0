@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import '../Bloc_Cubit/CreateItemCubit/create_item_cubit.dart';
 import '../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 import '../Widgets/CreateItemWidgets/create_item_button.dart';
 import 'settings_screen.dart';
 import '../Widgets/itemListWidgets/list_item_widget.dart';
-import '../Widgets/total_price_bottom_bar.dart';
+import '../Widgets/TotalPriceBottomBarWidgets/total_price_bottom_bar.dart';
 import '../FireBase/auth_service.dart';
 import '../FireBase/account_service.dart';
 import '../FireBase/item_firebase_storage.dart';
@@ -26,13 +27,14 @@ class ListScreen extends StatelessWidget {
           AuthService(FirebaseAuth.instance),
           AccountService(),
         )),
+        BlocProvider.value(value: context.read<AuthCubit>()),
       ],
       child: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
           backgroundColor: theme.appBarTheme.backgroundColor,
           centerTitle: true,
-          title: Text('Shop ‘n’ Roll 🎸', style: TextStyle(color: theme.appBarTheme.titleTextStyle?.color)),
+          title: Text('Shop n Roll 🎸', style: TextStyle(color: theme.appBarTheme.titleTextStyle?.color)),
           actions: [
             IconButton(
               icon: Icon(
@@ -64,7 +66,7 @@ class ListScreen extends StatelessWidget {
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: 100, // Nuova posizione più in alto
+                bottom: 100,
                 child: Center(
                   child: CreateItemButton(),
                 ),
