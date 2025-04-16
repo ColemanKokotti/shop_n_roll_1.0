@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../Data/data_items.dart';
+import '../../Data/data_icons.dart';
 
 class ReceiptItemRow extends StatelessWidget {
   final Map<String, dynamic> item;

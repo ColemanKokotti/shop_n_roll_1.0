@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc_Cubit/ModifyIconCubit/icon_selector_cubit.dart';
-import '../../../Data/data_items.dart';
+import '../../../Data/data_icons.dart';
 
 class ModifyIconWidget extends StatelessWidget {
   final String selectedIcon;

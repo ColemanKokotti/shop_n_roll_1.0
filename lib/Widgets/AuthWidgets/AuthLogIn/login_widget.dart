@@ -40,7 +40,7 @@ class LoginWidget extends StatelessWidget {
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Email/Username',
                     labelStyle: TextStyle(
                         color: theme.textTheme.labelLarge?.color,
                         fontSize: theme.textTheme.labelLarge?.fontSize),

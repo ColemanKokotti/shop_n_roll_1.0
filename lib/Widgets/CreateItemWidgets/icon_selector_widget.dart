@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../Data/data_items.dart';
+import '../../Data/data_icons.dart';
 
 class IconSelectorWidget extends StatelessWidget {
   final String selectedIcon;
