@@ -86,14 +86,27 @@ class ReceiptCubit extends Cubit<ReceiptState> {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      // Clear bought items by setting isBought to false
+      // Save items to savedItems collection
+      for (var item in state.items) {
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('savedItems')
+            .doc(item['id'])
+            .set({
+          ...item,
+          'savedAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      // Delete items from the list
       for (var item in state.items) {
         await _firestore
             .collection('users')
             .doc(user.uid)
             .collection('items')
             .doc(item['id'])
-            .update({'isBought': false});
+            .delete();
       }
 
       emit(state.copyWith(isLoading: false, items: [], totalPrice: 0.0));

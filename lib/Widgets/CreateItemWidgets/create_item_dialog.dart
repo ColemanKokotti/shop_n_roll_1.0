@@ -5,7 +5,7 @@ import 'package:shop_n_roll/Widgets/CreateItemWidgets/quantity_selector_widget.d
 import 'package:shop_n_roll/Widgets/CreateItemWidgets/text_field_widget.dart';
 import '../../Bloc_Cubit/CreateItemCubit/create_item_cubit.dart';
 import 'action_buttons_widget.dart';
-import 'icon_selectorwidget.dart';
+import 'icon_selector_widget.dart';
 
 class CreateItemDialog extends StatelessWidget {
   const CreateItemDialog({super.key});

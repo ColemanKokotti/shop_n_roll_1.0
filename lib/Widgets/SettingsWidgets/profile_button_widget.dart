@@ -128,7 +128,7 @@ class ProfileButton extends StatelessWidget {
                           width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            'Order History'.tr(),
+                            'Receipt History'.tr(),
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

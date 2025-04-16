@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import '../Widgets/SettingsWidgets/change_language_widget.dart';
 import '../Widgets/SettingsWidgets/logout_button_widget.dart';
 import '../Widgets/SettingsWidgets/profile_button_widget.dart';
@@ -13,7 +11,6 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final authCubit = context.read<AuthCubit>();
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,

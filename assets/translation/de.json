@@ -42,5 +42,15 @@
   "Qty": "Menge",
   "Unit": "Einheit",
   "No bought items": "Keine gekauften Artikel",
-  "Thank you for shopping!": "Vielen Dank für Ihren Einkauf!"
+  "Thank you for shopping!": "Danke für deinen Einkauf!",
+  "Receipt Detail": "Rechnungsdetails",
+  "Error: ${error}": "Fehler: ${error}",
+  "Receipt not found": "Rechnung nicht gefunden",
+  "Items not found": "Artikel nicht gefunden",
+  "Receipt History": "Rechnungsverlauf",
+  "No receipts yet": "Keine Rechnungen",
+  "Order history will be displayed here": "Der Bestellverlauf wird hier angezeigt",
+  "Receipt #": "Rechnung #",
+  "Date:": "Datum:",
+  "Total:": "Total:"
 }

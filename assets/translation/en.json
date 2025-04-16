@@ -42,5 +42,15 @@
   "Qty": "Qty",
   "Unit": "Unit",
   "No bought items": "No bought items",
-  "Thank you for shopping!": "Thank you for shopping!"
+  "Thank you for shopping!": "Thank you for shopping!",
+  "Receipt Detail": "Receipt Detail",
+  "Error: ${error}": "Error: ${error}",
+  "Receipt not found": "Receipt not found",
+  "Items not found": "Items not found",
+  "Receipt History": "Receipt History",
+  "No receipts yet": "No receipts yet",
+  "Order history will be displayed here": "Order history will be displayed here",
+  "Receipt #": "Receipt #",
+  "Date:": "Date:",
+  "Total:": "Total:"
 }

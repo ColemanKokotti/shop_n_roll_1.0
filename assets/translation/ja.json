@@ -42,5 +42,15 @@
   "Qty": "数量",
   "Unit": "単位",
   "No bought items": "購入した商品はありません",
-  "Thank you for shopping!": "お買い物ありがとうございます！"
+  "Thank you for shopping!": "お買い上げありがとうございます！",
+  "Receipt Detail": "レシートの詳細",
+  "Error: ${error}": "エラー: ${error}",
+  "Receipt not found": "レシートが見つかりません",
+  "Items not found": "商品が見つかりません",
+  "Receipt History": "レシート履歴",
+  "No receipts yet": "レシートがありません",
+  "Order history will be displayed here": "注文履歴がここに表示されます",
+  "Receipt #": "レシート #",
+  "Date:": "日付:",
+  "Total:": "合計:"
 }

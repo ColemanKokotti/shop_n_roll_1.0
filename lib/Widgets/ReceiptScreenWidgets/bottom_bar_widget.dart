@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_n_roll/Bloc_Cubit/ReceiptCubit/receipt_cubit.dart';
 import 'Buttons/back_button_widget.dart';
 import 'Buttons/save_and_clear_button_widget.dart';
 

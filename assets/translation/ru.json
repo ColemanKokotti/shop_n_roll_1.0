@@ -42,6 +42,16 @@
   "Qty": "Кол-во",
   "Unit": "Ед.",
   "No bought items": "Нет купленных товаров",
-  "Thank you for shopping!": "Спасибо за покупку!"
+  "Thank you for shopping!": "Спасибо за покупку!",
+  "Receipt Detail": "Детали чека",
+  "Error: ${error}": "Ошибка: ${error}",
+  "Receipt not found": "Чек не найден",
+  "Items not found": "Товары не найдены",
+  "Receipt History": "История чеков",
+  "No receipts yet": "Нет чеков",
+  "Order history will be displayed here": "История заказов будет отображена здесь",
+  "Receipt #": "Чек #",
+  "Date:": "Дата:",
+  "Total:": "Итого:"
 }
 

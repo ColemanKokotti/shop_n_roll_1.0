@@ -42,5 +42,15 @@
   "Qty": "Cant.",
   "Unit": "Unidad",
   "No bought items": "No hay artículos comprados",
-  "Thank you for shopping!": "¡Gracias por comprar!"
+  "Thank you for shopping!": "¡Gracias por tu compra!",
+  "Receipt Detail": "Detalles del recibo",
+  "Error: ${error}": "Error: ${error}",
+  "Receipt not found": "Recibo no encontrado",
+  "Items not found": "Artículos no encontrados",
+  "Receipt History": "Historial de recibos",
+  "No receipts yet": "Sin recibos",
+  "Order history will be displayed here": "El historial de pedidos se mostrará aquí",
+  "Receipt #": "Recibo #",
+  "Date:": "Fecha:",
+  "Total:": "Total:"
 }
