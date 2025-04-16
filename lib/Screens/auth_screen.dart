@@ -10,6 +10,7 @@ import '../FireBase/account_service.dart';
 import '../FireBase/theme_preference_service.dart';
 import '../Themes/default_theme.dart';
 import '../Widgets/AuthWidgets/auth_form_widget.dart';
+import '../Widgets/AuthWidgets/error_dialog_widget.dart';
 import 'list_screen.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -41,14 +42,20 @@ class AuthScreen extends StatelessWidget {
                   child: BlocListener<AuthCubit, AuthState>(
                     listener: (context, state) {
                       if (state is AuthAuthenticated) {
+                        print("Autenticato con username: ${state.username}");
+
                         if (state.preferredLanguage != null) {
                           context.setLocale(Locale(state.preferredLanguage!));
                         }
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => ListScreen()),
-                        );
+                        Future.delayed(Duration(milliseconds: 100), () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => ListScreen()),
+                          );
+                        });
+                      } else if (state is AuthError) {
+                        ErrorDialog(context, state.error);
                       }
                     },
                     child: BlocBuilder<AuthCubit, AuthState>(
@@ -61,7 +68,7 @@ class AuthScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Welcome, ${state.user.email ?? "User"}',
+                                  'Welcome, ${state.username ?? state.user.email ?? "User"}',
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold

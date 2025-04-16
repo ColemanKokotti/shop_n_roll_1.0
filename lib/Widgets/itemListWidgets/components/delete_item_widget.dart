@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
+import '../../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 
 
 Future<bool> showDeleteConfirmationDialog(BuildContext context, String itemId,ItemListCubit itemListCubit) async {

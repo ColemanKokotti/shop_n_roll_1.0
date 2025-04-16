@@ -10,6 +10,7 @@ import '../error_dialog_widget.dart';
 class SingUpWidget extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
 
   SingUpWidget({super.key});
 
@@ -30,11 +31,23 @@ class SingUpWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 40),
                 TextFormField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    labelStyle: TextStyle(
+                        color: theme.textTheme.labelLarge?.color,
+                        fontSize: theme.textTheme.labelLarge?.fontSize),
+                    border: OutlineInputBorder(),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                  ),
+                ),
+                SizedBox(height: 12),
+                TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
-                        color: theme.appBarTheme.foregroundColor,
+                        color: theme.textTheme.labelLarge?.color,
                         fontSize: theme.textTheme.labelLarge?.fontSize),
                     border: OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -48,7 +61,7 @@ class SingUpWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: TextStyle(
-                        color: theme.appBarTheme.foregroundColor,
+                        color: theme.textTheme.labelLarge?.color,
                         fontSize: theme.textTheme.labelLarge?.fontSize),
                     border: OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -93,11 +106,19 @@ class SingUpWidget extends StatelessWidget {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
+                    if (usernameController.text.trim().isEmpty) {
+                      ErrorDialog(context, "Please enter a username.");
+                      return;
+                    }
+
+                    print("Tentativo di registrazione con username: ${usernameController.text.trim()}");
+
                     if (cubit.hasUppercase &&
                         cubit.hasNumber &&
                         cubit.hasSpecialChar &&
                         cubit.hasMinLength) {
                       context.read<AuthCubit>().register(
+                          usernameController.text.trim(),
                           emailController.text,
                           passwordController.text,
                       );
@@ -108,7 +129,6 @@ class SingUpWidget extends StatelessWidget {
                   style: theme.elevatedButtonTheme.style,
                   child: Text('Sign up'),
                 ),
-                // Show a loading indicator when AuthLoading state
                 if (state is AuthLoading)
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),

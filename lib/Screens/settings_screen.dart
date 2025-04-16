@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/SettingsWidgets/change_language_widget.dart';
 import '../Widgets/SettingsWidgets/logout_button_widget.dart';
+import '../Widgets/SettingsWidgets/profile_button_widget.dart';
 import '../Widgets/SettingsWidgets/theme_selector_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -16,27 +17,28 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: theme.appBarTheme.backgroundColor,
         foregroundColor: theme.appBarTheme.foregroundColor,
-        elevation: theme.appBarTheme.elevation,
+        elevation: 0,
         title: Text(
           'Settings'.tr(),
-          style: theme.appBarTheme.titleTextStyle,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ThemeSelector(),
-                SizedBox(height: 20),
-                ChangeLanguageButton(),
-                SizedBox(height: 20),
-                LogoutWidgetButton(),
-              ],
-            ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProfileButton(),
+              SizedBox(height: 20),
+              ThemeSelector(),
+              SizedBox(height: 20),
+              ChangeLanguageButton(),
+              SizedBox(height: 20),
+              LogoutWidgetButton(),
+            ],
           ),
         ),
       ),

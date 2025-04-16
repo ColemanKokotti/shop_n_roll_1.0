@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
-import '../../Bloc_Cubit/ItemListCubit/item_list_state.dart';
+import '../../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
+import '../../../Bloc_Cubit/ItemListCubit/item_list_state.dart';
 class UndoButtonWidget extends StatelessWidget {
   const UndoButtonWidget({super.key});
   @override
@@ -35,13 +35,13 @@ class UndoButtonWidget extends StatelessWidget {
                       Icon(
                         Icons.undo,
                         size: 24,
-                        color: theme.iconTheme.color,
+                        color: theme.appBarTheme.iconTheme?.color,
                       ),
                       const SizedBox(width: 8),
                       Text(
                         'Undo'.tr(),
                         style: TextStyle(
-                          color: theme.iconTheme.color,
+                          color: theme.appBarTheme.foregroundColor,
                           fontSize: 16,
                         ),
                       ),

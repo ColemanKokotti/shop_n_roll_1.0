@@ -8,6 +8,7 @@ import 'Bloc_Cubit/LanguageCubit/language_cubit.dart';
 import 'Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import 'Screens/splash_screen.dart';
 
+
 class MyApp extends StatefulWidget {
   final AuthCubit authCubit;
 
@@ -18,27 +19,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  late ThemeCubit _themeCubit;
 
-  @override
-  void initState() {
-    super.initState();
-    _themeCubit = ThemeCubit();
-  }
-
-  @override
-  void dispose() {
-    _themeCubit.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => _themeCubit,
-        ),
         BlocProvider(
           create: (context) => SettingsThemeCubit(),
         ),
@@ -51,6 +37,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider.value(
           value: widget.authCubit,
         ),
+
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, currentTheme) {
@@ -58,10 +45,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            title: "Shop 'n' Roll",
+            title: "Shop 'n' Roll ",
             theme: currentTheme,
             debugShowCheckedModeBanner: false,
-            home: const SplashScreen(),
+            home:  const SplashScreen() ,
           );
         },
       ),

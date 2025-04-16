@@ -3,6 +3,8 @@ class CreateItemState {
   final String descriptionItem;
   final String selectedIcon;
   final int quantity;
+  final double unitPrice;
+  final double totalPrice;
   final String? imageUrl;
 
   CreateItemState({
@@ -10,6 +12,8 @@ class CreateItemState {
     this.descriptionItem = '',
     this.selectedIcon = '',
     this.quantity = 1,
+    this.unitPrice = 0.0,
+    this.totalPrice = 0.0,
     this.imageUrl,
   });
 
@@ -18,6 +22,8 @@ class CreateItemState {
     String? descriptionItem,
     String? selectedIcon,
     int? quantity,
+    double? unitPrice,
+    double? totalPrice,
     String? imageUrl,
   }) {
     return CreateItemState(
@@ -25,11 +31,20 @@ class CreateItemState {
       descriptionItem: descriptionItem ?? this.descriptionItem,
       selectedIcon: selectedIcon ?? this.selectedIcon,
       quantity: quantity ?? this.quantity,
+      unitPrice: unitPrice ?? this.unitPrice,
+      totalPrice: totalPrice ?? this.totalPrice,
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
   CreateItemState reset() {
-    return CreateItemState();
+    return CreateItemState(
+      nameItem: '',
+      descriptionItem: '',
+      selectedIcon: '',
+      quantity: 1,
+      unitPrice: 0.0,
+      totalPrice: this.totalPrice,
+    );
   }
 }

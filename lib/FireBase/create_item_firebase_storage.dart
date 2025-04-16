@@ -18,6 +18,7 @@ class CreateItemFirebase {
           'iconItem': state.selectedIcon,
           'descriptionItem': state.descriptionItem,
           'quantity': state.quantity,
+          'unitPrice': state.unitPrice,
         });
         return true;
       }

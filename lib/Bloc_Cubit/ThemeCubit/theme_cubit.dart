@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_n_roll/Themes/cyberpunk_theme.dart';
 import 'package:shop_n_roll/Themes/godofwar_theme.dart';
 import 'package:shop_n_roll/Themes/honkaistarrail_theme.dart';
 import 'package:shop_n_roll/Themes/pokemon_theme.dart';
@@ -24,7 +23,6 @@ final themeMap = {
   'vintage': vintageRetroTheme,
   'earthy': earthyTheme,
   'ocean': oceanBreezeTheme,
-  'cyberpunk': cyberpunkTheme,
   'godofwar': godOfWarTheme,
   'pokemon': pokemonTheme,
   'honkaistarrail': honkaiStarRailTheme,

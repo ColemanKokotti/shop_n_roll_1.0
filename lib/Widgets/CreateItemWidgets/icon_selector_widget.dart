@@ -4,11 +4,13 @@ import '../../Data/data_items.dart';
 class IconSelectorWidget extends StatelessWidget {
   final String selectedIcon;
   final Function(String) onIconSelect;
+  final ThemeData theme;
 
   const IconSelectorWidget({
     super.key,
     required this.selectedIcon,
     required this.onIconSelect,
+    required this.theme,
   });
 
   @override
@@ -18,12 +20,11 @@ class IconSelectorWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: theme.colorScheme.primary,
-          width: 2.0,
+          color: theme.dividerColor,
+          width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8.0),
       ),
-      padding: EdgeInsets.all(20),
       child: SizedBox(
         height: 150,
         width: 300,
@@ -44,15 +45,15 @@ class IconSelectorWidget extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: isSelected ? theme.colorScheme.primary.withOpacity(0.2) : Colors.transparent,
-                  border: Border.all(
-                    color: isSelected ? theme.colorScheme.primary : theme.colorScheme.primary.withOpacity(0.1),
-                    width: 2.0,
-                  ),
+                  color: isSelected ? theme.secondaryHeaderColor : Colors.transparent,
                   shape: BoxShape.circle,
+                  border: Border.all(
+                    color: theme.dividerColor,
+                    width: 1.0,
+                  ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: iconWidget,
                 ),
               ),
