@@ -102,11 +102,14 @@ final ThemeData honkaiStarRailTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xFF7B68EE),
-      elevation: 8,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      backgroundColor: const Color(0xFF9D4EDD),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(30),
+        side: const BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,

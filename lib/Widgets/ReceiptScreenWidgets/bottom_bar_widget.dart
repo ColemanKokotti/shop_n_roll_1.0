@@ -13,7 +13,7 @@ class ReceiptBottomBar extends StatelessWidget {
         color: Theme.of(context).appBarTheme.backgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black,
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),

@@ -17,10 +17,7 @@ class ReceiptSaveAndClearButton extends StatelessWidget {
             context.read<ReceiptCubit>().saveReceiptAndClear();
             Navigator.pop(context);
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: theme.colorScheme.onPrimary,
-            foregroundColor: theme.colorScheme.primary,
-          ),
+          style: theme.elevatedButtonTheme.style,
           child: Text('Save'.tr()),
         );
       },

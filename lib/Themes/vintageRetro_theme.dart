@@ -107,6 +107,10 @@ final ThemeData vintageRetroTheme = ThemeData(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: Color(0xFFF5F2E9),
+          width: 4.0,
+        ),
       ),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,

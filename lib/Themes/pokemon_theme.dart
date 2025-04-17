@@ -97,15 +97,18 @@ final ThemeData pokemonTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xFFE3350D),
-      elevation: 4,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      backgroundColor: const Color(0xFFE62E00),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       textStyle: TextStyle(
         fontFamily: 'Pokemon',
         fontWeight: FontWeight.bold,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+        side: const BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
     ),
   ),

@@ -107,6 +107,10 @@ final ThemeData witcherTheme = ThemeData(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,

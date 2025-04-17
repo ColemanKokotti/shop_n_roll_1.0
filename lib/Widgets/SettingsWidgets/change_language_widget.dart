@@ -12,10 +12,9 @@ class ChangeLanguageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final languageOptions = ['en', 'en_US', 'hi', 'zh', 'it', 'ja', 'ru', 'de', 'fr', 'es', 'ro', 'ar'];
+    final languageOptions = ['en','hi', 'zh', 'it', 'ja', 'ru', 'de', 'fr', 'es', 'ro', 'ar'];
     final languageNames = {
       'en': 'English',
-      'en_US': 'English (US)',
       'hi': 'हिंदी',
       'zh': '中文',
       'it': 'Italiano',
@@ -30,7 +29,6 @@ class ChangeLanguageButton extends StatelessWidget {
 
     final languageFlags = {
       'en': 'assets/icons/united_kingdom_flag_icon.png',
-      'en_US': 'assets/icons/usa_flag_icon.png',
       'hi': 'assets/icons/india_flag_icon.png',
       'zh': 'assets/icons/china_flag_icon.png',
       'it': 'assets/icons/italy_flag_icon.png',

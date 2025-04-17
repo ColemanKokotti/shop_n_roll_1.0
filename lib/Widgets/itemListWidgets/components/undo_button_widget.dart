@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 import '../../../Bloc_Cubit/ItemListCubit/item_list_state.dart';
+
 class UndoButtonWidget extends StatelessWidget {
   const UndoButtonWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -13,8 +15,11 @@ class UndoButtonWidget extends StatelessWidget {
         if (state.deletedItem == null || state.isItemRestored) {
           return const SizedBox.shrink();
         }
+
+        // Position the undo button higher above the CreateItemButton
+        // (160 instead of 40 to position it higher)
         return Positioned(
-          bottom: 60,
+          bottom: 160,
           left: 0,
           right: 0,
           child: Center(

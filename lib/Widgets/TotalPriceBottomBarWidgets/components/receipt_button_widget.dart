@@ -21,7 +21,7 @@ class ReceiptButton extends StatelessWidget {
       },
       icon: Icon(
         Icons.receipt_long,
-        color: theme.iconTheme.color,
+        color: theme.appBarTheme.iconTheme?.color,
       ),
       label: Text(
         'Receipt'.tr(),
@@ -30,14 +30,7 @@ class ReceiptButton extends StatelessWidget {
           fontSize: 15,
         ),
       ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: theme.appBarTheme.foregroundColor,
-        foregroundColor: theme.appBarTheme.backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        elevation: 0,
-      ),
+      style: theme.elevatedButtonTheme.style,
     );
   }
 }

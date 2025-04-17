@@ -106,7 +106,11 @@ final ThemeData pastelTheme = ThemeData(
       elevation: 2,
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30), // Full circular border
+        borderRadius: BorderRadius.circular(30),
+        side: BorderSide(
+          color: Color(0xFF4A4A4A),
+          width: 4.0,
+        ),
       ),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,

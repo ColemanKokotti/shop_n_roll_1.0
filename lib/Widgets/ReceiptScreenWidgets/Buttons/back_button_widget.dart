@@ -14,10 +14,7 @@ class ReceiptBackButton extends StatelessWidget {
     final theme = Theme.of(context);
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: theme.colorScheme.onPrimary,
-        foregroundColor: theme.colorScheme.primary,
-      ),
+      style: theme.elevatedButtonTheme.style,
       child: Text('Back'.tr()),
     );
   }

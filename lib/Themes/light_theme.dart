@@ -46,7 +46,10 @@ final ThemeData lightTheme = ThemeData(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
-        side: BorderSide(color: Colors.blue, width: 2.0),
+        side: BorderSide(
+          color: Colors.blue,
+          width: 4.0,
+        ),
       ),
       elevation: 0,
     ),

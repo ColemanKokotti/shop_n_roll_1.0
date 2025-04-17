@@ -102,15 +102,18 @@ final ThemeData oceanBreezeTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xFF0277BD),
-      elevation: 2,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      backgroundColor: const Color(0xFF0277BD),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,
         letterSpacing: 0.5,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+        side: const BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
     ),
   ),

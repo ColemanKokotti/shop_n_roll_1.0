@@ -92,11 +92,15 @@ final ThemeData darkTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
       backgroundColor: Color(0xFF00BFA5),
-      elevation: 4,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(30),
+        side: BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
+      elevation: 0,
     ),
   ),
 

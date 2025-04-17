@@ -102,11 +102,14 @@ final ThemeData warframeTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xFF00A8CC),
-      elevation: 8,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      backgroundColor: const Color(0xFF1A1A1A),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(30),
+        side: const BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,

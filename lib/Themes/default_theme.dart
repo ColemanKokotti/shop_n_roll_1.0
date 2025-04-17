@@ -92,10 +92,13 @@ final ThemeData defaultTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
       backgroundColor: Color(0xFF009688),
-      elevation: 2,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30), 
+        borderRadius: BorderRadius.circular(30),
+        side: const BorderSide(
+          color: Colors.white,
+          width: 4.0,
+        ),
       ),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,
