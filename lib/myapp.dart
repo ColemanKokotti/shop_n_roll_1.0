@@ -2,12 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Bloc_Cubit/LanguageCubit/setting_language_cubit.dart';
+import 'Bloc_Cubit/ProfileCubit/profile_cubit.dart';
 import 'Bloc_Cubit/ThemeCubit/theme_cubit.dart';
 import 'Bloc_Cubit/ThemeCubit/settings_theme_cubit.dart';
 import 'Bloc_Cubit/LanguageCubit/language_cubit.dart';
 import 'Bloc_Cubit/AuthCubit/auth_cubit.dart';
+import 'FireBase/account_service.dart';
 import 'Screens/splash_screen.dart';
-
 
 class MyApp extends StatefulWidget {
   final AuthCubit authCubit;
@@ -20,9 +21,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
-
   @override
   Widget build(BuildContext context) {
+    final profileCubit = ProfileCubit(AccountService());
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -37,7 +39,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider.value(
           value: widget.authCubit,
         ),
-
+        BlocProvider<ProfileCubit>.value(
+          value: profileCubit,
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, currentTheme) {
@@ -48,7 +52,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             title: "Shop 'n' Roll ",
             theme: currentTheme,
             debugShowCheckedModeBanner: false,
-            home:  const SplashScreen() ,
+            home: const SplashScreen(),
           );
         },
       ),

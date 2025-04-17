@@ -1,14 +1,15 @@
-import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Bloc_Cubit/ThemeCubit/theme_cubit.dart';
 import '../../FireBase/account_service.dart';
 import '../../FireBase/auth_service.dart';
 import '../../FireBase/firebase_language_preference.dart';
 import '../../FireBase/theme_preference_service.dart';
+import '../../Bloc_Cubit/ProfileCubit/profile_cubit.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -31,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
   String email = '';
   String password = '';
   String username = '';
-  String? avatarPath; // Added avatarPath property
+  String? avatarPath;
 
   ThemeCubit getThemeCubit() {
     return _themeCubit;
@@ -70,13 +71,11 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthUpdate());
   }
 
-  // Added method to update avatar path
   void updateAvatarPath(String value) {
     avatarPath = value;
     emit(AuthUpdate(avatarPath: avatarPath));
   }
 
-  // Added method to get avatar path for current user
   Future<String?> getAvatarPathForCurrentUser() async {
     User? currentUser = _authService.getCurrentUser();
     if (currentUser != null) {
@@ -85,14 +84,12 @@ class AuthCubit extends Cubit<AuthState> {
     return null;
   }
 
-  // Added method to update avatar path in Firestore
   Future<void> updateUserAvatar(String newAvatarPath) async {
     User? currentUser = _authService.getCurrentUser();
     if (currentUser != null) {
       await _accountService.updateUserAvatarPath(currentUser.uid, newAvatarPath);
       avatarPath = newAvatarPath;
 
-      // Update the state if currently authenticated
       if (state is AuthAuthenticated) {
         final currentState = state as AuthAuthenticated;
         emit(AuthAuthenticated(
@@ -145,10 +142,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<String?> _fetchUsernameWithFallback(String userId) async {
     String? username;
 
-    // Debug: Print userId
     print("DEBUG - Fetching username for userId: $userId");
 
-    // Try to get username from 'users' collection first
     try {
       print("DEBUG - Checking users collection");
       DocumentSnapshot userDoc = await _firestore.collection('users').doc(userId).get();
@@ -158,7 +153,6 @@ class AuthCubit extends Cubit<AuthState> {
         print("DEBUG - Username from users collection: $username");
 
         if (username != null && username.isNotEmpty) {
-          // Save this username to the Accounts collection for future use
           await _accountService.updateUsername(userId, username);
           return username;
         }
@@ -169,7 +163,6 @@ class AuthCubit extends Cubit<AuthState> {
       print("DEBUG - Error fetching from users: $e");
     }
 
-    // If not found, try to get from 'Accounts' collection
     try {
       print("DEBUG - Checking Accounts collection");
       username = await _accountService.getUsernameFromAccount(userId);
@@ -182,29 +175,57 @@ class AuthCubit extends Cubit<AuthState> {
       print("DEBUG - Error fetching from Accounts: $e");
     }
 
-    // Last resort: Check Firebase Auth displayName
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null && user.displayName != null && user.displayName!.isNotEmpty) {
       username = user.displayName;
       print("DEBUG - Using displayName from Firebase Auth: $username");
 
-      // Save this for future use
       await _accountService.updateUsername(userId, username!);
       return username;
     }
 
-    // If we reached here, no username was found anywhere
     print("DEBUG - No username found anywhere for userId: $userId");
     return null;
   }
 
-  // New method to fetch avatar path
   Future<String?> _fetchAvatarPath(String userId) async {
     try {
       return await _accountService.getUserAvatarPath(userId);
     } catch (e) {
       print("DEBUG - Error fetching avatar path: $e");
       return null;
+    }
+  }
+
+  Future<void> _initializeProfileCubit(BuildContext context, User user) async {
+    try {
+      final profileCubit = context.read<ProfileCubit>();
+      await profileCubit.loadProfile(user);
+    } catch (e) {
+      print("DEBUG - Error initializing ProfileCubit: $e");
+    }
+  }
+
+  Future<void> refreshAuthState(BuildContext context) async {
+    if (state is AuthAuthenticated) {
+      User? currentUser = _authService.getCurrentUser();
+      if (currentUser != null) {
+        await currentUser.reload();
+        currentUser = _authService.getCurrentUser();
+
+        String? username = await _fetchUsernameWithFallback(currentUser!.uid);
+        String? userAvatarPath = await _fetchAvatarPath(currentUser.uid);
+
+        final currentState = state as AuthAuthenticated;
+
+        emit(AuthAuthenticated(
+            currentUser,
+            currentState.preferredLanguage,
+            currentState.preferredTheme,
+            username: username,
+            avatarPath: userAvatarPath
+        ));
+      }
     }
   }
 
@@ -218,7 +239,7 @@ class AuthCubit extends Cubit<AuthState> {
 
         final themePreferenceFuture = _themePreferenceService.getThemePreference(user.uid);
         final languagePreferenceFuture = _languagePreferenceService.getLanguagePreference(user.uid);
-        final avatarPathFuture = _fetchAvatarPath(user.uid); // Added avatar path fetch
+        final avatarPathFuture = _fetchAvatarPath(user.uid);
 
         String? username = await _fetchUsernameWithFallback(user.uid);
         print("DEBUG - Username after login: $username");
@@ -226,7 +247,7 @@ class AuthCubit extends Cubit<AuthState> {
         final results = await Future.wait([themePreferenceFuture, languagePreferenceFuture, avatarPathFuture]);
         final String? savedTheme = results[0];
         final String? savedLanguage = results[1];
-        final String? userAvatarPath = results[2]; // Get avatar path from results
+        final String? userAvatarPath = results[2];
 
         if (savedTheme != null) {
           await _themeCubit.selectTheme(savedTheme);
@@ -246,6 +267,8 @@ class AuthCubit extends Cubit<AuthState> {
             username: username,
             avatarPath: userAvatarPath
         ));
+
+        await _initializeProfileCubit(context, user);
       } else {
         emit(AuthUnauthenticated());
       }
@@ -266,7 +289,7 @@ class AuthCubit extends Cubit<AuthState> {
 
         final themePreferenceFuture = _themePreferenceService.getThemePreference(currentUser.uid);
         final languagePreferenceFuture = _languagePreferenceService.getLanguagePreference(currentUser.uid);
-        final avatarPathFuture = _fetchAvatarPath(currentUser.uid); // Added avatar path fetch
+        final avatarPathFuture = _fetchAvatarPath(currentUser.uid);
 
         String? username = await _fetchUsernameWithFallback(currentUser.uid);
         print("DEBUG - Username after auth check: $username");
@@ -274,7 +297,7 @@ class AuthCubit extends Cubit<AuthState> {
         final results = await Future.wait([themePreferenceFuture, languagePreferenceFuture, avatarPathFuture]);
         final String? savedTheme = results[0];
         final String? savedLanguage = results[1];
-        final String? userAvatarPath = results[2]; // Get avatar path from results
+        final String? userAvatarPath = results[2];
 
         if (savedTheme != null) {
           await _themeCubit.selectTheme(savedTheme);
@@ -294,6 +317,8 @@ class AuthCubit extends Cubit<AuthState> {
             username: username,
             avatarPath: userAvatarPath
         ));
+
+        await _initializeProfileCubit(context, currentUser);
       } else {
         emit(AuthUnauthenticated());
       }
@@ -313,16 +338,14 @@ class AuthCubit extends Cubit<AuthState> {
       if (user != null) {
         print("DEBUG - Firebase user created: ${user.uid}");
 
-        // Default avatar path for new users
         String defaultAvatarPath = 'assets/profile_icon/default_avatar.png';
 
-        // Store username in both places to be safe
         await _accountService.createUserAccount(
             user.uid,
             preferredLanguage: 'en',
             preferredTheme: 'default',
             username: username,
-            avatarPath: defaultAvatarPath // Added default avatar path
+            avatarPath: defaultAvatarPath
         );
         print("DEBUG - Account created in Accounts collection with username: $username");
 
@@ -336,7 +359,6 @@ class AuthCubit extends Cubit<AuthState> {
         await _themeCubit.selectTheme('default');
         context.setLocale(Locale('en'));
 
-        // Verify username is stored in Firestore
         DocumentSnapshot userDoc = await _firestore.collection('users').doc(user!.uid).get();
         if (userDoc.exists) {
           print("DEBUG - User document in 'users' collection: ${userDoc.data()}");
@@ -359,6 +381,8 @@ class AuthCubit extends Cubit<AuthState> {
             username: username,
             avatarPath: defaultAvatarPath
         ));
+
+        await _initializeProfileCubit(context, user);
       } else {
         print("DEBUG - Registration failed: user is null");
         emit(AuthUnauthenticated());

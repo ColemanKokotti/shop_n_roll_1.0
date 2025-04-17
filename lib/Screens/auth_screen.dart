@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import '../Bloc_Cubit/AuthCubit/auth_state.dart';
 import '../Bloc_Cubit/ThemeCubit/theme_cubit.dart';
+import '../Bloc_Cubit/ProfileCubit/profile_cubit.dart';
 import '../FireBase/auth_service.dart';
 import '../FireBase/account_service.dart';
 import '../FireBase/theme_preference_service.dart';
@@ -20,13 +21,20 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: defaultTheme,
-      child: BlocProvider(
-        create: (context) => AuthCubit(
-            AuthService(FirebaseAuth.instance),
-            AccountService(),
-            context.read<ThemeCubit>(),
-            ThemePreferenceService()
-        )..loadCredentials(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthCubit(
+                AuthService(FirebaseAuth.instance),
+                AccountService(),
+                context.read<ThemeCubit>(),
+                ThemePreferenceService()
+            )..loadCredentials(),
+          ),
+          BlocProvider.value(
+            value: context.read<ProfileCubit>(),
+          ),
+        ],
         child: Builder(
             builder: (context) {
               return Scaffold(
