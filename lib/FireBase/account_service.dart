@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AccountService {
   final CollectionReference _accountsCollection = FirebaseFirestore.instance.collection('Accounts');
 
+  // Existing methods
   Future<void> addItemToAccount(String userId, String itemId) async {
     try {
       await _accountsCollection.doc(userId).update({
@@ -60,7 +61,8 @@ class AccountService {
   Future<void> createUserAccount(String userId, {
     String? preferredLanguage,
     String? preferredTheme,
-    String? username
+    String? username,
+    String? avatarPath
   }) async {
     try {
       print("DEBUG - AccountService: Creating account for userId: $userId with username: $username");
@@ -71,6 +73,7 @@ class AccountService {
         'preferredLanguage': preferredLanguage ?? 'en',
         'theme': preferredTheme ?? 'default',
         'username': username ?? '',
+        'avatarPath': avatarPath ?? 'assets/profile_icon/default_avatar.png',
         'createdAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 
@@ -104,6 +107,7 @@ class AccountService {
           'preferredLanguage': 'en',
           'theme': 'default',
           'username': username,
+          'avatarPath': 'assets/profile_icon/default_avatar.png',
           'createdAt': FieldValue.serverTimestamp(),
         });
         print('DEBUG - AccountService: Created new account with username');
@@ -125,12 +129,50 @@ class AccountService {
           'preferredLanguage': 'en',
           'theme': 'default',
           'username': username,
+          'avatarPath': 'assets/profile_icon/default_avatar.png',
           'createdAt': FieldValue.serverTimestamp(),
         });
         print('DEBUG - AccountService: Created document after update failed');
       } catch (e2) {
         print('DEBUG - AccountService: Error creating document after update failed: $e2');
       }
+    }
+  }
+
+  // New Methods for Avatar
+  Future<String?> getUserAvatarPath(String userId) async {
+    try {
+      DocumentSnapshot doc = await _accountsCollection.doc(userId).get();
+      if (doc.exists && doc.data() != null) {
+        var data = doc.data() as Map<String, dynamic>;
+        String? avatarPath = data['avatarPath'] as String?;
+        return avatarPath;
+      }
+      return null;
+    } catch (e) {
+      print('DEBUG - AccountService: Error retrieving avatar path: $e');
+      return null;
+    }
+  }
+
+  Future<void> updateUserAvatarPath(String userId, String avatarPath) async {
+    try {
+      print("DEBUG - AccountService: Updating avatar path for userId: $userId to: $avatarPath");
+
+      // Check if document exists first
+      DocumentSnapshot docCheck = await _accountsCollection.doc(userId).get();
+
+      if (docCheck.exists) {
+        await _accountsCollection.doc(userId).update({
+          'avatarPath': avatarPath,
+        });
+        print('DEBUG - AccountService: Avatar path updated');
+      } else {
+        // Document doesn't exist, create it with default values
+        await createUserAccount(userId, avatarPath: avatarPath);
+      }
+    } catch (e) {
+      print('DEBUG - AccountService: Error updating avatar path: $e');
     }
   }
 }

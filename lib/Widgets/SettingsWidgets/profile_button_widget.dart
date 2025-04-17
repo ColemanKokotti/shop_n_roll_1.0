@@ -3,10 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import '../../Bloc_Cubit/AuthCubit/auth_state.dart';
+import '../../Screens/edit_profile_screen.dart';
 import '../../Screens/history_receipt_screen.dart';
+import '../../FireBase/account_service.dart';
 
-class ProfileButton extends StatelessWidget {
+class ProfileButton extends StatefulWidget {
   const ProfileButton({super.key});
+
+  @override
+  State<ProfileButton> createState() => _ProfileButtonState();
+}
+
+class _ProfileButtonState extends State<ProfileButton> {
+  String? avatarPath;
+  final AccountService _accountService = AccountService();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAvatarPath();
+  }
+
+  Future<void> _loadAvatarPath() async {
+    final authCubit = context.read<AuthCubit>();
+    if (authCubit.state is AuthAuthenticated) {
+      final user = (authCubit.state as AuthAuthenticated).user;
+      final path = await _accountService.getUserAvatarPath(user.uid);
+      if (path != null && mounted) {
+        setState(() {
+          avatarPath = path;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +68,19 @@ class ProfileButton extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Profile'.tr(),
-                style: TextStyle(
-                  color: theme.primaryColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Profile'.tr(),
+                    style: TextStyle(
+                      color: theme.primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                ],
               ),
             ),
             Container(
@@ -71,14 +106,15 @@ class ProfileButton extends StatelessWidget {
                         CircleAvatar(
                           backgroundColor: theme.primaryColor,
                           radius: 25,
-                          child: Text(
+                          backgroundImage: avatarPath != null ? AssetImage(avatarPath!) : null,
+                          child: avatarPath == null ? Text(
                             username.isNotEmpty ? username[0].toUpperCase() : '?',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
-                          ),
+                          ) : null,
                         ),
                         SizedBox(width: 16),
                         Expanded(
@@ -108,6 +144,25 @@ class ProfileButton extends StatelessWidget {
                             ],
                           ),
                         ),
+                        if (state is AuthAuthenticated)
+                          IconButton(
+                            icon: Icon(Icons.edit, color: theme.primaryColor),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => EditProfileScreen(
+                                    initialUsername: username,
+                                  ),
+                                ),
+                              ).then((_) {
+                                // Refresh avatar path after returning from edit screen
+                                _loadAvatarPath();
+                                // Refresh auth state to get updated username
+                                authCubit.checkAuthStatus(context);
+                              });
+                            },
+                            tooltip: 'Edit Profile'.tr(),
+                          ),
                       ],
                     ),
                     SizedBox(height: 16),
