@@ -37,7 +37,8 @@ void main() async {
         supportedLocales: [
           Locale('en'), Locale('it'), Locale('ja'),
           Locale('ru'), Locale('de'), Locale('fr'),
-          Locale('es'), Locale("ro"), Locale('ar')
+          Locale('es'), Locale("ro"), Locale('ar'),
+          Locale('hi'),Locale('zh'),Locale('en_US')
         ],
         path: 'assets/translation',
         fallbackLocale: Locale('en'),
