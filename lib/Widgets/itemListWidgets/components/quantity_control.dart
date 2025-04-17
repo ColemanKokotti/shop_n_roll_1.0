@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class QuantityControl extends StatelessWidget {
+class QuantityControl extends StatefulWidget {
   final String documentId;
   final int quantity;
 
@@ -13,9 +13,49 @@ class QuantityControl extends StatelessWidget {
   });
 
   @override
+  State<QuantityControl> createState() => _QuantityControlState();
+}
+
+class _QuantityControlState extends State<QuantityControl> {
+  late int _currentQuantity;
+  late ValueNotifier<int> _quantityNotifier;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentQuantity = widget.quantity;
+    _quantityNotifier = ValueNotifier(widget.quantity);
+  }
+
+  @override
+  void dispose() {
+    _quantityNotifier.dispose();
+    super.dispose();
+  }
+
+  Future<void> _updateQuantity(int newQuantity) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('items')
+          .doc(widget.documentId)
+          .update({
+            'quantity': newQuantity,
+            'updatedAt': FieldValue.serverTimestamp()
+          });
+    } catch (e) {
+      print('Error updating quantity: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final itemListCubit = context.read<ItemListCubit>();
 
     return Container(
       decoration: BoxDecoration(
@@ -30,27 +70,40 @@ class QuantityControl extends StatelessWidget {
             context,
             icon: Icons.remove,
             onPressed: () {
-              if (quantity > 0) {
-                itemListCubit.updateQuantity(documentId, quantity - 1);
+              if (_currentQuantity > 0) {
+                setState(() {
+                  _currentQuantity--;
+                  _updateQuantity(_currentQuantity);
+                });
+                _quantityNotifier.value = _currentQuantity;
               }
             },
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-              '$quantity',
-              style: TextStyle(
-                color: theme.textTheme.labelLarge?.color,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
+          ValueListenableBuilder<int>(
+            valueListenable: _quantityNotifier,
+            builder: (context, value, child) {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  '$value',
+                  style: TextStyle(
+                    color: theme.textTheme.labelLarge?.color,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              );
+            },
           ),
           _buildButton(
             context,
             icon: Icons.add,
             onPressed: () {
-              itemListCubit.updateQuantity(documentId, quantity + 1);
+              setState(() {
+                _currentQuantity++;
+                _updateQuantity(_currentQuantity);
+              });
+              _quantityNotifier.value = _currentQuantity;
             },
           ),
         ],
@@ -60,7 +113,7 @@ class QuantityControl extends StatelessWidget {
 
   Widget _buildButton(BuildContext context, {required IconData icon, required VoidCallback onPressed}) {
     return IconButton(
-      icon: Icon(icon, color: Theme.of(context).iconTheme.color),
+      icon: Icon(icon),
       onPressed: onPressed,
     );
   }
