@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Bloc_Cubit/ItemDetailedCubit/item_detailed_cubit.dart';
 import '../../Data/data_items.dart';
-import 'item_editor_fields.dart';
+import 'editcomponents/edit_description_fields.dart';
+import 'editcomponents/edit_icon_filed.dart';
+import 'editcomponents/edit_name_field.dart';
+import 'editcomponents/edit_price_filed.dart';
+import 'editcomponents/edit_quantity_field.dart';
+
 
 class ItemEditorWidget extends StatelessWidget {
   final Item item;
@@ -26,7 +31,7 @@ class ItemEditorWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: theme.shadowColor.withOpacity(0.3),
+                color: theme.shadowColor,
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
