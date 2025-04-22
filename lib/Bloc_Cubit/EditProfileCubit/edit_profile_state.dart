@@ -23,3 +23,6 @@ class EditProfileError extends EditProfileState {
 }
 
 class EditProfileSuccess extends EditProfileState {}
+
+// New state for account deletion
+class AccountDeleted extends EditProfileState {}

@@ -62,7 +62,7 @@ class ProfileButton extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const ProfileHeaderWidget(),
-                if (profileState is ProfileLoading && !(authState is AuthAuthenticated))
+                if (profileState is ProfileLoading && authState is! AuthAuthenticated)
                   const Center(child: CircularProgressIndicator())
                 else
                   ProfileCardWidget(

@@ -13,7 +13,7 @@ class TotalPriceDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${totalPrice.toStringAsFixed(2)}',
+      totalPrice.toStringAsFixed(2),
       style: TextStyle(
         color: theme.textTheme.bodyLarge?.color,
         fontSize: 16,

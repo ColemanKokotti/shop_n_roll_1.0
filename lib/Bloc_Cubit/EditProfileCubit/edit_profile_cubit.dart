@@ -155,7 +155,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       }
 
       await _accountRepository.updateUsername(currentUser.uid, _username);
-
       await currentUser.updateDisplayName(_username);
 
       try {
@@ -172,6 +171,51 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       emit(EditProfileSuccess());
     } catch (e) {
       emit(EditProfileError('Error updating profile: ${e.toString()}'));
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    emit(EditProfileLoading());
+
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser == null) {
+        emit(EditProfileError('User not authenticated'));
+        return;
+      }
+
+      final String userId = currentUser.uid;
+
+      WriteBatch batch = FirebaseFirestore.instance.batch();
+
+      DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+      DocumentReference accountRef = FirebaseFirestore.instance.collection('Accounts').doc(userId);
+
+      batch.delete(userRef);
+      batch.delete(accountRef);
+
+      await batch.commit();
+
+      QuerySnapshot userItemsQuery = await FirebaseFirestore.instance
+          .collection('userItems')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      if (userItemsQuery.docs.isNotEmpty) {
+        WriteBatch itemsBatch = FirebaseFirestore.instance.batch();
+        for (var doc in userItemsQuery.docs) {
+          itemsBatch.delete(doc.reference);
+        }
+        await itemsBatch.commit();
+      }
+
+      await currentUser.delete();
+
+      emit(AccountDeleted());
+    } catch (e) {
+      String errorMessage = 'Error deleting account: ${e.toString()}';
+      print(errorMessage);
+      emit(EditProfileError(errorMessage));
     }
   }
 

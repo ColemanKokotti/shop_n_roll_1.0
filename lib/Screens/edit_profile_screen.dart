@@ -2,11 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shop_n_roll/Screens/splash_screen.dart';
 import '../Bloc_Cubit/EditProfileCubit/edit_profile_cubit.dart';
 import '../Bloc_Cubit/EditProfileCubit/edit_profile_state.dart';
 import '../Data/DataAccount/account_repository_implementation.dart';
 import '../FireBase/account_service.dart';
 import '../Widgets/EditProfileScreenWidgets/avatar_section_widget.dart';
+import '../Widgets/EditProfileScreenWidgets/delete_account_dialog_widget.dart';
 import '../Widgets/EditProfileScreenWidgets/password_section_widget.dart';
 import '../Widgets/EditProfileScreenWidgets/username_section_widget.dart';
 import '../Bloc_Cubit/AuthCubit/auth_cubit.dart';
@@ -52,6 +54,17 @@ class EditProfileView extends StatelessWidget {
 
         if (state is EditProfileInitial) {
           _usernameController.text = state.username;
+        }
+
+        if (state is AccountDeleted) {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => SplashScreen()),
+                (route) => false,
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Account deleted successfully'.tr())),
+          );
         }
       },
       builder: (context, state) {
@@ -133,7 +146,53 @@ class EditProfileView extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 48),
+          Divider(
+            color: theme.dividerColor,
+            thickness: 1.0,
+          ),
+          SizedBox(height: 24),
+          Text(
+            'Danger Zone'.tr(),
+            style: TextStyle(
+              color: theme.colorScheme.error,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => _showDeleteAccountConfirmation(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.error,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              child: Text(
+                'Delete Account'.tr(),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  void _showDeleteAccountConfirmation(BuildContext context) {
+    final parentContext = context;
+    showDialog(
+      context: parentContext,
+      builder: (dialogContext) => DeleteAccountDialog(
+        onConfirm: () => parentContext.read<EditProfileCubit>().deleteAccount(),
       ),
     );
   }

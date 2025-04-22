@@ -10,7 +10,6 @@ final ThemeData earthyTheme = ThemeData(
     primary: Color(0xFF6D4C41),
     secondary: Color(0xFF8D6E63),
     surface: Colors.white,
-    background: Color(0xFFF5F5F5),
     error: Color(0xFFD32F2F),
   ),
 
@@ -133,8 +132,8 @@ final ThemeData earthyTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFF6D4C41);
       }
       return Colors.grey[300]!;

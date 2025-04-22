@@ -5,7 +5,6 @@ class CreateItemState {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
-  final String? imageUrl;
 
   CreateItemState({
     this.nameItem = '',
@@ -14,7 +13,6 @@ class CreateItemState {
     this.quantity = 1,
     this.unitPrice = 0.0,
     this.totalPrice = 0.0,
-    this.imageUrl,
   });
 
   CreateItemState copyWith({
@@ -33,7 +31,6 @@ class CreateItemState {
       quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       totalPrice: totalPrice ?? this.totalPrice,
-      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -44,7 +41,7 @@ class CreateItemState {
       selectedIcon: '',
       quantity: 1,
       unitPrice: 0.0,
-      totalPrice: this.totalPrice,
+      totalPrice: totalPrice,
     );
   }
 }

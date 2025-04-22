@@ -10,7 +10,6 @@ final ThemeData pastelTheme = ThemeData(
     primary: Color(0xFFFFC8DD),
     secondary: Color(0xFFBDE0FE),
     surface: Colors.white,
-    background: Color(0xFFFFF9F9),
     error: Color(0xFFFF8B94),
   ),
 
@@ -163,8 +162,8 @@ final ThemeData pastelTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFFFFC8DD);
       }
       return Colors.grey[300]!;

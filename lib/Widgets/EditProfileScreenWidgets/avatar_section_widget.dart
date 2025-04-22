@@ -44,7 +44,7 @@ class AvatarSection extends StatelessWidget {
   }
 
   Widget _buildAvatarList(ThemeData theme) {
-    return Container(
+    return SizedBox(
       height: 100,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

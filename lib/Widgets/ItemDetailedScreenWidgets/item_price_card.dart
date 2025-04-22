@@ -7,11 +7,11 @@ class ItemPriceCard extends StatelessWidget {
   final double totalPrice;
 
   const ItemPriceCard({
-    Key? key,
+    super.key,
     required this.unitPrice,
     required this.quantity,
     required this.totalPrice,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ItemPriceCard extends StatelessWidget {
             context,
             Icons.price_change,
             'Unit Price:'.tr(),
-            '${unitPrice.toStringAsFixed(2)}',
+            unitPrice.toStringAsFixed(2),
             theme,
           ),
           const SizedBox(height: 15),
@@ -56,7 +56,7 @@ class ItemPriceCard extends StatelessWidget {
             context,
             Icons.attach_money,
             'Total Price:'.tr(),
-            '${totalPrice.toStringAsFixed(2)}',
+            totalPrice.toStringAsFixed(2),
             theme,
             isTotal: true,
           ),

@@ -5,7 +5,7 @@ class UIControllerData {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController quantityController = TextEditingController(text: '1');
-  final TextEditingController priceController = TextEditingController(text: '0.0');
+  final TextEditingController priceController = TextEditingController(text: '');
 
 
   void dispose() {

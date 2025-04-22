@@ -12,7 +12,7 @@ class BoughtItemCubit extends Cubit<bool> {
   Future<void> toggleItemStatus() async {
     try {
       final newState = !state;
-      print('Current state: ${state}, new state: ${newState}');
+      print('Current state: $state, new state: $newState');
       
       // Update the bought status in Firestore
       await _itemFirebaseStorage.updateBoughtStatus(itemId, newState);

@@ -14,6 +14,9 @@
   "Confirm": "确认",
   "Confirm deletion": "确认删除",
   "Delete": "删除",
+  "Danger Zone": "危险区域",
+  "Delete Account": "删除账户",
+  "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.": "您确定要删除您的账户吗？此操作无法撤销，您的所有数据将被永久删除。",
   "Error loading data": "加载数据时出错",
   "Item description": "项目描述",
   "Item name": "项目名称",
@@ -55,5 +58,15 @@
   "Order history will be displayed here": "订单历史将显示在这里",
   "Receipt #": "收据 #",
   "Date:": "日期:",
-  "Total:": "总计:"
+  "Total:": "总计:",
+  "Edit Profile": "编辑个人资料",
+  "Profile Picture": "个人照片",
+  "Username": "用户名",
+  "Enter username": "输入用户名",
+  "Change Password": "更改密码",
+  "New password": "新密码",
+  "Confirm password": "确认密码",
+  "Save Changes": "保存更改",
+  "Try Again": "重试",
+  "Profile updated successfully": "个人资料更新成功"
 }

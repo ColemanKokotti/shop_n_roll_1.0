@@ -34,7 +34,7 @@ class AuthService {
           .get();
 
       if (userDoc.docs.isEmpty) {
-        throw AuthException('Utente non trovato.');
+        throw AuthException("The account doesn't exist.");
       }
 
       final userEmail = userDoc.docs.first.data()['email'] as String;
@@ -44,9 +44,18 @@ class AuthService {
       );
 
       return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException nel login: '+e.code+' - '+e.message.toString());
+      if (e.code == 'user-not-found') {
+        throw AuthException("The account doesn't exist.");
+      } else if (e.code == 'wrong-password' || e.code == 'invalid-credential') {
+        throw AuthException('Email, Username or Password are incorrect.');
+      } else {
+        throw AuthException('Login failed. Please try again.');
+      }
     } catch (e) {
-      print('Errore nel login: $e');
-      throw AuthException('Login fallito. Si prega di riprovare.');
+      print('Errore generico nel login: $e');
+      throw AuthException('Login failed. Please try again.');
     }
   }
 

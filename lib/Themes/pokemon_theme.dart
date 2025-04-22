@@ -10,7 +10,6 @@ final ThemeData pokemonTheme = ThemeData(
     primary: Color(0xFFE3350D),
     secondary: Color(0xFF0075BE),
     surface: Colors.white,
-    background: Colors.white,
     error: Colors.red[700]!,
   ),
 
@@ -128,8 +127,8 @@ final ThemeData pokemonTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return Color(0xFFE3350D);
       }
       return Colors.grey[400]!;

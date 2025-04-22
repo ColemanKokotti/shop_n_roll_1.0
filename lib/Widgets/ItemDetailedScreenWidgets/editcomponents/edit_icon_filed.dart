@@ -13,10 +13,10 @@ class IconField extends StatelessWidget {
   final String documentId;
 
   const IconField({
-    Key? key,
+    super.key,
     required this.initialValue,
     required this.documentId,
-  }) : super(key: key);
+  });
 
   void _showIconSelector(BuildContext context, IconSelectorCubit cubit) {
     final theme = Theme.of(context);

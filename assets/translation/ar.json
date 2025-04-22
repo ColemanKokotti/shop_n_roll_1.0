@@ -55,5 +55,15 @@
   "Order history will be displayed here": "سيظهر سجل الطلبات هنا",
   "Receipt #": "فاتورة #",
   "Date:": "التاريخ:",
-  "Total:": "المجموع:"
+  "Total:": "المجموع:",
+  "Edit Profile": "تعديل الملف الشخصي",
+  "Profile Picture": "صورة الملف الشخصي",
+  "Username": "اسم المستخدم",
+  "Enter username": "أدخل اسم المستخدم",
+  "Change Password": "تغيير كلمة المرور",
+  "New password": "كلمة مرور جديدة",
+  "Confirm password": "تأكيد كلمة المرور",
+  "Save Changes": "حفظ التغييرات",
+  "Try Again": "جرب مرة أخرى",
+  "Profile updated successfully": "تم تحديث الملف الشخصي بنجاح"
 }

@@ -9,9 +9,9 @@ class PriceField extends StatefulWidget {
   final double initialValue;
 
   const PriceField({
-    Key? key,
+    super.key,
     required this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   State<PriceField> createState() => _PriceFieldState();

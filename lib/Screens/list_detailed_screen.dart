@@ -14,9 +14,9 @@ class ListDetailed extends StatelessWidget {
   final Item item;
 
   const ListDetailed({
-    Key? key,
+    super.key,
     required this.item,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

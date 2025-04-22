@@ -7,10 +7,10 @@ class ItemHeaderCard extends StatelessWidget {
   final String iconItem;
 
   const ItemHeaderCard({
-    Key? key,
+    super.key,
     required this.itemName,
     required this.iconItem,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
