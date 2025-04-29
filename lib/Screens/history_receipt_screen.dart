@@ -67,7 +67,7 @@ class HistoryReceiptScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 12),
                     child: ListTile(
                       title: Text(
-                        '${'Receipt'.tr()} ${index + 1}',
+                        ' ${'Receipt'.tr()} 🧾',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Column(
