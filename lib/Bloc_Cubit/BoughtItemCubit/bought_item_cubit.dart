@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../Data/item_firebase_storage.dart';
+import '../../Data/receipt_item_firebase_storage.dart';
 
 class BoughtItemCubit extends Cubit<bool> {
   final String itemId;
-  final ItemFirebaseStorage _itemFirebaseStorage;
+  final ReceiptItemFirebaseStorage _itemFirebaseStorage;
   
   BoughtItemCubit(this._itemFirebaseStorage, this.itemId, {bool initialState = false}) 
       : super(initialState);

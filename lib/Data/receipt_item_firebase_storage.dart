@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ItemFirebaseStorage {
+class ReceiptItemFirebaseStorage {
   final FirebaseFirestore _firestore;
   final FirebaseAuth _auth;
 
-  ItemFirebaseStorage(this._firestore, this._auth);
+  ReceiptItemFirebaseStorage(this._firestore, this._auth);
 
   Future<void> updateBoughtStatus(String itemId, bool isBought) async {
     try {

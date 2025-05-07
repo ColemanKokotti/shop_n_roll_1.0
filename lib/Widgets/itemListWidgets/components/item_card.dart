@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../Data/data_items.dart';
-import '../../../Data/item_firebase_storage.dart';
+import '../../../Data/receipt_item_firebase_storage.dart';
 import '../../../Screens/list_detailed_screen.dart';
 import '../../../Bloc_Cubit/ItemListCubit/item_list_cubit.dart';
 import '../../../Bloc_Cubit/BoughtItemCubit/bought_item_cubit.dart';
@@ -112,12 +112,12 @@ class ItemCard extends StatelessWidget {
                   ),
                   BlocProvider(
                     create: (_) {
-                      final itemFirebaseStorage = ItemFirebaseStorage(
+                      final receiptItemFirebaseStorage = ReceiptItemFirebaseStorage(
                         FirebaseFirestore.instance,
                         FirebaseAuth.instance,
                       );
                       return BoughtItemCubit(
-                        itemFirebaseStorage,
+                        receiptItemFirebaseStorage,
                         documentId,
                         initialState: data['isBought'] ?? false,
                       );
