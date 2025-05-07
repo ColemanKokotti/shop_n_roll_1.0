@@ -46,7 +46,7 @@ final ThemeData mintTheme = ThemeData(
   ),
 
   iconTheme: IconThemeData(
-    color: Color(0xFF3D5A59),
+    color: Color(0xFF7EC8AA),
     size: 24,
   ),
 
