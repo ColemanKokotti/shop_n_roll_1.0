@@ -74,11 +74,11 @@ class HistoryReceiptScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Date: ${createdAt.toLocal().toString().split(' ')[0]}',
+                            '${'Date:'.tr()} ${createdAt.toLocal().toString().split(' ')[0]}',
                             style: TextStyle(color: theme.primaryColor),
                           ),
                           Text(
-                            'Total: ${receipt['totalPrice'].toStringAsFixed(2)}',
+                            '${'Total'.tr()}: ${receipt['totalPrice'].toStringAsFixed(2)}',
                             style: TextStyle(color: theme.primaryColor),
                           ),
                         ],
