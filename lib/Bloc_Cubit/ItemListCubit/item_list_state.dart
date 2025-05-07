@@ -48,4 +48,8 @@ class ItemListState {
   ItemListState setError(String message) {
     return copyWith(errorMessage: message);
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

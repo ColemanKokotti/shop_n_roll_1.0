@@ -10,9 +10,13 @@ class UndoButtonWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return BlocBuilder<ItemListCubit, ItemListState>(
       builder: (context, state) {
-        if (state.deletedItem == null || state.isItemRestored) {
+        if (state.deletedItem == null || state.deletedItemId == null) {
           return const SizedBox.shrink();
         }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         return Positioned(
           bottom: 60,
           left: 0,
