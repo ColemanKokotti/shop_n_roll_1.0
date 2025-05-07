@@ -46,8 +46,27 @@ void main() async {
             BlocProvider.value(value: authCubit),
             BlocProvider.value(value: themeCubit),
           ],
-          child: MyApp(authCubit: authCubit),
+          child: MyApp(authCubit: authCubit, showSplash: true),
         ),
       )
   );
+}
+
+// Global key for root navigator
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+// Function to perform soft reload
+void softReload() {
+  final context = navigatorKey.currentContext;
+  if (context != null) {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => MyApp(
+          authCubit: context.read<AuthCubit>(),
+          showSplash: false,
+        ),
+        transitionDuration: Duration.zero,
+      ),
+    );
+  }
 }

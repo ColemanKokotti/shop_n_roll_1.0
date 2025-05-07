@@ -7,19 +7,32 @@ import 'Bloc_Cubit/ThemeCubit/settings_theme_cubit.dart';
 import 'Bloc_Cubit/LanguageCubit/language_cubit.dart';
 import 'Bloc_Cubit/AuthCubit/auth_cubit.dart';
 import 'Screens/splash_screen.dart';
-
+import 'app_content.dart';
+import 'main.dart';
 
 class MyApp extends StatefulWidget {
   final AuthCubit authCubit;
+  final bool showSplash;
 
-  const MyApp({super.key, required this.authCubit});
+  const MyApp({
+    super.key, 
+    required this.authCubit,
+    this.showSplash = true,
+  });
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Ensure the app is properly initialized
+      widget.authCubit.loadCredentials();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +50,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider.value(
           value: widget.authCubit,
         ),
-
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, currentTheme) {
           return MaterialApp(
+            navigatorKey: navigatorKey,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            title: "Shop 'n' Roll ",
+            title: "Shop 'n' Roll",
             theme: currentTheme,
             debugShowCheckedModeBanner: false,
-            home:  const SplashScreen() ,
+            home: widget.showSplash ? const SplashScreen() : const AppContent(),
           );
         },
       ),
