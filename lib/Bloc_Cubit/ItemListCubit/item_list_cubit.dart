@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'dart:async';
+import 'package:flutter/widgets.dart';
+import '../../main.dart';
 import '../../FireBase/item_firebase_storage.dart';
 import '../../FireBase/auth_service.dart';
 import '../../FireBase/account_service.dart';
@@ -21,19 +23,31 @@ class ItemListCubit extends Cubit<ItemListState> {
       if (itemData != null) {
         await _itemFirebaseStorage.deleteItem(documentId);
 
-        emit(state.copyWith(
+        // First clear any existing state
+        emit(ItemListState(itemQuantities: state.itemQuantities));
+
+        // Then set the new deleted item
+        emit(ItemListState(
+          itemQuantities: state.itemQuantities,
           deletedItem: itemData,
           deletedItemId: documentId,
+          isItemRestored: false,
         ));
 
         if (_authService.getCurrentUser() != null) {
           await _accountService.removeItemFromAccount(_authService.getCurrentUser()!.uid, documentId);
         }
 
-        // Clear the deleted item after 3 seconds if not undone
+        // Clear the deleted item after 6 seconds if not undone
         _autoClearTimer?.cancel();
-        _autoClearTimer = Timer(const Duration(seconds: 3), () {
-          emit(state.clearDeletedItem());
+        _autoClearTimer = Timer(const Duration(seconds: 6), () {
+          if (state.deletedItemId == documentId) {  // Only clear if it's the same item
+            emit(state.clearDeletedItem());
+            // Trigger soft reload to refresh the UI
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              softReload();
+            });
+          }
         });
       }
     } catch (e) {
@@ -71,10 +85,15 @@ class ItemListCubit extends Cubit<ItemListState> {
       try {
         bool success = await _itemFirebaseStorage.undoDelete(state.deletedItemId!, state.deletedItem!);
         if (success) {
+          _autoClearTimer?.cancel();
           emit(state.clearDeletedItem());
           if (_authService.getCurrentUser() != null) {
             await _accountService.addItemToAccount(_authService.getCurrentUser()!.uid, state.deletedItemId!);
           }
+          // Trigger soft reload to refresh the UI
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            softReload();
+          });
         }
       } catch (e) {
         print("Errore durante il ripristino dell'elemento: $e");

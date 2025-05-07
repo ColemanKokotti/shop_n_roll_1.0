@@ -21,8 +21,8 @@ class ItemListState {
     bool? isItemRestored,
   }) {
     return ItemListState(
-      deletedItem: deletedItem ?? this.deletedItem,
-      deletedItemId: deletedItemId ?? this.deletedItemId,
+      deletedItem: deletedItem,
+      deletedItemId: deletedItemId,
       itemQuantities: itemQuantities ?? this.itemQuantities,
       errorMessage: errorMessage,
       isItemRestored: isItemRestored ?? this.isItemRestored,
