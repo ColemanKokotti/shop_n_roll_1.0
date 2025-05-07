@@ -42,8 +42,6 @@ class ItemListCubit extends Cubit<ItemListState> {
     }
   }
 
-<<<<<<< Updated upstream
-=======
   // New method to delete items without activating the undo functionality
   // This will be used by the Receipt screen when saving and clearing
   Future<void> deleteItemWithoutUndo(String documentId) async {
@@ -62,7 +60,6 @@ class ItemListCubit extends Cubit<ItemListState> {
     }
   }
 
->>>>>>> Stashed changes
   @override
   Future<void> close() {
     _autoClearTimer?.cancel();
@@ -97,8 +94,6 @@ class ItemListCubit extends Cubit<ItemListState> {
     } catch (e) {
       print("Errore durante l'aggiornamento della quantità: $e");
       emit(state.setError("Errore durante l'aggiornamento: ${e.toString()}"));
-<<<<<<< Updated upstream
-=======
     }
   }
 
@@ -108,16 +103,8 @@ class ItemListCubit extends Cubit<ItemListState> {
     } catch (e) {
       print("Errore durante il recupero dei dati dell'item: $e");
       return null;
->>>>>>> Stashed changes
-    }
-  }
 
-  Future<Map<String, dynamic>?> getItemData(String itemId) async {
-    try {
-      return await _itemFirebaseStorage.getItem(itemId);
-    } catch (e) {
-      print("Errore durante il recupero dei dati dell'item: $e");
-      return null;
     }
   }
-}
+  
+  }

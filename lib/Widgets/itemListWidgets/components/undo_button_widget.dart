@@ -13,10 +13,7 @@ class UndoButtonWidget extends StatelessWidget {
         if (state.deletedItem == null || state.deletedItemId == null) {
           return const SizedBox.shrink();
         }
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
         return Positioned(
           bottom: 60,
           left: 0,
