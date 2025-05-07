@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_n_roll/Themes/godofwar_theme.dart';
 import 'package:shop_n_roll/Themes/honkaistarrail_theme.dart';
+import 'package:shop_n_roll/Themes/kingdom_hearts_theme.dart';
 import 'package:shop_n_roll/Themes/pokemon_theme.dart';
 import 'package:shop_n_roll/Themes/thewitcher_theme.dart';
 import 'package:shop_n_roll/Themes/warframe_theme.dart';
@@ -11,7 +11,7 @@ import '../../Themes/default_theme.dart';
 import '../../Themes/earthy_theme.dart';
 import '../../Themes/light_theme.dart';
 import '../../Themes/ocean_breeze_theme.dart';
-import '../../Themes/pastel_theme.dart';
+import '../../Themes/mint_theme.dart';
 import '../../Themes/theme_dark.dart';
 import '../../Themes/vintageRetro_theme.dart';
 
@@ -19,13 +19,13 @@ final themeMap = {
   'default': defaultTheme,
   'light': lightTheme,
   'dark': darkTheme,
-  'pastel': pastelTheme,
+  'mint': mintTheme,
   'vintage': vintageRetroTheme,
   'earthy': earthyTheme,
   'ocean': oceanBreezeTheme,
-  'godofwar': godOfWarTheme,
+  'kingdom': kingdomHeartsTheme,
   'pokemon': pokemonTheme,
-  'honkaistarrail': honkaiStarRailTheme,
+  'honkai': honkaiStarRailTheme,
   'warframe': warframeTheme,
   'witcher': witcherTheme
 };
